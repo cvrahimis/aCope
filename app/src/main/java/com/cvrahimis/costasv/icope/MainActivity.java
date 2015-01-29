@@ -1,5 +1,6 @@
 package com.cvrahimis.costasv.icope;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
@@ -109,6 +110,10 @@ public class MainActivity extends ActionBarActivity {
             case R.id.drawing:
             {
                 Toast.makeText(getApplicationContext(), "Drawing Button Pressed", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, DrawingPad.class);
+                startActivityForResult(intent, 1);
+
                 break;
             }
             case R.id.journal:
@@ -123,6 +128,13 @@ public class MainActivity extends ActionBarActivity {
             }
             default:
                 break;
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent i)
+    {
+        if (requestCode == 1 && resultCode == RESULT_OK)
+        {
         }
     }
 }
