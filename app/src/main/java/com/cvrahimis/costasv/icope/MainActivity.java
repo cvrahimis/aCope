@@ -1,17 +1,72 @@
 package com.cvrahimis.costasv.icope;
 
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private int screenWidth;
+    private int screenHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final TextView greetingLbl = (TextView) findViewById(R.id.greeting);
+        final LinearLayout content = (LinearLayout) findViewById(R.id.content);
+        final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        screenWidth = size.x;
+        screenHeight = size.y;
+
+        Drawable d;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH");
+        String str = sdf.format(new Date());
+
+
+        int hour = Integer.parseInt(str);
+        if(hour >= 12 && hour < 18)
+        {
+            d = getResources().getDrawable(R.drawable.afternoon);
+            mainLayout.setBackground(d);
+            //background.setImageDrawable(d);
+            greetingLbl.setText(R.string.afternoonGreet);
+        }
+        else if (hour > 0 && hour <= 24)
+        {
+            d = getResources().getDrawable(R.drawable.evening);
+            mainLayout.setBackground(d);
+            //background.setImageDrawable(d);
+            greetingLbl.setText(R.string.eveningGreet);
+        }
+        else
+        {
+            d = getResources().getDrawable(R.drawable.morning);
+            mainLayout.setBackground(d);
+            //background.setImageDrawable(d);
+            greetingLbl.setText(R.string.morningGreet);
+        }
     }
 
 
@@ -35,5 +90,39 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void activityPress(View view) {
+
+        switch(view.getId())
+        {
+            case R.id.music:
+            {
+                Toast.makeText(getApplicationContext(), "Music Button Pressed", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.reading:
+            {
+                Toast.makeText(getApplicationContext(), "Reading Button Pressed", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.drawing:
+            {
+                Toast.makeText(getApplicationContext(), "Drawing Button Pressed", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.journal:
+            {
+                Toast.makeText(getApplicationContext(), "Journal Button Pressed", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.exercise:
+            {
+                Toast.makeText(getApplicationContext(), "Exercise Button Pressed", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            default:
+                break;
+        }
     }
 }

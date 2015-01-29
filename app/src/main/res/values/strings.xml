@@ -4,5 +4,8 @@
     <string name="app_name">ICope</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="morningGreet">Good Morning</string>
+    <string name="afternoonGreet">Good Afternoon</string>
+    <string name="eveningGreet">Good Evening</string>
 
 </resources>
