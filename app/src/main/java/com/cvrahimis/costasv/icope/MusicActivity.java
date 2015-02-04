@@ -3,6 +3,7 @@ package com.cvrahimis.costasv.icope;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -27,9 +28,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MediaController.MediaPlayerControl;
 import android.widget.RelativeLayout;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
-public class MusicActivity extends Activity implements MediaPlayerControl {
+public class MusicActivity extends ActionBarActivity implements MediaPlayerControl {
 
     //song list variables
     private ArrayList<Song> songList;
@@ -97,6 +100,7 @@ public class MusicActivity extends Activity implements MediaPlayerControl {
         //setup controller
         setController();
     }
+
 
     //connect to the service
     private ServiceConnection musicConnection = new ServiceConnection(){

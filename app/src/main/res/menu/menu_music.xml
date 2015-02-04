@@ -16,7 +16,7 @@
             android:icon="@drawable/end"
             android:orderInCategory="2"
             android:showAsAction="always"
-            android:title="End"/>
+            android:title="Back"/>
 
 
 </menu>
