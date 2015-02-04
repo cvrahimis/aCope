@@ -100,6 +100,8 @@ public class MainActivity extends ActionBarActivity {
             case R.id.music:
             {
                 Toast.makeText(getApplicationContext(), "Music Button Pressed", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, MusicActivity.class);
+                startActivityForResult(intent, 1);
                 break;
             }
             case R.id.reading:
