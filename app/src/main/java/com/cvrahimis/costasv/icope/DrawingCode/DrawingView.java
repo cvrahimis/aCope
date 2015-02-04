@@ -1,7 +1,7 @@
 /**
  * Created by Costasv on 1/3/15.
  */
-package com.cvrahimis.costasv.icope;
+package com.cvrahimis.costasv.icope.DrawingCode;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,6 +15,8 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.cvrahimis.costasv.icope.R;
 
 public class DrawingView extends View {
 

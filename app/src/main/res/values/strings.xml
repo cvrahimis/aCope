@@ -17,5 +17,11 @@
     <string name="med">Medium</string>
     <string name="lrg">Large</string>
     <string name="title_activity_music">MusicActivity</string>
+    <string name="title_activity_writing">WritingActivity</string>
+    <string name="open">Open</string>
+    <string name="delete">Delete</string>
+    <string name="titleHint">Title</string>
+    <string name="entryHint">Journal Entry</string>
+    <string name="title_activity_open_writing">OpenWritingActivity</string>
 
 </resources>

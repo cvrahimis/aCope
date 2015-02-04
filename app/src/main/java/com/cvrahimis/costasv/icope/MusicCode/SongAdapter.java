@@ -1,4 +1,4 @@
-package com.cvrahimis.costasv.icope;
+package com.cvrahimis.costasv.icope.MusicCode;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.cvrahimis.costasv.icope.R;
 
 import java.util.ArrayList;
 

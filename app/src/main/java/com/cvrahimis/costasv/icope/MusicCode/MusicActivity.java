@@ -1,4 +1,4 @@
-package com.cvrahimis.costasv.icope;
+package com.cvrahimis.costasv.icope.MusicCode;
 
 
 import android.graphics.drawable.Drawable;
@@ -13,10 +13,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-import com.cvrahimis.costasv.icope.MusicService.MusicBinder;
+import com.cvrahimis.costasv.icope.R;
+
 import android.net.Uri;
 import android.os.IBinder;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -27,9 +27,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MediaController.MediaPlayerControl;
-import android.widget.RelativeLayout;
-import android.view.Menu;
-import android.view.MenuItem;
 
 
 public class MusicActivity extends ActionBarActivity implements MediaPlayerControl {
@@ -107,7 +104,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            MusicBinder binder = (MusicBinder)service;
+            MusicService.MusicBinder binder = (MusicService.MusicBinder)service;
             //get service
             musicSrv = binder.getService();
             //pass list

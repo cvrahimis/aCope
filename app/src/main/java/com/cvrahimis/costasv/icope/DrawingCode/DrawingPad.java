@@ -1,4 +1,4 @@
-package com.cvrahimis.costasv.icope;
+package com.cvrahimis.costasv.icope.DrawingCode;
 
 
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.cvrahimis.costasv.icope.R;
 
 
 public class DrawingPad extends Activity implements OnClickListener {

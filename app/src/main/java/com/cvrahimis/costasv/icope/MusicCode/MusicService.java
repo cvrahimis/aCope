@@ -1,4 +1,4 @@
-package com.cvrahimis.costasv.icope;
+package com.cvrahimis.costasv.icope.MusicCode;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -12,6 +12,9 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
+
+import com.cvrahimis.costasv.icope.MainActivity;
+import com.cvrahimis.costasv.icope.R;
 
 import java.util.ArrayList;
 import java.util.Random;

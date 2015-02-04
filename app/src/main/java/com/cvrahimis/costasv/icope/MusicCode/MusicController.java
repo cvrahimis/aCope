@@ -1,4 +1,4 @@
-package com.cvrahimis.costasv.icope;
+package com.cvrahimis.costasv.icope.MusicCode;
 
 import android.content.Context;
 import android.widget.MediaController;

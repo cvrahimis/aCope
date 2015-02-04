@@ -22,15 +22,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DrawingPad"
+            android:name=".DrawingCode.DrawingPad"
             android:label="@string/title_activity_drawing_pad" >
         </activity>
 
-        <service android:name=".MusicService" />
+        <service android:name=".MusicCode.MusicService" />
 
         <activity
-            android:name=".MusicActivity"
+            android:name=".MusicCode.MusicActivity"
             android:label="@string/title_activity_music" >
+        </activity>
+        <activity
+            android:name=".WritingCode.OpenWritingActivity$WritingActivity"
+            android:label="@string/title_activity_writing" >
+        </activity>
+        <activity
+            android:name=".WritingCode.OpenWritingActivity"
+            android:label="@string/title_activity_open_writing" >
+        </activity>
+        <activity
+            android:name=".WritingCode.WritingActivity"
+            android:label="@string/title_activity_writing" >
         </activity>
     </application>
 

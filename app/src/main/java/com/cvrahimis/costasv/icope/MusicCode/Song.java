@@ -1,4 +1,4 @@
-package com.cvrahimis.costasv.icope;
+package com.cvrahimis.costasv.icope.MusicCode;
 
 /*
  * This is demo code to accompany the Mobiletuts+ series:

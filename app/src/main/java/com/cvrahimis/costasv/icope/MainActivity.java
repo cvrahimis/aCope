@@ -9,12 +9,14 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
+import com.cvrahimis.costasv.icope.MusicCode.MusicActivity;
+import com.cvrahimis.costasv.icope.WritingCode.WritingActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -121,6 +123,10 @@ public class MainActivity extends ActionBarActivity {
             case R.id.journal:
             {
                 Toast.makeText(getApplicationContext(), "Journal Button Pressed", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, WritingActivity.class);
+                startActivityForResult(intent, 1);
+
                 break;
             }
             case R.id.exercise:
