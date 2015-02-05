@@ -68,7 +68,7 @@ public class OpenWritingActivity extends ActionBarActivity {
         db = new DBAdapter(this);
         db.open();
 
-        Cursor cur = db.getAllItems();
+        //Cursor cur = db.getAllItems();
 
         journalView = (ListView)findViewById(R.id.journalList);
 
@@ -88,9 +88,15 @@ public class OpenWritingActivity extends ActionBarActivity {
 
     }
 
+    public void onDestroy()
+    {
+        super.onDestroy();
+        db.close();
+    }
+
     public void getJournalList()
     {
-        Cursor cur = db.getAllItems();
+        Cursor cur = db.getAllJournals();
         if (cur.moveToFirst())
         {
             do

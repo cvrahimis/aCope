@@ -75,6 +75,11 @@ public class WritingActivity extends ActionBarActivity {
 
     }
 
+    public void onDestroy()
+    {
+        super.onDestroy();
+        db.close();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,18 +118,20 @@ public class WritingActivity extends ActionBarActivity {
                     if (!entry.getText().toString().equals("") && !title.getText().toString().equals("")) {
                         //Toast.makeText(getApplicationContext(), "Title: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getApplicationContext(), "Entry: " + entry.getText().toString(), Toast.LENGTH_SHORT).show();
+                        /*
+                        PROBABLY DONT NEED DATE
                         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                         String date = sdf.format(new Date());
-
+                        */
                         //Toast.makeText(getApplicationContext(), "DateFormat: " + date, Toast.LENGTH_SHORT).show();
 
-                        rowID = db.insertNewJournal(title.getText().toString(), entry.getText().toString(), date);
+                        rowID = db.insertNewJournal(title.getText().toString(), entry.getText().toString()/*, date*/);
                         //Toast.makeText(getApplicationContext(), "Saved " + title.getText().toString() + ": " + rowID, Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
                 {
-                    db.updateItem(rowID,title.getText().toString(), entry.getText().toString());
+                    db.updateJournal(rowID,title.getText().toString(), entry.getText().toString());
                 }
                 break;
             }
@@ -148,7 +155,7 @@ public class WritingActivity extends ActionBarActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if(rowID != 0)
                         {
-                            if(db.deleteItem(rowID))
+                            if(db.deleteJournalEntry(rowID))
                             {
                                 Toast.makeText(getApplicationContext(), "Delete Successful", Toast.LENGTH_SHORT).show();
                                 entry.setText("");

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
 import com.cvrahimis.costasv.icope.MusicCode.MusicActivity;
+import com.cvrahimis.costasv.icope.ReadingCode.ReadingActivity;
 import com.cvrahimis.costasv.icope.WritingCode.WritingActivity;
 
 import java.text.SimpleDateFormat;
@@ -109,6 +110,10 @@ public class MainActivity extends ActionBarActivity {
             case R.id.reading:
             {
                 Toast.makeText(getApplicationContext(), "Reading Button Pressed", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, ReadingActivity.class);
+                startActivityForResult(intent, 1);
+
                 break;
             }
             case R.id.drawing:

@@ -23,5 +23,6 @@
     <string name="titleHint">Title</string>
     <string name="entryHint">Journal Entry</string>
     <string name="title_activity_open_writing">OpenWritingActivity</string>
+    <string name="title_activity_reading">ReadingActivity</string>
 
 </resources>

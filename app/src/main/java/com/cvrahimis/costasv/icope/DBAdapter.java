@@ -13,17 +13,22 @@ import java.util.Date;
 
 public class DBAdapter 
 {
-	static final String ROWID = "_id";
-	static final String TITLE = "title";
-	static final String ENTRY = "entry";
-    static final String DATE = "date";
+	static final String Journal_ROWID = "_id";
+	static final String Journal_TITLE = "title";
+	static final String Journal_ENTRY = "entry";
+    //static final String DATE = "date";
 	static final String TAG = "DBAdapter";
 	static final String DATABASE_NAME = "ICopeDB";
-	static final String DATABASE_TABLE = "journalEntries";
+	static final String JOURNAL_TABLE = "journalEntries";
+    static final String QUOTES_TABLE = "quotes";
+    static final String Quotes_ROWID = "_id";
+    static final String Quotes_Quote = "quote";
+    static final String Quotes_Author = "author";
 	static final int DATABASE_VERSION = 1;
 	
-	static final String DATABASE_CREATE = "create table journalEntries (_id integer primary key autoincrement, title text not null, entry text not null, date text not null);";
-	
+	static final String CREATE_JOURNAL_TABLE = "create table journalEntries (_id integer primary key autoincrement, title text not null, entry text not null);";
+	static final String CREATE_QUOTE_TABLE = "create table quotes(_id integer primary key autoincrement, quote text not null, author text not null);";
+
 	final Context context;
 	
 	DatabaseHelper DBHelper;
@@ -47,7 +52,8 @@ public class DBAdapter
 		{
 			try
 			{
-				db.execSQL(DATABASE_CREATE);
+				db.execSQL(CREATE_JOURNAL_TABLE);
+                db.execSQL(CREATE_QUOTE_TABLE);
 			}
 			catch (SQLException e) { e.printStackTrace(); }
 		}
@@ -56,6 +62,7 @@ public class DBAdapter
 		public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer)
 		{
 			db.execSQL("DROP TABLE IF EXISTS journalEntries");
+            db.execSQL("DROP TABLE IF EXISTS quotes");
 			onCreate(db);
 		}
 	}
@@ -73,61 +80,66 @@ public class DBAdapter
 		DBHelper.close();
 	}
 
+    public long insertNewQuote(String q, String a)
+    {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(Quotes_Quote, q);
+        initialValues.put(Quotes_Author, a);
+
+        return db.insert(QUOTES_TABLE,  null,  initialValues);
+    }
 	
-	public long insertNewJournal(String t,  String e, String d)
+	public long insertNewJournal(String t,  String e/*, String d*/)
 	{
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(TITLE, t);
-		initialValues.put(ENTRY, e);
-		initialValues.put(DATE, d);
-		return db.insert(DATABASE_TABLE,  null,  initialValues);
+		initialValues.put(Journal_TITLE, t);
+		initialValues.put(Journal_ENTRY, e);
+		//initialValues.put(DATE, d);
+		return db.insert(JOURNAL_TABLE,  null,  initialValues);
 	}
 
 	
-	public boolean deleteItem(long rowId)
+	public boolean deleteJournalEntry(long rowId)
 	{
-		return db.delete(DATABASE_TABLE, ROWID + "=" + rowId, null) > 0;
-	}
-	
-	public Cursor getAllItems()
-	{
-		return db.query(DATABASE_TABLE, new String [] {ROWID, TITLE, ENTRY, DATE}, null, null, null, null, null);
+		return db.delete(JOURNAL_TABLE, Journal_ROWID + "=" + rowId, null) > 0;
 	}
 
-	public Cursor getItem(long rowId) throws SQLException
+    public boolean deleteQuoteByRowID(long rowId)
+    {
+        return db.delete(QUOTES_TABLE, Quotes_ROWID + "=" + rowId, null) > 0;
+    }
+	
+	public Cursor getAllJournals()
+	{
+		return db.query(JOURNAL_TABLE, new String [] {Journal_ROWID, Journal_TITLE, Journal_ENTRY/*, DATE*/}, null, null, null, null, null);
+	}
+
+    public Cursor getAllQuotes()
+    {
+        return db.query(QUOTES_TABLE, new String [] {Quotes_ROWID, Quotes_Quote, Quotes_Author}, null, null, null, null, null);
+    }
+
+	public Cursor getJournal(long rowId) throws SQLException
 	{
 		Cursor cur = null;
 		
 		try
 		{
-			cur = db.query(true, DATABASE_TABLE,  new String [] {ROWID, TITLE, ENTRY, DATE},  ROWID + "=" + rowId, null, null, null, null, null);
+			cur = db.query(true, JOURNAL_TABLE,  new String [] {Journal_ROWID, Journal_TITLE, Journal_ENTRY/*, DATE*/},  Journal_ROWID + "=" + rowId, null, null, null, null, null);
 		}
 		catch(SQLException e) {Log.d(null, "DB EXCEPTION" + e);}
 		
 		if (cur != null) cur.moveToFirst();
 		return cur;
 	}
-	
-	
-	public Cursor getItemByTitle(String title) throws SQLException
-	{
-		Cursor cur = null;
-		try
-		{
-			cur = db.query(false, DATABASE_TABLE,  new String [] {ROWID, TITLE, ENTRY, DATE},  TITLE + "='" + title + "'", null, null, null, null, null);
-		}
-		catch(SQLException e) {Log.d(null, "DB EXCEPTION" + e);}
-	
-		if (cur != null) cur.moveToFirst();
-		return cur;
-	}
 
-    public Cursor getItemByDate(String date) throws SQLException
+    public Cursor getQuote(long rowId) throws SQLException
     {
         Cursor cur = null;
+
         try
         {
-            cur = db.query(false, DATABASE_TABLE,  new String [] {ROWID, TITLE, ENTRY, DATE},  DATE + "='" + date + "'", null, null, null, null, null);
+            cur = db.query(true, QUOTES_TABLE,  new String [] {Quotes_ROWID, Quotes_Quote, Quotes_Author},  Quotes_ROWID + "=" + rowId, null, null, null, null, null);
         }
         catch(SQLException e) {Log.d(null, "DB EXCEPTION" + e);}
 
@@ -136,47 +148,125 @@ public class DBAdapter
     }
 	
 	
-	public int getItemId(String title)
+	public Cursor getJournalByTitle(String title) throws SQLException
 	{
-		Cursor cur = getItemByTitle(title);
-
-		return cur.getInt(0);
-	}
+		Cursor cur = null;
+		try
+		{
+			cur = db.query(false, JOURNAL_TABLE,  new String [] {Journal_ROWID, Journal_TITLE, Journal_ENTRY/*, DATE*/},  Journal_TITLE + "='" + title + "'", null, null, null, null, null);
+		}
+		catch(SQLException e) {Log.d(null, "DB EXCEPTION" + e);}
 	
-	
-	public Cursor getAllIds()
-	{		
-		Cursor cur = db.query(true, DATABASE_TABLE,  new String [] {ROWID},  null, null, null, null, null, null);
 		if (cur != null) cur.moveToFirst();
 		return cur;
 	}
+
+    public Cursor getQuoteByQuote(String quote) throws SQLException
+    {
+        Cursor cur = null;
+        try
+        {
+            cur = db.query(false, QUOTES_TABLE,  new String [] {Quotes_ROWID, Quotes_Quote, Quotes_Author},  Quotes_Quote + "='" + quote + "'", null, null, null, null, null);
+        }
+        catch(SQLException e) {Log.d(null, "DB EXCEPTION" + e);}
+
+        if (cur != null) cur.moveToFirst();
+        return cur;
+    }
+
+    public Cursor getQuoteByAuthor(String author) throws SQLException
+    {
+        Cursor cur = null;
+        try
+        {
+            cur = db.query(false, QUOTES_TABLE,  new String [] {Quotes_ROWID, Quotes_Quote, Quotes_Author},  Quotes_Author + "='" + author + "'", null, null, null, null, null);
+        }
+        catch(SQLException e) {Log.d(null, "DB EXCEPTION" + e);}
+
+        if (cur != null) cur.moveToFirst();
+        return cur;
+    }
+
+    /*public Cursor getItemByDate(String date) throws SQLException
+    {
+        Cursor cur = null;
+        try
+        {
+            cur = db.query(false, JOURNAL_TABLE,  new String [] {Journal_ROWID, Journal_TITLE, Journal_ENTRY, DATE},  DATE + "='" + date + "'", null, null, null, null, null);
+        }
+        catch(SQLException e) {Log.d(null, "DB EXCEPTION" + e);}
+
+        if (cur != null) cur.moveToFirst();
+        return cur;
+    }*/
 	
-	public boolean updateItem(long rowId, String title, String entry)
+	
+	public int getJournalId(String title)
+	{
+		Cursor cur = getJournalByTitle(title);
+
+		return cur.getInt(0);
+	}
+
+    public int getQuoteId(String quote)
+    {
+        Cursor cur = getQuoteByQuote(quote);
+        return cur.getInt(0);
+    }
+	
+	public Cursor getAllJournalIds()
+	{		
+		Cursor cur = db.query(true, JOURNAL_TABLE,  new String [] {Journal_ROWID},  null, null, null, null, null, null);
+		if (cur != null) cur.moveToFirst();
+		return cur;
+	}
+
+    public Cursor getAllQuoteIds()
+    {
+        Cursor cur = db.query(true, QUOTES_TABLE,  new String [] {Quotes_ROWID},  null, null, null, null, null, null);
+        if (cur != null) cur.moveToFirst();
+        return cur;
+    }
+	
+	public boolean updateJournal(long rowId, String title, String entry)
 	{
 		ContentValues args = new ContentValues();
-		args.put(TITLE, title);
-		args.put(ENTRY, entry);
+		args.put(Journal_TITLE, title);
+		args.put(Journal_ENTRY, entry);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        /*SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         String date = sdf.format(new Date());
-        args.put(DATE, date);
+        args.put(DATE, date);*/
 
-		return db.update(DATABASE_TABLE, args, ROWID + "=" + rowId, null) > 0;
+		return db.update(JOURNAL_TABLE, args, Journal_ROWID + "=" + rowId, null) > 0;
 	}
 
-	public boolean updateItemEntry(long rowId, String entry)
+    public boolean updateQuotes(long rowId, String quote, String author)
+    {
+        ContentValues args = new ContentValues();
+        args.put(Quotes_Quote, quote);
+        args.put(Quotes_Author, author);
+
+        /*SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        String date = sdf.format(new Date());
+        args.put(DATE, date);*/
+
+        return db.update(QUOTES_TABLE, args, Quotes_ROWID + "=" + rowId, null) > 0;
+    }
+
+	public boolean updateJournalEntry(long rowId, String entry)
 	{
 		ContentValues args = new ContentValues();
-		args.put(ENTRY, entry);
-		return db.update(DATABASE_TABLE, args, ROWID + "=" + rowId, null) > 0;
+		args.put(Journal_ENTRY, entry);
+		return db.update(JOURNAL_TABLE, args, Journal_ROWID + "=" + rowId, null) > 0;
 	}
-	public boolean hasEntry(long rowId)
+	public boolean hasJournalEntry(long rowId)
 	{
 		Cursor cur = null;
 		
 		try
 		{
-			cur = db.query(true, DATABASE_TABLE,  new String [] {ENTRY},  ROWID + "=" + rowId, null, null, null, null, null);
+			cur = db.query(true, JOURNAL_TABLE,  new String [] {Journal_ENTRY},  Journal_ROWID + "=" + rowId, null, null, null, null, null);
 		}
 		catch(SQLException e) {Log.d(null, "DB EXCEPTION" + e);}
 		
@@ -190,6 +280,32 @@ public class DBAdapter
 		}
 		return true;		
 	}
+
+    public int quoteCount()
+    {
+        return getAllQuoteIds().getCount();
+    }
+
+    public boolean hasQuote(long rowId)
+    {
+        Cursor cur = null;
+
+        try
+        {
+            cur = db.query(true, QUOTES_TABLE,  new String [] {Quotes_Quote, Quotes_Author},  Quotes_ROWID + "=" + rowId, null, null, null, null, null);
+        }
+        catch(SQLException e) {Log.d(null, "DB EXCEPTION" + e);}
+
+        if (cur != null)
+        {
+            cur.moveToFirst();
+            if(cur.getString(0).equals(""))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 

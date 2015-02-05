@@ -44,6 +44,10 @@
             android:name=".WritingCode.WritingActivity"
             android:label="@string/title_activity_writing" >
         </activity>
+        <activity
+            android:name=".ReadingCode.ReadingActivity"
+            android:label="@string/title_activity_reading" >
+        </activity>
     </application>
 
 </manifest>
