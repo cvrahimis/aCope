@@ -1,19 +1,23 @@
 package com.cvrahimis.costasv.icope.WritingCode;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cvrahimis.costasv.icope.DBAdapter;
 import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
 import com.cvrahimis.costasv.icope.MusicCode.MusicActivity;
 import com.cvrahimis.costasv.icope.R;
@@ -23,10 +27,18 @@ import java.util.Date;
 
 public class WritingActivity extends ActionBarActivity {
 
+    private DBAdapter db;
+    private EditText title;
+    private EditText entry;
+    private long rowID = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
+
+        db = new DBAdapter(this);
+        db.open();
 
         final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.background);
 
@@ -35,6 +47,11 @@ public class WritingActivity extends ActionBarActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH");
         String str = sdf.format(new Date());
 
+        title = (EditText) findViewById(R.id.title);
+        title.setHint(R.string.titleHint);
+
+        entry = (EditText) findViewById(R.id.entry);
+        entry.setHint(R.string.entryHint);
 
         int hour = Integer.parseInt(str);
         if(hour >= 12 && hour < 18)
@@ -86,13 +103,32 @@ public class WritingActivity extends ActionBarActivity {
             case R.id.saveBtn:
             {
                 Toast.makeText(getApplicationContext(), "Save Button Pressed", Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(this, MusicActivity.class);
-                //startActivityForResult(intent, 1);
+                //Toast.makeText(getApplicationContext(), "Title: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Entry: " + entry.getText().toString(), Toast.LENGTH_SHORT).show();
+
+
+
+                if(!entry.getText().toString().equals("") && !title.getText().toString().equals(""))
+                {
+                    //Toast.makeText(getApplicationContext(), "Title: " + title.getText().toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Entry: " + entry.getText().toString(), Toast.LENGTH_SHORT).show();
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                    String date = sdf.format(new Date());
+
+                    //Toast.makeText(getApplicationContext(), "DateFormat: " + date, Toast.LENGTH_SHORT).show();
+
+                    rowID = db.insertNewJournal(title.getText().toString(), entry.getText().toString(), date);
+                    //Toast.makeText(getApplicationContext(), "Saved " + title.getText().toString() + ": " + rowID, Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
             case R.id.openBtn:
             {
                 Toast.makeText(getApplicationContext(), "Open Button Pressed", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, OpenWritingActivity.class);
+                startActivityForResult(intent, 1);
+
                 break;
             }
             case R.id.deleteBtn:
@@ -106,6 +142,17 @@ public class WritingActivity extends ActionBarActivity {
             }
             default:
                 break;
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent i)
+    {
+        //Log.i("info", "onActivityResult(int requestCode, int resultCode, Intent i)  MainActivity");
+        if (requestCode == 1 && resultCode == RESULT_OK)
+        {
+            rowID = i.getIntExtra("id", 0);
+            title.setText((String) i.getStringExtra("title"));
+            entry.setText((String) i.getStringExtra("entry"));
         }
     }
 }

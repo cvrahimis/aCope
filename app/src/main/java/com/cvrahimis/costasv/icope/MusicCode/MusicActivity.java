@@ -4,6 +4,7 @@ package com.cvrahimis.costasv.icope.MusicCode;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -96,6 +97,22 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
 
         //setup controller
         setController();
+    }
+
+    private void CreateMenu(Menu menu)
+    {
+        Log.i("info", "CreateMenu(Menu menu)  MainActivity");
+        MenuItem itm1 = (MenuItem) findViewById(R.id.action_shuffle);
+        {
+            //itm1.setIcon(R.drawable.add);
+            itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        }
+
+        MenuItem itm2 = (MenuItem) findViewById(R.id.action_end);
+        {
+            //itm2.setIcon(R.drawable.del);
+            itm2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        }
     }
 
 

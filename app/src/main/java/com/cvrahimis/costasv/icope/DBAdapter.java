@@ -74,7 +74,7 @@ public class DBAdapter
 	}
 
 	
-	public long insertNewItem(String t,  String e, String d)
+	public long insertNewJournal(String t,  String e, String d)
 	{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(TITLE, t);
