@@ -3,12 +3,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:id="@+id/background"
-    android:onClick="journalPicked"
+    android:id="@+id/openWritingBackground"
+
     tools:context="com.cvrahimis.costasv.icope.WritingCode.OpenWritingActivity" >
 
     <ListView
         android:id="@+id/journalList"
+
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
     </ListView>

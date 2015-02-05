@@ -89,18 +89,11 @@ public class DBAdapter
 		return db.delete(DATABASE_TABLE, ROWID + "=" + rowId, null) > 0;
 	}
 	
-	public boolean deleteItemByTitle(String t)
-	{
-		return db.delete(DATABASE_TABLE, TITLE + "='" + t + "'", null) > 0;
-	}
-	
-	
 	public Cursor getAllItems()
 	{
 		return db.query(DATABASE_TABLE, new String [] {ROWID, TITLE, ENTRY, DATE}, null, null, null, null, null);
 	}
-	
-	
+
 	public Cursor getItem(long rowId) throws SQLException
 	{
 		Cursor cur = null;
@@ -164,10 +157,9 @@ public class DBAdapter
 		args.put(TITLE, title);
 		args.put(ENTRY, entry);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/YYYY");
-        String str = sdf.format(new Date());
-
-        args.put(DATE, str);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        String date = sdf.format(new Date());
+        args.put(DATE, date);
 
 		return db.update(DATABASE_TABLE, args, ROWID + "=" + rowId, null) > 0;
 	}

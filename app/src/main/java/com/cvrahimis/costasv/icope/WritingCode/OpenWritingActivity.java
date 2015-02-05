@@ -37,7 +37,7 @@ public class OpenWritingActivity extends ActionBarActivity {
         setContentView(R.layout.activity_open_writing);
 
 
-        final LinearLayout mainLayout = (LinearLayout) findViewById(R.id.background);
+        final LinearLayout mainLayout = (LinearLayout) findViewById(R.id.openWritingBackground);
         Drawable d;
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH");
@@ -102,14 +102,17 @@ public class OpenWritingActivity extends ActionBarActivity {
     }
 
     //user song select
-    public void journalPicked(View view){
-        Journal j = journalList.get(Integer.parseInt(view.getTag().toString()));
-        Intent i = new Intent();
-        i.putExtra("id", j.getID());
-        i.putExtra("title", j.getTitle());
-        i.putExtra("entry", j.getEntry());
-        setResult(RESULT_OK, i);
-        finish();
+    public void journalPicked(View view) {
+        //if (null != view.getTag().toString())
+        //{
+            Journal j = journalList.get(Integer.parseInt(view.getTag().toString()));
+            Intent i = new Intent();
+            i.putExtra("id", String.valueOf(j.getID()));
+            i.putExtra("title", j.getTitle());
+            i.putExtra("entry", j.getEntry());
+            setResult(RESULT_OK, i);
+            finish();
+        //}
     }
 
 
@@ -133,101 +136,5 @@ public class OpenWritingActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public static class WritingActivity extends ActionBarActivity {
-        DBAdapter db;
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_writing);
-
-            final LinearLayout mainLayout = (LinearLayout) findViewById(R.id.background);
-            Drawable d;
-
-            SimpleDateFormat sdf = new SimpleDateFormat("HH");
-            String str = sdf.format(new Date());
-
-
-            int hour = Integer.parseInt(str);
-            if(hour >= 12 && hour < 18)
-            {
-                d = getResources().getDrawable(R.drawable.afternoon);
-                mainLayout.setBackground(d);
-                //background.setImageDrawable(d);
-            }
-            else if (hour > 0 && hour <= 24)
-            {
-                d = getResources().getDrawable(R.drawable.evening);
-                mainLayout.setBackground(d);
-                //background.setImageDrawable(d);
-            }
-            else
-            {
-                d = getResources().getDrawable(R.drawable.morning);
-                mainLayout.setBackground(d);
-                //background.setImageDrawable(d);
-            }
-
-            final EditText title = (EditText) findViewById(R.id.title);
-            title.setHint(R.string.titleHint);
-
-            final EditText entry = (EditText) findViewById(R.id.entry);
-            entry.setHint(R.string.entryHint);
-        }
-
-        public void activityPress(View view) {
-
-            switch(view.getId())
-            {
-                case R.id.saveBtn:
-                {
-                    Toast.makeText(getApplicationContext(), "Save Button Pressed", Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent(this, MusicActivity.class);
-                    //startActivityForResult(intent, 1);
-                    break;
-                }
-                case R.id.openBtn:
-                {
-                    Toast.makeText(getApplicationContext(), "Open Button Pressed", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                case R.id.deleteBtn:
-                {
-                    Toast.makeText(getApplicationContext(), "Delete Button Pressed", Toast.LENGTH_SHORT).show();
-
-                    //Intent intent = new Intent(this, DrawingPad.class);
-                    //startActivityForResult(intent, 1);
-
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
-
-
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.menu_writing, menu);
-            return true;
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_settings) {
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
     }
 }
