@@ -97,8 +97,11 @@ public class ReadingActivity extends ActionBarActivity {
         count++;
         if(count >= quotesList.size())
             count = 0;
+
+        //quote.startAnimation(AnimationUtils.loadAnimation(ReadingActivity.this, android.R.anim.slide_out_right));
         quote.setText(quotesList.get(count).getQuote());
-        quote.startAnimation(AnimationUtils.loadAnimation(ReadingActivity.this, android.R.anim.fade_in));
+        quote.startAnimation(AnimationUtils.loadAnimation(ReadingActivity.this, android.R.anim.slide_in_left));
+        //author.startAnimation(AnimationUtils.loadAnimation(ReadingActivity.this, android.R.anim.fade_out));
         author.setText(quotesList.get(count).getAuthor());
         author.startAnimation(AnimationUtils.loadAnimation(ReadingActivity.this, android.R.anim.fade_in));
     }
