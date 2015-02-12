@@ -48,6 +48,10 @@
             android:name=".ReadingCode.ReadingActivity"
             android:label="@string/title_activity_reading" >
         </activity>
+        <activity
+            android:name=".RatingCode.RatingScreen"
+            android:label="@string/title_activity_rating_screen" >
+        </activity>
     </application>
 
 </manifest>

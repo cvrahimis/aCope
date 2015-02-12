@@ -1,5 +1,7 @@
 package com.cvrahimis.costasv.icope.ReadingCode;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.DBAdapter;
+import com.cvrahimis.costasv.icope.MainActivity;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingCode.RatingScreen;
 import com.cvrahimis.costasv.icope.WritingCode.Journal;
 
 import org.w3c.dom.Text;
@@ -34,6 +38,8 @@ public class ReadingActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading);
+
+
 
         quote = (TextView) findViewById(R.id.quote);
         author = (TextView) findViewById(R.id.author);
@@ -113,9 +119,23 @@ public class ReadingActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RatingScreen.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_reading, menu);
+
+        MenuItem itm1 = menu.add(0, 0, 0, "ADD");
+        {
+            itm1.setTitle("Done");
+            itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        }
+
         return true;
     }
 
@@ -130,8 +150,15 @@ public class ReadingActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case 0:
+                // app icon in action bar clicked; go home
+                Intent intent = new Intent(this, RatingScreen.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void getQuotesList()

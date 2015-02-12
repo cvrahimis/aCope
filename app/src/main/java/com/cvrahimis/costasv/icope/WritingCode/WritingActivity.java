@@ -23,6 +23,7 @@ import com.cvrahimis.costasv.icope.DBAdapter;
 import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
 import com.cvrahimis.costasv.icope.MusicCode.MusicActivity;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingCode.RatingScreen;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -82,9 +83,23 @@ public class WritingActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RatingScreen.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_writing, menu);
+
+        MenuItem itm1 = menu.add(0, 0, 0, "ADD");
+        {
+            itm1.setTitle("Done");
+            itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        }
+
         return true;
     }
 
@@ -99,8 +114,15 @@ public class WritingActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case 0:
+                // app icon in action bar clicked; go home
+                Intent intent = new Intent(this, RatingScreen.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void activityPress(View view) {

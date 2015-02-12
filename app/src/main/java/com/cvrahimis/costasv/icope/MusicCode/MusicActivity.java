@@ -14,7 +14,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+import com.cvrahimis.costasv.icope.MainActivity;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingCode.RatingScreen;
 
 import android.net.Uri;
 import android.os.IBinder;
@@ -28,6 +30,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MediaController.MediaPlayerControl;
+import android.widget.Toast;
 
 
 public class MusicActivity extends ActionBarActivity implements MediaPlayerControl {
@@ -99,6 +102,13 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
         setController();
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RatingScreen.class);
+        startActivity(intent);
+    }
+
     private void CreateMenu(Menu menu)
     {
         Log.i("info", "CreateMenu(Menu menu)  MainActivity");
@@ -113,6 +123,45 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
             //itm2.setIcon(R.drawable.del);
             itm2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_music, menu);
+        MenuItem itm1 = menu.add(0, 0, 0, "ADD");
+        {
+            itm1.setTitle("Done");
+            itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //menu item selected
+        switch (item.getItemId()) {
+            case R.id.action_shuffle:
+            {
+                musicSrv.setShuffle();
+                break;
+            }
+            case R.id.action_end:
+            {
+                stopService(playIntent);
+                musicSrv = null;
+                System.exit(0);
+                break;
+            }
+            case 0:
+            {
+                Intent intent = new Intent(this, RatingScreen.class);
+                startActivity(intent);
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -155,29 +204,6 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
             playbackPaused=false;
         }
         controller.show(0);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_music, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        //menu item selected
-        switch (item.getItemId()) {
-            case R.id.action_shuffle:
-                musicSrv.setShuffle();
-                break;
-            case R.id.action_end:
-                stopService(playIntent);
-                musicSrv=null;
-                System.exit(0);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     //method to retrieve song info from device

@@ -24,5 +24,8 @@
     <string name="entryHint">Journal Entry</string>
     <string name="title_activity_open_writing">OpenWritingActivity</string>
     <string name="title_activity_reading">ReadingActivity</string>
-
+    <string name="title_activity_rating_screen">RatingScreen</string>
+    <string name="ratingScreen1">How do you feel?</string>
+    <string name="ratingScreen2">Urge to self injure?</string>
+    <string name="done">Done</string>
 </resources>

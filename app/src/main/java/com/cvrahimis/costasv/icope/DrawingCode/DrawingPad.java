@@ -1,6 +1,7 @@
 package com.cvrahimis.costasv.icope.DrawingCode;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingCode.RatingScreen;
 
 
 public class DrawingPad extends Activity implements OnClickListener {
@@ -64,10 +66,22 @@ public class DrawingPad extends Activity implements OnClickListener {
     }
 
     @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RatingScreen.class);
+        startActivity(intent);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    public void donePress(View view) {
+        Intent intent = new Intent(this, RatingScreen.class);
+        startActivity(intent);
     }
 
     //user clicked paint
