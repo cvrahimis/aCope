@@ -52,6 +52,10 @@
             android:name=".RatingCode.RatingScreen"
             android:label="@string/title_activity_rating_screen" >
         </activity>
+        <activity
+            android:name=".PhysicalActivities.PhysicalActivity"
+            android:label="@string/title_activity_physical" >
+        </activity>
     </application>
 
 </manifest>

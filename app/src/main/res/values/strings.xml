@@ -28,4 +28,6 @@
     <string name="ratingScreen1">How do you feel?</string>
     <string name="ratingScreen2">Urge to self injure?</string>
     <string name="done">Done</string>
+    <string name="title_activity_physical">PhysicalActivity</string>
+
 </resources>
