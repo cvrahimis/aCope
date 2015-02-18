@@ -54,20 +54,18 @@ public class MainActivity extends ActionBarActivity {
         thermometer = (ImageView) absLayout.findViewById(R.id.thermometer);
         thermometerLayoutParams = (AbsoluteLayout.LayoutParams)thermometer.getLayoutParams();
 
-
-
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         screenWidth = size.x;
         screenHeight = size.y;
 
-        //Toast.makeText(getApplicationContext(), String.valueOf(thermometerLayoutParams.height), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), String.valueOf((int)Math.floor(screenWidth)), Toast.LENGTH_SHORT).show();
 
         mesurmentViewLayoutParams = (AbsoluteLayout.LayoutParams)mesurmentView.getLayoutParams();
         mesurmentViewLayoutParams.x = (int)Math.floor(screenWidth * .14);
-        mesurmentViewLayoutParams.y = ((int)Math.floor(screenHeight * .01)) + 2;
-        mesurmentViewLayoutParams.height = thermometerLayoutParams.height * -32;
+        mesurmentViewLayoutParams.y = ((int)Math.floor(screenHeight * .01)) + 3;
+        mesurmentViewLayoutParams.height = (int)Math.floor(screenHeight * .05) - 1;
 
         //mesurmentView.setLayoutParams(absParams);
 
@@ -153,14 +151,25 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void onLeftSwipe(double d) {
-        mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width - (int)Math.floor(d);
-        mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
+        int diff = (int)Math.floor(d);
+        if(mesurmentViewLayoutParams.width - diff < 0)
+            mesurmentViewLayoutParams.width = 1;
+        else
+            mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width - diff;
 
+        mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
+        Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
     }
 
     private void onRightSwipe(double d) {
-        mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width + (int)Math.floor(d);
+        int diff = (int)Math.floor(d);
+        if(mesurmentViewLayoutParams.width + diff > screenWidth * .738)
+            mesurmentViewLayoutParams.width = (int)Math.floor(screenWidth * .738);
+        else
+            mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width + diff;
+
         mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
+        Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -189,13 +198,13 @@ public class MainActivity extends ActionBarActivity {
                 }*/
 
                 // Left swipe
-                if (diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    Toast.makeText(getApplicationContext(),"diff: " + diff, Toast.LENGTH_LONG).show();
+                if (diff > 0) {
+                    //Toast.makeText(getApplicationContext(),"diff: " + diff, Toast.LENGTH_LONG).show();
                     MainActivity.this.onLeftSwipe(diff);
-
-                    // Right swipe
-                } else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    Toast.makeText(getApplicationContext(),"diff: " + diff, Toast.LENGTH_LONG).show();
+                }
+                // Right swipe
+                else {
+                    //Toast.makeText(getApplicationContext(),"diff: " + diff, Toast.LENGTH_LONG).show();
                     MainActivity.this.onRightSwipe(-diff);
                 }
 

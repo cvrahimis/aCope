@@ -239,10 +239,9 @@
         <ImageView
             android:id="@+id/mesurmentView"
             android:layout_marginRight="20dp"
-            android:background="#0000ff"
+            android:background="#ff0000"
             android:layout_width="30dp"
-            android:layout_height="35dp
-            ">
+            android:layout_height="35dp">
         </ImageView>
 
         <ImageView
