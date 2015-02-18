@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
 import com.cvrahimis.costasv.icope.MusicCode.MusicActivity;
+import com.cvrahimis.costasv.icope.PhysicalActivities.PhysicalActivity;
 import com.cvrahimis.costasv.icope.R;
 import com.cvrahimis.costasv.icope.ReadingCode.ReadingActivity;
 import com.cvrahimis.costasv.icope.WritingCode.WritingActivity;
@@ -138,6 +139,8 @@ public class MenuActivity extends ActionBarActivity {
             case R.id.exercise:
             {
                 Toast.makeText(getApplicationContext(), "Exercise Button Pressed", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, PhysicalActivity.class);
+                startActivityForResult(intent, 1);
                 break;
             }
             default:
