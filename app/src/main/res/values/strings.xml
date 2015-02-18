@@ -31,4 +31,21 @@
     <string name="title_activity_physical">PhysicalActivity</string>
     <string name="title_activity_menu">MenuActivity</string>
 
+    <string-array name="exerciseNames">
+        <item>Back Lifts</item>
+        <item>Leg Lifts</item>
+        <item>Crunches</item>
+        <item>Planks</item>
+
+    </string-array>
+
+    <string-array name="exerciseDescriptions">
+        <item>Lay down on your stomach and lift your hands and feet off the ground</item>
+        <item>Lay down on you back and lift your feet into the air</item>
+        <item>Lay down on you back and use your abdominal muscles to lift your torso up</item>
+        <item>Use your forearms and feet to keep your body off the ground</item>
+
+    </string-array>
+
+
 </resources>
