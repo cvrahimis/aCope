@@ -217,15 +217,6 @@
         android:layout_alignLeft="@+id/linearLayout"
         android:layout_alignStart="@+id/linearLayout" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/thermometer"
-        android:src="@drawable/thermometer"
-        android:layout_marginTop="49dp"
-        android:layout_below="@+id/ratingScreen1Lb2"
-        android:layout_centerHorizontal="true" />
-
 
     <Button
         android:layout_width="wrap_content"
@@ -235,6 +226,36 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="activityPress"/>
+
+    <AbsoluteLayout
+        android:id="@+id/urgeFrameView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/ratingScreen1Lb2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+       >
+
+        <ImageView
+            android:id="@+id/mesurmentView"
+            android:layout_marginRight="20dp"
+            android:background="#0000ff"
+            android:layout_width="30dp"
+            android:layout_height="35dp
+            ">
+        </ImageView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/thermometer"
+            android:src="@drawable/thermometer"
+            android:layout_alignTop="@+id/done"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal|top" />
+
+
+    </AbsoluteLayout>
 
 
 </RelativeLayout>
