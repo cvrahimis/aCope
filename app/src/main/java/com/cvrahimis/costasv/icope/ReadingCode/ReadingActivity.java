@@ -122,7 +122,7 @@ public class ReadingActivity extends ActionBarActivity {
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, RatingScreen.class);
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
 
     @Override

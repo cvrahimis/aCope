@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
 import com.cvrahimis.costasv.icope.MusicCode.MusicActivity;
+import com.cvrahimis.costasv.icope.PhysicalActivities.PhysicalActivity;
+import com.cvrahimis.costasv.icope.RatingCode.RatingScreen;
 import com.cvrahimis.costasv.icope.ReadingCode.ReadingActivity;
 import com.cvrahimis.costasv.icope.WritingCode.WritingActivity;
 
@@ -32,6 +34,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = new Intent(this, RatingScreen.class);
+        startActivityForResult(intent, 1);
 
         final TextView greetingLbl = (TextView) findViewById(R.id.greeting);
         final LinearLayout content = (LinearLayout) findViewById(R.id.content);
@@ -137,6 +142,8 @@ public class MainActivity extends ActionBarActivity {
             case R.id.exercise:
             {
                 Toast.makeText(getApplicationContext(), "Exercise Button Pressed", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, PhysicalActivity.class);
+                startActivityForResult(intent, 1);
                 break;
             }
             default:
