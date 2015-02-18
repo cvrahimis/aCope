@@ -3,27 +3,19 @@ package com.cvrahimis.costasv.icope.WritingCode;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.DBAdapter;
-import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
-import com.cvrahimis.costasv.icope.MusicCode.MusicActivity;
+import com.cvrahimis.costasv.icope.MainActivity;
 import com.cvrahimis.costasv.icope.R;
-import com.cvrahimis.costasv.icope.RatingCode.RatingScreen;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,7 +77,7 @@ public class WritingActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, RatingScreen.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivityForResult(intent, 1);
     }
 
@@ -117,7 +109,7 @@ public class WritingActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case 0:
                 // app icon in action bar clicked; go home
-                Intent intent = new Intent(this, RatingScreen.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
             default:

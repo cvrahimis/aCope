@@ -15,8 +15,8 @@ import java.util.Comparator;
 import java.util.Date;
 
 import com.cvrahimis.costasv.icope.MainActivity;
+import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
-import com.cvrahimis.costasv.icope.RatingCode.RatingScreen;
 
 import android.net.Uri;
 import android.os.IBinder;
@@ -105,7 +105,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     @Override
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, RatingScreen.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -156,7 +156,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
             }
             case 0:
             {
-                Intent intent = new Intent(this, RatingScreen.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
             }

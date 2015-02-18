@@ -1,6 +1,5 @@
 package com.cvrahimis.costasv.icope.ReadingCode;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -10,18 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.DBAdapter;
 import com.cvrahimis.costasv.icope.MainActivity;
+import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
-import com.cvrahimis.costasv.icope.RatingCode.RatingScreen;
-import com.cvrahimis.costasv.icope.WritingCode.Journal;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -121,7 +116,7 @@ public class ReadingActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, RatingScreen.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivityForResult(intent, 1);
     }
 
@@ -153,7 +148,7 @@ public class ReadingActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case 0:
                 // app icon in action bar clicked; go home
-                Intent intent = new Intent(this, RatingScreen.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
             default:

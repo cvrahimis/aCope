@@ -16,8 +16,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.cvrahimis.costasv.icope.MainActivity;
+import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
-import com.cvrahimis.costasv.icope.RatingCode.RatingScreen;
 
 
 public class DrawingPad extends Activity implements OnClickListener {
@@ -68,7 +69,7 @@ public class DrawingPad extends Activity implements OnClickListener {
     @Override
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, RatingScreen.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -80,7 +81,7 @@ public class DrawingPad extends Activity implements OnClickListener {
     }
 
     public void donePress(View view) {
-        Intent intent = new Intent(this, RatingScreen.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

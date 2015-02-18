@@ -49,12 +49,12 @@
             android:label="@string/title_activity_reading" >
         </activity>
         <activity
-            android:name=".RatingCode.RatingScreen"
-            android:label="@string/title_activity_rating_screen" >
-        </activity>
-        <activity
             android:name=".PhysicalActivities.PhysicalActivity"
             android:label="@string/title_activity_physical" >
+        </activity>
+        <activity
+            android:name=".MenuActitvity.MenuActivity"
+            android:label="@string/title_activity_menu" >
         </activity>
     </application>
 
