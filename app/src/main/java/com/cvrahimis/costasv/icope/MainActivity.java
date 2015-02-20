@@ -49,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
         final AbsoluteLayout absLayout = (AbsoluteLayout) mainLayout.findViewById(R.id.urgeFrameView);
 
         mesurmentView = (ImageView) absLayout.findViewById(R.id.mesurmentView);
-        mesurmentView.bringToFront();
+        //mesurmentView.bringToFront();
 
         thermometer = (ImageView) absLayout.findViewById(R.id.thermometer);
         thermometerLayoutParams = (AbsoluteLayout.LayoutParams)thermometer.getLayoutParams();
@@ -158,7 +158,7 @@ public class MainActivity extends ActionBarActivity {
             mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width - diff;
 
         mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
-        Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
     }
 
     private void onRightSwipe(double d) {
@@ -169,7 +169,7 @@ public class MainActivity extends ActionBarActivity {
             mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width + diff;
 
         mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
-        Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
     }
 
 

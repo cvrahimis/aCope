@@ -1,8 +1,8 @@
 package com.cvrahimis.costasv.icope.PhysicalActivities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cvrahimis.costasv.icope.MainActivity;
 import com.cvrahimis.costasv.icope.R;
 
 public class PhysicalActivity extends ActionBarActivity {
@@ -38,11 +40,24 @@ public class PhysicalActivity extends ActionBarActivity {
         listView.setAdapter(adapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivityForResult(intent, 1);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_physical, menu);
+
+        MenuItem itm1 = menu.add(0, 0, 0, "ADD");
+        {
+            itm1.setTitle("Done");
+            itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        }
+
         return true;
     }
 
@@ -57,8 +72,15 @@ public class PhysicalActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case 0:
+                // app icon in action bar clicked; go home
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
 

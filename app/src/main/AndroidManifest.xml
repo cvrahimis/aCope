@@ -33,10 +33,6 @@
             android:label="@string/title_activity_music" >
         </activity>
         <activity
-            android:name=".WritingCode.OpenWritingActivity$WritingActivity"
-            android:label="@string/title_activity_writing" >
-        </activity>
-        <activity
             android:name=".WritingCode.OpenWritingActivity"
             android:label="@string/title_activity_open_writing" >
         </activity>
@@ -49,12 +45,12 @@
             android:label="@string/title_activity_reading" >
         </activity>
         <activity
-            android:name=".PhysicalActivities.PhysicalActivity"
-            android:label="@string/title_activity_physical" >
-        </activity>
-        <activity
             android:name=".MenuActitvity.MenuActivity"
             android:label="@string/title_activity_menu" >
+        </activity>
+        <activity
+            android:name=".PhysicalActivities.PhysicalActivity"
+            android:label="PhysicalActivity">
         </activity>
     </application>
 
