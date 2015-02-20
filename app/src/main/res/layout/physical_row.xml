@@ -6,9 +6,10 @@
     android:id="@+id/physicalRow">
     <!-- "Olympic pictogram Athletics" by Parutakupiu - Own work. Licensed under Public Domain via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Olympic_pictogram_Athletics.png#mediaviewer/File:Olympic_pictogram_Athletics.png-->
     <ImageView
-        android:layout_margin="10dp"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:src="@drawable/running"
         android:id="@+id/exerciseImage" />
 
@@ -18,11 +19,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:layout_alignTop="@+id/imageView"
+        android:layout_alignTop="@+id/exerciseImage"
+        android:textColor="#FFFFFF99"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_toRightOf="@+id/exerciseImage"
+        android:layout_toEndOf="@+id/exerciseImage" />
 
     <TextView
         android:id="@+id/description"
@@ -30,6 +32,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
+        android:textColor="#FFFFFF99"
         android:layout_below="@+id/exerciseName"
         android:layout_alignLeft="@+id/exerciseName"
         android:layout_alignStart="@+id/exerciseName"

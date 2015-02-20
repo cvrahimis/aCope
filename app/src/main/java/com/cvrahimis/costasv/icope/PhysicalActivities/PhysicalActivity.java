@@ -3,26 +3,37 @@ package com.cvrahimis.costasv.icope.PhysicalActivities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.MainActivity;
 import com.cvrahimis.costasv.icope.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PhysicalActivity extends ActionBarActivity {
 
     String[] exName;
     String[] exDescriptions;
+    int screenWidth;
+    int screenHeight;
     int[] images = {R.drawable.backlifts1, R.drawable.leglifts1, R.drawable.crunches1, R.drawable.plank};
 
     ListView listView;
@@ -35,8 +46,39 @@ public class PhysicalActivity extends ActionBarActivity {
         exName = res.getStringArray(R.array.exerciseNames);
         exDescriptions = res.getStringArray(R.array.exerciseDescriptions);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        screenWidth = size.x;
+        screenHeight = size.y;
+
+
+        final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.physicalBackground);
+
+        Drawable d;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH");
+        String str = sdf.format(new Date());
+
+        int hour = Integer.parseInt(str);
+        if(hour >= 12 && hour < 18)
+        {
+            d = getResources().getDrawable(R.drawable.afternoon);
+            mainLayout.setBackground(d);
+        }
+        else if (hour > 0 && hour <= 24)
+        {
+            d = getResources().getDrawable(R.drawable.evening);
+            mainLayout.setBackground(d);
+        }
+        else
+        {
+            d = getResources().getDrawable(R.drawable.morning);
+            mainLayout.setBackground(d);
+        }
+
         listView = (ListView)findViewById(R.id.listView);
-        ExerciseAdapter adapter = new ExerciseAdapter(this, exName, images, exDescriptions);
+        ExerciseAdapter adapter = new ExerciseAdapter(this, exName, images, exDescriptions, screenWidth);
         listView.setAdapter(adapter);
     }
 
@@ -90,13 +132,15 @@ class ExerciseAdapter extends ArrayAdapter<String>
     int[] imgs;
     String[] exerciseNames;
     String[] exerciseDescriptions;
-    ExerciseAdapter(Context c, String[] exNames, int images[],  String[] exDesc)
+    int screenWidth;
+    ExerciseAdapter(Context c, String[] exNames, int images[],  String[] exDesc, int screenW)
     {
         super(c, R.layout.physical_row, R.id.exerciseName, exNames);
         this.context = c;
         this.imgs = images;
         this.exerciseNames = exNames;
         this.exerciseDescriptions = exDesc;
+        this.screenWidth = screenW;
     }
 
     @Override
@@ -112,7 +156,18 @@ class ExerciseAdapter extends ArrayAdapter<String>
         exerciseName.setText(exerciseNames[position]);
         exerciseDescription.setText(exerciseDescriptions[position]);
 
+        ViewGroup.LayoutParams params = exerciseImage.getLayoutParams();
+        params.width = (int)Math.floor(screenWidth * .2);
+        params.height = (int)Math.floor(screenWidth * .2);
+        exerciseImage.setLayoutParams(params);
 
+        params = exerciseName.getLayoutParams();
+        params.width = (int)Math.floor(screenWidth * .6);
+        exerciseName.setLayoutParams(params);
+
+        params = exerciseDescription.getLayoutParams();
+        params.width = (int)Math.floor(screenWidth * .6);
+        exerciseDescription.setLayoutParams(params);
 
         return row;
     }
