@@ -1,37 +1,33 @@
 package com.cvrahimis.costasv.icope;
 
-import android.app.ActionBar;
+
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Process;
 import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.cvrahimis.costasv.icope.MainActivity;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
-import com.cvrahimis.costasv.icope.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
+
 
 public class MainActivity extends ActionBarActivity {
 
     int screenWidth;
     int screenHeight;
-
     private GestureDetector gestureDetector;
     private AbsoluteLayout.LayoutParams thermometerLayoutParams;
     private AbsoluteLayout.LayoutParams mesurmentViewLayoutParams;
@@ -95,6 +91,14 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        Bundle bndl = getIntent().getExtras();
+        if(bndl != null)
+        {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -124,20 +128,49 @@ public class MainActivity extends ActionBarActivity {
         }
         switch (item.getItemId()) {
             case 0:
-                Intent intent = new Intent(this, MenuActivity.class);
-                startActivity(intent);
+                Bundle bndl = getIntent().getExtras();
+                if(bndl != null) {
+                    finish();
+
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Intent intent = new Intent(this, MenuActivity.class);
+                    startActivity(intent);
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void activityPress(View view) {
+    @Override
+    public void onDestroy(){
+        Process.killProcess(Process.myPid());
+    }
 
+    public void activityPress(View view) {
         switch (view.getId()) {
             case R.id.done: {
-                Intent intent = new Intent(this, MenuActivity.class);
-                startActivity(intent);
+                Bundle bndl = getIntent().getExtras();
+                if(bndl != null) {
+                    finish();
+
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Intent intent = new Intent(this, MenuActivity.class);
+                    startActivity(intent);
+                }
             }
         }
     }

@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.cvrahimis.costasv.icope.MainActivity;
 import com.cvrahimis.costasv.icope.PhysicalActivities.PhysicalActivity;
 import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
 import com.cvrahimis.costasv.icope.MusicCode.MusicActivity;
@@ -150,10 +152,9 @@ public class MenuActivity extends ActionBarActivity {
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("exit", true);
+        startActivity(i);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent i)
