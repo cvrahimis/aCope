@@ -70,6 +70,7 @@ public class DrawingPad extends Activity implements OnClickListener {
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
+        finish();
         startActivity(intent);
     }
 
@@ -82,6 +83,7 @@ public class DrawingPad extends Activity implements OnClickListener {
 
     public void donePress(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+        finish();
         startActivity(intent);
     }
 

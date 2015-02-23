@@ -3,8 +3,9 @@ package com.cvrahimis.costasv.icope.MenuActitvity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.os.*;
+import android.os.Process;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -107,6 +108,7 @@ public class MenuActivity extends ActionBarActivity {
             {
                 Toast.makeText(getApplicationContext(), "Music Button Pressed", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MusicActivity.class);
+                finish();
                 startActivityForResult(intent, 1);
                 break;
             }
@@ -115,6 +117,7 @@ public class MenuActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Reading Button Pressed", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, ReadingActivity.class);
+                finish();
                 startActivityForResult(intent, 1);
 
                 break;
@@ -124,6 +127,7 @@ public class MenuActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Drawing Button Pressed", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, DrawingPad.class);
+                finish();
                 startActivityForResult(intent, 1);
 
                 break;
@@ -133,6 +137,7 @@ public class MenuActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Journal Button Pressed", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, WritingActivity.class);
+                finish();
                 startActivityForResult(intent, 1);
 
                 break;
@@ -141,6 +146,7 @@ public class MenuActivity extends ActionBarActivity {
             {
                 Toast.makeText(getApplicationContext(), "Exercise Button Pressed", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, PhysicalActivity.class);
+                finish();
                 startActivityForResult(intent, 1);
                 break;
             }
@@ -149,12 +155,18 @@ public class MenuActivity extends ActionBarActivity {
         }
     }
 
+    /*public void onDestroy(){
+        Process.killProcess(Process.myPid());
+        super.onDestroy();
+    }*/
+
     @Override
     public void onBackPressed()
     {
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("exit", true);
-        startActivity(i);
+        setResult(RESULT_OK, i);
+        finish();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent i)

@@ -33,6 +33,9 @@ public class MainActivity extends ActionBarActivity {
     private AbsoluteLayout.LayoutParams mesurmentViewLayoutParams;
     private ImageView mesurmentView;
     private ImageView thermometer;
+    public final static int RESULT_CLOSE_ALL = 0;
+    public boolean exit = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +94,12 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Bundle bndl = getIntent().getExtras();
-        if(bndl != null)
+        if(exit)
         {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            finish();
             startActivity(intent);
         }
     }
@@ -128,13 +131,12 @@ public class MainActivity extends ActionBarActivity {
         }
         switch (item.getItemId()) {
             case 0:
-                Bundle bndl = getIntent().getExtras();
-                if(bndl != null) {
-                    finish();
-
+                if(exit)
+                {
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_HOME);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    finish();
                     startActivity(intent);
                 }
                 else
@@ -152,24 +154,24 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onDestroy(){
         Process.killProcess(Process.myPid());
+        super.onDestroy();
     }
 
     public void activityPress(View view) {
         switch (view.getId()) {
             case R.id.done: {
-                Bundle bndl = getIntent().getExtras();
-                if(bndl != null) {
-                    finish();
-
+                if(exit)
+                {
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_HOME);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    finish();
                     startActivity(intent);
                 }
                 else
                 {
                     Intent intent = new Intent(this, MenuActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
                 }
             }
         }
@@ -246,5 +248,11 @@ public class MainActivity extends ActionBarActivity {
             }
             return false;
         }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent i)
+    {
+        if (requestCode == 1 && resultCode == RESULT_OK)
+            exit = (boolean) i.getBooleanExtra("exit", true);
     }
 }

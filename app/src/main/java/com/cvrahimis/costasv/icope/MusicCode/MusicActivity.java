@@ -106,6 +106,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
+        finish();
         startActivity(intent);
     }
 
@@ -157,6 +158,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
             case 0:
             {
                 Intent intent = new Intent(this, MainActivity.class);
+                finish();
                 startActivity(intent);
                 break;
             }

@@ -86,6 +86,7 @@ public class PhysicalActivity extends ActionBarActivity {
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
+        finish();
         startActivityForResult(intent, 1);
     }
 
@@ -118,6 +119,7 @@ public class PhysicalActivity extends ActionBarActivity {
             case 0:
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
+                finish();
                 startActivity(intent);
                 return true;
             default:
