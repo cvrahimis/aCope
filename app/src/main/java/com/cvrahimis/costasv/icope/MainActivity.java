@@ -2,7 +2,9 @@ package com.cvrahimis.costasv.icope;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -15,11 +17,13 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsoluteLayout;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -35,13 +39,14 @@ public class MainActivity extends ActionBarActivity {
     private ImageView thermometer;
     public final static int RESULT_CLOSE_ALL = 0;
     public boolean exit = false;
+    public int[] feelingBtns;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        feelingBtns = new int[]{R.id.lonely, R.id.ashamed, R.id.guilty, R.id.disgusted, R.id.angry, R.id.anxious, R.id.afraid, R.id.sad, R.id.depressed, R.id.okay, R.id.happy};
         gestureDetector = new GestureDetector(getApplicationContext(), new SwipeGestureDetector());
 
         final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.ratingScreenMainLayout);
@@ -254,5 +259,85 @@ public class MainActivity extends ActionBarActivity {
     {
         if (requestCode == 1 && resultCode == RESULT_OK)
             exit = (boolean) i.getBooleanExtra("exit", true);
+    }
+
+    public void feelingClick(View view){
+
+        switch (view.getId())
+        {
+            case R.id.lonely:
+            {
+                changeFeelingPressColors(R.id.lonely);
+                break;
+            }
+            case R.id.ashamed:
+            {
+                changeFeelingPressColors(R.id.ashamed);
+                break;
+            }
+            case R.id.guilty:
+            {
+                changeFeelingPressColors(R.id.guilty);
+                break;
+            }
+            case R.id.disgusted:
+            {
+                changeFeelingPressColors(R.id.disgusted);
+                break;
+            }
+            case R.id.angry:
+            {
+                changeFeelingPressColors(R.id.angry);
+                break;
+            }
+            case R.id.anxious:
+            {
+                changeFeelingPressColors(R.id.anxious);
+                break;
+            }
+            case R.id.afraid:
+            {
+                changeFeelingPressColors(R.id.afraid);
+                break;
+            }
+            case R.id.sad:
+            {
+                changeFeelingPressColors(R.id.sad);
+                break;
+            }
+            case R.id.depressed:
+            {
+                changeFeelingPressColors(R.id.depressed);
+                break;
+            }
+            case R.id.okay:
+            {
+                changeFeelingPressColors(R.id.okay);
+                break;
+            }
+            case R.id.happy:
+            {
+                changeFeelingPressColors(R.id.happy);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    public void changeFeelingPressColors(int btnID)
+    {
+        Button tempFeelingBtn;
+        Button lonelyBtn = (Button) findViewById(btnID);
+        lonelyBtn.setBackgroundColor(Color.parseColor("#0000FF"));
+        lonelyBtn.setTextColor(Color.parseColor("#FFFFFF"));
+        for(int i = 0; i < feelingBtns.length; i++)
+        {
+            if(feelingBtns[i] != btnID)
+            {
+                tempFeelingBtn = (Button) findViewById(feelingBtns[i]);
+                tempFeelingBtn.setBackgroundColor(Color.parseColor("#00FF33"));
+                tempFeelingBtn.setTextColor(Color.parseColor("#000000"));
+            }
+        }
     }
 }

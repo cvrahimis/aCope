@@ -89,21 +89,33 @@
                 android:layout_height="wrap_content"
                 android:text="Lonely"
                 android:id="@+id/lonely"
-                android:layout_column="3" />
+                android:layout_column="3"
+                android:background="#00FF33"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:onClick="feelingClick"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shameful"
-                android:id="@+id/shameful"
-                android:layout_column="6" />
+                android:text="Ashamed"
+                android:id="@+id/ashamed"
+                android:layout_column="6"
+                android:background="#00FF33"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:onClick="feelingClick"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Guilty"
                 android:id="@+id/guilty"
-                android:layout_column="3" />
+                android:layout_column="3"
+                android:background="#00FF33"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:onClick="feelingClick"/>
         </TableRow>
 
         <TableRow
@@ -119,21 +131,33 @@
                 android:layout_height="wrap_content"
                 android:text="Disgusted"
                 android:id="@+id/disgusted"
-                android:layout_column="3" />
+                android:layout_column="3"
+                android:background="#00FF33"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:onClick="feelingClick"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Angry"
                 android:id="@+id/angry"
-                android:layout_column="6" />
+                android:layout_column="6"
+                android:background="#00FF33"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:onClick="feelingClick"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Anxious"
                 android:id="@+id/anxious"
-                android:layout_column="7" />
+                android:layout_column="7"
+                android:background="#00FF33"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:onClick="feelingClick"/>
         </TableRow>
 
         <TableRow
@@ -149,21 +173,33 @@
                 android:layout_height="wrap_content"
                 android:text="Afraid"
                 android:id="@+id/afraid"
-                android:layout_column="3" />
+                android:layout_column="3"
+                android:background="#00FF33"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:onClick="feelingClick"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sad"
                 android:id="@+id/sad"
-                android:layout_column="6" />
+                android:layout_column="6"
+                android:background="#00FF33"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:onClick="feelingClick"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Depressed"
                 android:id="@+id/depressed"
-                android:layout_column="7" />
+                android:layout_column="7"
+                android:background="#00FF33"
+                android:textColor="#000"
+                android:layout_margin="5dp"
+                android:onClick="feelingClick"/>
         </TableRow>
     </TableLayout>
 
@@ -174,23 +210,31 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:text="Okay"
             android:id="@+id/okay"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:background="#00FF33"
+            android:textColor="#000"
+            android:layout_margin="5dp"
+            android:onClick="feelingClick"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:text="Happy"
             android:id="@+id/happy"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:background="#00FF33"
+            android:textColor="#000"
+            android:layout_margin="5dp"
+            android:onClick="feelingClick"/>
     </LinearLayout>
 
     <TextView
