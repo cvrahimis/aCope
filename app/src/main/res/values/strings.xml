@@ -46,6 +46,7 @@
         <item>Use your forearms and feet to keep your body off the ground</item>
 
     </string-array>
+    <string name="title_activity_settings">Settings</string>
 
 
 </resources>

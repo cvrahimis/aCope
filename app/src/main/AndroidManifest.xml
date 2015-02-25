@@ -50,7 +50,11 @@
         </activity>
         <activity
             android:name=".PhysicalActivities.PhysicalActivity"
-            android:label="PhysicalActivity">
+            android:label="PhysicalActivity" >
+        </activity>
+        <activity
+            android:name=".SettingsCode.Settings"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 
