@@ -1,6 +1,8 @@
 package com.cvrahimis.costasv.icope;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -38,6 +40,8 @@ public class MainActivity extends ActionBarActivity {
     private ImageView mesurmentView;
     private ImageView thermometer;
     public final static int RESULT_CLOSE_ALL = 0;
+    public boolean didFeelingPressed = false;
+    public boolean didSwipe = false;
     public boolean exit = false;
     public int[] feelingBtns;
 
@@ -98,15 +102,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        didFeelingPressed = false;
+        didSwipe = false;
+        defaultColors();
+    }
+
+    @Override
     public void onBackPressed() {
-        if(exit)
-        {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            finish();
-            startActivity(intent);
-        }
+        exitLogic();
     }
 
     @Override
@@ -136,20 +141,7 @@ public class MainActivity extends ActionBarActivity {
         }
         switch (item.getItemId()) {
             case 0:
-                if(exit)
-                {
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.addCategory(Intent.CATEGORY_HOME);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    finish();
-                    startActivity(intent);
-                }
-                else
-                {
-                    Intent intent = new Intent(this, MenuActivity.class);
-                    startActivity(intent);
-                }
-
+                exitLogic();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -165,19 +157,7 @@ public class MainActivity extends ActionBarActivity {
     public void activityPress(View view) {
         switch (view.getId()) {
             case R.id.done: {
-                if(exit)
-                {
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.addCategory(Intent.CATEGORY_HOME);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    finish();
-                    startActivity(intent);
-                }
-                else
-                {
-                    Intent intent = new Intent(this, MenuActivity.class);
-                    startActivityForResult(intent, 1);
-                }
+                exitLogic();
             }
         }
     }
@@ -198,6 +178,7 @@ public class MainActivity extends ActionBarActivity {
             mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width - diff;
 
         mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
+        didSwipe = true;
         //Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
     }
 
@@ -209,6 +190,7 @@ public class MainActivity extends ActionBarActivity {
             mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width + diff;
 
         mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
+        didSwipe = true;
         //Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
     }
 
@@ -231,11 +213,11 @@ public class MainActivity extends ActionBarActivity {
                 float heightDiff = Math.abs(e1.getY() - e2.getY());
                 float diff = e1.getX() - e2.getX();
 
-                /*if (heightDiff > SWIPE_MAX_OFF_PATH)
+                if (heightDiff > SWIPE_MAX_OFF_PATH)
                 {
                     Toast.makeText(getApplicationContext(),"height: " + SWIPE_MAX_OFF_PATH, Toast.LENGTH_LONG).show();
                     return false;
-                }*/
+                }
 
                 // Left swipe
                 if (diff > 0) {
@@ -262,7 +244,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void feelingClick(View view){
-
+        didFeelingPressed = true;
         switch (view.getId())
         {
             case R.id.lonely:
@@ -337,6 +319,130 @@ public class MainActivity extends ActionBarActivity {
                 tempFeelingBtn = (Button) findViewById(feelingBtns[i]);
                 tempFeelingBtn.setBackgroundColor(Color.parseColor("#00FF33"));
                 tempFeelingBtn.setTextColor(Color.parseColor("#000000"));
+            }
+        }
+    }
+
+    public void defaultColors(){
+        Button tempFeelingBtn;
+        for(int i = 0; i < feelingBtns.length; i++)
+        {
+            tempFeelingBtn = (Button) findViewById(feelingBtns[i]);
+            tempFeelingBtn.setBackgroundColor(Color.parseColor("#00FF33"));
+            tempFeelingBtn.setTextColor(Color.parseColor("#000000"));
+        }
+    }
+
+    public void goToMenuActivity(){
+        Intent intent = new Intent(this, com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity.class);
+        startActivity(intent);
+    }
+
+    public void exitAndGoHome(){
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        finish();
+        startActivity(intent);
+    }
+
+    public void exitLogic(){
+        if(exit)
+        {
+            if(didSwipe && didFeelingPressed)
+            {
+                exitAndGoHome();
+            }
+            else if(didSwipe && !didFeelingPressed)
+            {
+                AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+                newDialog.setTitle("You did not select a feeling");
+                newDialog.setMessage("Please select one");
+                newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        exitAndGoHome();
+                    }
+                });
+                newDialog.show();
+            }
+            else if(!didSwipe && didFeelingPressed)
+            {
+                AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+                newDialog.setTitle("You did not select an urge");
+                newDialog.setMessage("Do you like to keep it the same?");
+                newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                newDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                newDialog.show();
+            }
+            else
+            {
+                AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+                newDialog.setTitle("Rating Screen Not complete");
+                newDialog.setMessage("You must select a feeling and rate urge.");
+                newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                newDialog.show();
+            }
+        }
+        else
+        {
+            if(didSwipe && didFeelingPressed)
+                goToMenuActivity();
+
+            else if(didSwipe && !didFeelingPressed)
+            {
+                AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+                newDialog.setTitle("You did not select a feeling");
+                newDialog.setMessage("Please select one");
+                newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+                newDialog.show();
+            }
+            else if(!didSwipe && didFeelingPressed)
+            {
+                AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+                newDialog.setTitle("You did not select an urge");
+                newDialog.setMessage("Do you like to keep it the same?");
+                newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        goToMenuActivity();
+                    }
+                });
+                newDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                newDialog.show();
+            }
+            else
+            {
+                AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+                newDialog.setTitle("Rating Screen Not complete");
+                newDialog.setMessage("You must select a feeling and rate urge.");
+                newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                newDialog.show();
             }
         }
     }
