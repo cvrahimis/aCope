@@ -335,7 +335,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void goToMenuActivity(){
         Intent intent = new Intent(this, com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     public void exitAndGoHome(){
@@ -374,6 +374,7 @@ public class MainActivity extends ActionBarActivity {
                 newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        exitAndGoHome();
                     }
                 });
                 newDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
