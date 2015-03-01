@@ -56,6 +56,10 @@
             android:name=".SettingsCode.Settings"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
     </application>
 
 </manifest>

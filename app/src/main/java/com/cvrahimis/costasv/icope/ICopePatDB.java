@@ -218,4 +218,17 @@ public class ICopePatDB {
         return db.query(ratingScreen_Table, new String [] {ratingScreen_patientID, ratingScreen_mood, ratingScreen_urge, ratingScreen_time}, null, null, null, null, null);
     }
 
+    public Cursor getAllPatients()
+    {
+        return db.query(patient_Table, new String [] {patient_patientId, patient_patientFirstName, patient_patientLastName}, null, null, null, null, null);
+    }
+
+    public boolean isPatientOnPhone()
+    {
+        if(getAllPatients().getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
 }

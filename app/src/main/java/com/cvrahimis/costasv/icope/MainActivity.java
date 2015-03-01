@@ -4,6 +4,7 @@ package com.cvrahimis.costasv.icope;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
@@ -44,12 +45,27 @@ public class MainActivity extends ActionBarActivity {
     public boolean didSwipe = false;
     public boolean exit = false;
     public int[] feelingBtns;
-
+    public String mood = "";
+    private ICopePatDB db;
+    public int urge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = new ICopePatDB(this);
+        db.open();
+
+        /*if(db.isPatientOnPhone())
+        {
+            Cursor cursor = db.getAllPatients();
+        }
+        else
+        {
+
+        }*/
+
         feelingBtns = new int[]{R.id.lonely, R.id.ashamed, R.id.guilty, R.id.disgusted, R.id.angry, R.id.anxious, R.id.afraid, R.id.sad, R.id.depressed, R.id.okay, R.id.happy};
         gestureDetector = new GestureDetector(getApplicationContext(), new SwipeGestureDetector());
 
@@ -74,6 +90,7 @@ public class MainActivity extends ActionBarActivity {
         mesurmentViewLayoutParams.x = (int)Math.floor(screenWidth * .14);
         mesurmentViewLayoutParams.y = ((int)Math.floor(screenHeight * .01)) + 3;
         mesurmentViewLayoutParams.height = (int)Math.floor(screenHeight * .05) - 1;
+        urge = mesurmentViewLayoutParams.width;
 
         //mesurmentView.setLayoutParams(absParams);
 
@@ -179,7 +196,10 @@ public class MainActivity extends ActionBarActivity {
 
         mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
         didSwipe = true;
-        //Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
+
+        double section = (screenWidth * .738) / 10;
+        int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
+        Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();
     }
 
     private void onRightSwipe(double d) {
@@ -189,9 +209,13 @@ public class MainActivity extends ActionBarActivity {
         else
             mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width + diff;
 
+
         mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
         didSwipe = true;
-        //Toast.makeText(getApplicationContext(), String.valueOf(mesurmentViewLayoutParams.width), Toast.LENGTH_SHORT).show();
+
+        double section = (screenWidth * .738) / 10;
+        int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
+        Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -309,9 +333,10 @@ public class MainActivity extends ActionBarActivity {
     public void changeFeelingPressColors(int btnID)
     {
         Button tempFeelingBtn;
-        Button lonelyBtn = (Button) findViewById(btnID);
-        lonelyBtn.setBackgroundColor(Color.parseColor("#0000FF"));
-        lonelyBtn.setTextColor(Color.parseColor("#FFFFFF"));
+        Button moodBtn = (Button) findViewById(btnID);
+        mood = moodBtn.getText().toString();
+        moodBtn.setBackgroundColor(Color.parseColor("#0000FF"));
+        moodBtn.setTextColor(Color.parseColor("#FFFFFF"));
         for(int i = 0; i < feelingBtns.length; i++)
         {
             if(feelingBtns[i] != btnID)
@@ -361,6 +386,7 @@ public class MainActivity extends ActionBarActivity {
                 newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        insertData();
                         exitAndGoHome();
                     }
                 });
@@ -446,5 +472,11 @@ public class MainActivity extends ActionBarActivity {
                 newDialog.show();
             }
         }
+    }
+
+    public void insertData(){
+        /*double section = (screenWidth * .738) / 10;
+        int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
+        db.insertNewRatingScreen()*/
     }
 }
