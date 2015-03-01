@@ -18,7 +18,7 @@ public class DBAdapter
 	static final String Journal_ENTRY = "entry";
     //static final String DATE = "date";
 	static final String TAG = "DBAdapter";
-	static final String DATABASE_NAME = "ICopeDB";
+	static final String DATABASE_NAME = "ICopeActDataDB";
 	static final String JOURNAL_TABLE = "journalEntries";
     static final String QUOTES_TABLE = "quotes";
     static final String Quotes_ROWID = "_id";
