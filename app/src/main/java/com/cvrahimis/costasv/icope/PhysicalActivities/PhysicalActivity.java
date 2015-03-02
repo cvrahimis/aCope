@@ -22,8 +22,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cvrahimis.costasv.icope.MainActivity;
+import com.cvrahimis.costasv.icope.ICopePatDB;
+import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -84,10 +86,7 @@ public class PhysicalActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        finish();
-        startActivityForResult(intent, 1);
+        exitLogic();
     }
 
     @Override
@@ -117,15 +116,34 @@ public class PhysicalActivity extends ActionBarActivity {
         }
         switch (item.getItemId()) {
             case 0:
-                // app icon in action bar clicked; go home
-                Intent intent = new Intent(this, MainActivity.class);
-                finish();
-                startActivity(intent);
+                exitLogic();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void exitLogic(){
+        ICopePatDB db = new ICopePatDB(this);
+        db.open();
+        if(db.isPatientAndTherapistOnPhone())
+        {
+            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, RatingScreenActivity.class);
+            finish();
+            db.close();
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MenuActivity.class);
+            finish();
+            db.close();
+            startActivity(intent);
+        }
+    }
+
 }
 
 class ExerciseAdapter extends ArrayAdapter<String>

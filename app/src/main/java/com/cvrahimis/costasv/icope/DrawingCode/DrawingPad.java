@@ -16,9 +16,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.cvrahimis.costasv.icope.MainActivity;
+import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
 
 public class DrawingPad extends Activity implements OnClickListener {
@@ -68,10 +69,7 @@ public class DrawingPad extends Activity implements OnClickListener {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        finish();
-        startActivity(intent);
+        exitLogic();
     }
 
     @Override
@@ -82,9 +80,7 @@ public class DrawingPad extends Activity implements OnClickListener {
     }
 
     public void donePress(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        finish();
-        startActivity(intent);
+        exitLogic();
     }
 
     //user clicked paint
@@ -230,6 +226,27 @@ public class DrawingPad extends Activity implements OnClickListener {
                 }
             });
             saveDialog.show();
+        }
+    }
+
+    public void exitLogic(){
+        ICopePatDB db = new ICopePatDB(this);
+        db.open();
+        if(db.isPatientAndTherapistOnPhone())
+        {
+            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, RatingScreenActivity.class);
+            finish();
+            db.close();
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MenuActivity.class);
+            finish();
+            db.close();
+            startActivity(intent);
         }
     }
 }

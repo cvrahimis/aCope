@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,55 +55,12 @@ public class ICopePatDB {
     static final String buttonActivations_patientId = "patientId";
     static final String buttonActivations_time = "time";*/
 
-    static final String CREATE_Tables = "CREATE TABLE therapist(\n" +
-            "therapistId integer primary key,\n" +
-            "therapistLogin text,\n" +
-            "therapistPassword text,\n" +
-            "therapistName text,\n" +
-            "therapistAddress text,\n" +
-            "therapistPhone integer,\n" +
-            "therapistEmail text\n" +
-            ");\n" +
-            "\n" +
-            "CREATE TABLE patient(\n" +
-            "patientId integer primary key,\n" +
-            "therapistId integer,\n" +
-            "patientLogin text,\n" +
-            "patientPassword text,\n" +
-            "patientFirstName text,\n" +
-            "patientLastName text,\n" +
-            "patientEmail text,\n" +
-            "FOREIGN KEY (therapistId) REFERENCES therapist(therapistId)\n" +
-            ");\n" +
-            "\n" +
-            "CREATE TABLE activities(\n" +
-            "activityId integer primary Key,\n" +
-            "therapistId integer,\n" +
-            "patientId integer,\n" +
-            "time numeric,\n" +
-            "activity text,\n" +
-            "duration numeric,\n" +
-            "FOREIGN KEY (therapistId) REFERENCES therapist(therapistId),\n" +
-            "FOREIGN KEY (patientId) REFERENCES patient(patientId)\n" +
-            ");\n" +
-            "\n" +
-            "CREATE Table RatingScreen(\n" +
-            "patientID integer,\n" +
-            "mood text,\n" +
-            "urge integer,\n" +
-            "time numeric,\n" +
-            "FOREIGN KEY (patientId) REFERENCES patient(patientId)\n" +
-            ");" +
-            "\n" +
-            "CREATE TABLE buttonActivations(\n" +
-            "buttonId integer primary key,\n" +
-            "buttonName text,\n" +
-            "therapistId integer,\n" +
-            "patientId integer,\n" +
-            "time numeric,\n" +
-            "FOREIGN KEY (therapistId) REFERENCES therapist(therapistId),\n" +
-            "FOREIGN KEY (patientId) REFERENCES patient(patientId)\n" +
-            ");";
+    static final String CREATE_Table_therapist = "CREATE TABLE therapist( therapistId integer primary key, therapistLogin text, therapistPassword text, therapistName text, therapistAddress text, therapistPhone integer, therapistEmail text);";
+    static final String CREATE_Table_patient = "CREATE TABLE patient(patientId integer primary key, therapistId integer, patientLogin text, patientPassword text, patientFirstName text, patientLastName text, patientEmail text, FOREIGN KEY (therapistId) REFERENCES therapist(therapistId));";
+    static final String CREATE_Table_activities = "CREATE TABLE activities( activityId integer primary Key, therapistId integer, patientId integer, time numeric, activity text, duration numeric, FOREIGN KEY (therapistId) REFERENCES therapist(therapistId), FOREIGN KEY (patientId) REFERENCES patient(patientId));";
+    static final String CREATE_Table_RatingScreen = "CREATE Table RatingScreen( patientID integer, mood text, urge integer, time numeric, FOREIGN KEY (patientId) REFERENCES patient(patientId));";
+
+    //static final String CREATE_Table_buttonActivations = "CREATE TABLE buttonActivations(buttonId integer primary key, buttonName text, therapistId integer, patientId integer, time numeric, FOREIGN KEY (therapistId) REFERENCES therapist(therapistId), FOREIGN KEY (patientId) REFERENCES patient(patientId));";
 
     final Context context;
 
@@ -116,15 +73,17 @@ public class ICopePatDB {
         DBHelper = new DatabaseHelper(context);
     }
 
-    private static class DatabaseHelper extends SQLiteOpenHelper {
-        DatabaseHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        }
+    private static class DatabaseHelper extends SQLiteOpenHelper
+    {
+        DatabaseHelper(Context context) { super(context, DATABASE_NAME, null, DATABASE_VERSION); }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
             try {
-                db.execSQL(CREATE_Tables);
+                db.execSQL(CREATE_Table_therapist);
+                db.execSQL(CREATE_Table_patient);
+                db.execSQL(CREATE_Table_activities);
+                db.execSQL(CREATE_Table_RatingScreen);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -133,7 +92,7 @@ public class ICopePatDB {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
             db.execSQL("DROP TABLE IF EXISTS RatingScreen");
-            db.execSQL("DROP TABLE IF EXISTS buttonActivations");
+            //db.execSQL("DROP TABLE IF EXISTS buttonActivations");
             db.execSQL("DROP TABLE IF EXISTS activities");
             db.execSQL("DROP TABLE IF EXISTS patient");
             db.execSQL("DROP TABLE IF EXISTS therapist");
@@ -223,9 +182,14 @@ public class ICopePatDB {
         return db.query(patient_Table, new String [] {patient_patientId, patient_patientFirstName, patient_patientLastName}, null, null, null, null, null);
     }
 
-    public boolean isPatientOnPhone()
+    public Cursor getAllTherapists()
     {
-        if(getAllPatients().getCount() > 0)
+        return db.query(therapist_Table, new String [] {therapist_therapistId, therapist_therapistName, therapist_therapistEmail}, null, null, null, null, null);
+    }
+
+    public boolean isPatientAndTherapistOnPhone()
+    {
+        if(getAllPatients().getCount() > 0 && getAllTherapists().getCount() > 0)
             return true;
         else
             return false;

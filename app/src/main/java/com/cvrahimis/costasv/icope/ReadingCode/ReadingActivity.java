@@ -14,9 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.DBAdapter;
-import com.cvrahimis.costasv.icope.MainActivity;
+import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -115,10 +116,7 @@ public class ReadingActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        finish();
-        startActivityForResult(intent, 1);
+        exitLogic();
     }
 
     @Override
@@ -148,10 +146,7 @@ public class ReadingActivity extends ActionBarActivity {
         }
         switch (item.getItemId()) {
             case 0:
-                // app icon in action bar clicked; go home
-                Intent intent = new Intent(this, MainActivity.class);
-                finish();
-                startActivity(intent);
+                exitLogic();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -168,6 +163,27 @@ public class ReadingActivity extends ActionBarActivity {
                 quotesList.add(new Quote((long) cur.getLong(0), (String) cur.getString(1), (String) cur.getString(2)));
             }
             while (cur.moveToNext());
+        }
+    }
+
+    public void exitLogic(){
+        ICopePatDB idb = new ICopePatDB(this);
+        idb.open();
+        if(idb.isPatientAndTherapistOnPhone())
+        {
+            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, RatingScreenActivity.class);
+            finish();
+            idb.close();
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MenuActivity.class);
+            finish();
+            idb.close();
+            startActivity(intent);
         }
     }
 }

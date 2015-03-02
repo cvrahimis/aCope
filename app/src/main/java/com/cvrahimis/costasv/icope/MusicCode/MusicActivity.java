@@ -14,9 +14,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-import com.cvrahimis.costasv.icope.MainActivity;
+import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
 import android.net.Uri;
 import android.os.IBinder;
@@ -67,19 +68,16 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
         {
             d = getResources().getDrawable(R.drawable.afternoon);
             mainLayout.setBackground(d);
-            //background.setImageDrawable(d);
         }
         else if (hour > 0 && hour <= 24)
         {
             d = getResources().getDrawable(R.drawable.evening);
             mainLayout.setBackground(d);
-            //background.setImageDrawable(d);
         }
         else
         {
             d = getResources().getDrawable(R.drawable.morning);
             mainLayout.setBackground(d);
-            //background.setImageDrawable(d);
         }
 
         //retrieve list view
@@ -104,15 +102,11 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        finish();
-        startActivity(intent);
+        exitLogic();
     }
 
     private void CreateMenu(Menu menu)
     {
-        Log.i("info", "CreateMenu(Menu menu)  MainActivity");
         MenuItem itm1 = (MenuItem) findViewById(R.id.action_shuffle);
         {
             //itm1.setIcon(R.drawable.add);
@@ -157,9 +151,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
             }
             case 0:
             {
-                Intent intent = new Intent(this, MainActivity.class);
-                finish();
-                startActivity(intent);
+                exitLogic();
                 break;
             }
         }
@@ -361,6 +353,27 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
         stopService(playIntent);
         musicSrv=null;
         super.onDestroy();
+    }
+
+    public void exitLogic(){
+        ICopePatDB db = new ICopePatDB(this);
+        db.open();
+        if(db.isPatientAndTherapistOnPhone())
+        {
+            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, RatingScreenActivity.class);
+            finish();
+            db.close();
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MenuActivity.class);
+            finish();
+            db.close();
+            startActivity(intent);
+        }
     }
 
 }
