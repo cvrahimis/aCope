@@ -44,6 +44,7 @@ public class ICopePatDB {
 
     static final String ratingScreen_Table = "RatingScreen";
     static final String ratingScreen_patientID = "patientID";
+    static final String ratingScreen_activityId = "activityId";
     static final String ratingScreen_mood = "mood";
     static final String ratingScreen_urge = "urge";
     static final String ratingScreen_time = "time";
@@ -58,7 +59,7 @@ public class ICopePatDB {
     static final String CREATE_Table_therapist = "CREATE TABLE therapist( therapistId integer primary key, therapistLogin text, therapistPassword text, therapistName text, therapistAddress text, therapistPhone integer, therapistEmail text);";
     static final String CREATE_Table_patient = "CREATE TABLE patient(patientId integer primary key, therapistId integer, patientLogin text, patientPassword text, patientFirstName text, patientLastName text, patientEmail text, FOREIGN KEY (therapistId) REFERENCES therapist(therapistId));";
     static final String CREATE_Table_activities = "CREATE TABLE activities( activityId integer primary Key, therapistId integer, patientId integer, time numeric, activity text, duration numeric, FOREIGN KEY (therapistId) REFERENCES therapist(therapistId), FOREIGN KEY (patientId) REFERENCES patient(patientId));";
-    static final String CREATE_Table_RatingScreen = "CREATE Table RatingScreen( patientID integer, mood text, urge integer, time numeric, FOREIGN KEY (patientId) REFERENCES patient(patientId));";
+    static final String CREATE_Table_RatingScreen = "CREATE Table RatingScreen(ratingId integer primary key, patientId integer, activityId integer, mood text, urge integer, time numeric, FOREIGN KEY (activityId) REFERENCES activities(activityId));";
 
     //static final String CREATE_Table_buttonActivations = "CREATE TABLE buttonActivations(buttonId integer primary key, buttonName text, therapistId integer, patientId integer, time numeric, FOREIGN KEY (therapistId) REFERENCES therapist(therapistId), FOREIGN KEY (patientId) REFERENCES patient(patientId));";
 
@@ -154,10 +155,11 @@ public class ICopePatDB {
         return db.insert(activities_Table,  null,  initialValues);
     }
 
-    public long insertNewRatingScreen(int pID, String mood, int urge)
+    public long insertNewRatingScreen(int pID, int aID, String mood, int urge)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(ratingScreen_patientID, pID);
+        initialValues.put(ratingScreen_activityId, aID);
         initialValues.put(ratingScreen_mood, mood);
         initialValues.put(ratingScreen_urge, urge);
         SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
@@ -174,7 +176,7 @@ public class ICopePatDB {
 
     public Cursor getAllRatings()
     {
-        return db.query(ratingScreen_Table, new String [] {ratingScreen_patientID, ratingScreen_mood, ratingScreen_urge, ratingScreen_time}, null, null, null, null, null);
+        return db.query(ratingScreen_Table, new String [] {ratingScreen_patientID, ratingScreen_activityId, ratingScreen_mood, ratingScreen_urge, ratingScreen_time}, null, null, null, null, null);
     }
 
     public Cursor getAllPatients()

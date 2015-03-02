@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cvrahimis.costasv.icope.LoginCode.LoginActivity;
 import com.cvrahimis.costasv.icope.MainActivity;
 import com.cvrahimis.costasv.icope.PhysicalActivities.PhysicalActivity;
 import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
@@ -58,43 +59,49 @@ public class MenuActivity extends ActionBarActivity {
         {
             d = getResources().getDrawable(R.drawable.afternoon);
             mainLayout.setBackground(d);
-            //background.setImageDrawable(d);
             greetingLbl.setText(R.string.afternoonGreet);
         }
         else if (hour > 0 && hour <= 24)
         {
             d = getResources().getDrawable(R.drawable.evening);
             mainLayout.setBackground(d);
-            //background.setImageDrawable(d);
             greetingLbl.setText(R.string.eveningGreet);
         }
         else
         {
             d = getResources().getDrawable(R.drawable.morning);
             mainLayout.setBackground(d);
-            //background.setImageDrawable(d);
             greetingLbl.setText(R.string.morningGreet);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem itm1 = menu.add(0, 0, 0, "ADD");
+        {
+            itm1.setTitle("Login");
+            itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        }
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case 0:
+            {
+                Intent intent = new Intent(this, LoginActivity.class);
+                finish();
+                startActivityForResult(intent, 1);
+                break;
+            }
+            case R.id.action_settings:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
