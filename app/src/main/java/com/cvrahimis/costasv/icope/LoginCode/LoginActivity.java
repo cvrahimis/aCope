@@ -149,6 +149,9 @@ public class LoginActivity extends ActionBarActivity {
                         spinner.setVisibility(View.VISIBLE);
                         try {
                             String result = new RetrieveFeedTask().execute(String.valueOf(username.getText()), String.valueOf(password.getText())).get();
+                            String[] patThrpData = result.split(",");
+                            db.insertNewTherapist(Integer.parseInt(patThrpData[1]), patThrpData[6], patThrpData[7]);
+                            db.insertNewPatient(Integer.parseInt(patThrpData[0]), Integer.parseInt(patThrpData[1]), patThrpData[2], patThrpData[3], patThrpData[4], patThrpData[5]);
                             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                         }
                         catch(ExecutionException e){

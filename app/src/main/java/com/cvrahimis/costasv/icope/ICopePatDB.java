@@ -18,12 +18,8 @@ public class ICopePatDB {
 
     static final String therapist_Table = "therapist";
     static final String therapist_therapistId = "therapistId";
-    static final String therapist_therapistLogin = "therapistLogin";
-    static final String therapist_therapistPassword = "therapistPassword";
-    static final String therapist_therapistName = "therapistName";
-    static final String therapist_therapistAddress = "therapistAddress";
-    static final String therapist_therapistPhone = "therapistPhone";
-    static final String therapist_therapistEmail = "therapistEmail";
+    static final String therapist_therapistFirstName = "therapistFirstName";
+    static final String therapist_therapistLastName = "therapistLastName";
 
     static final String patient_Table = "patient";
     static final String patient_patientId = "patientId";
@@ -32,7 +28,6 @@ public class ICopePatDB {
     static final String patient_patientPassword = "patientPassword";
     static final String patient_patientFirstName = "patientFirstName";
     static final String patient_patientLastName = "patientLastName";
-    static final String patient_patientEmail = "patientEmail";
 
     static final String activities_Table = "activities";
     static final String activities_activityId = "activityId";
@@ -56,8 +51,8 @@ public class ICopePatDB {
     static final String buttonActivations_patientId = "patientId";
     static final String buttonActivations_time = "time";*/
 
-    static final String CREATE_Table_therapist = "CREATE TABLE therapist( therapistId integer primary key, therapistLogin text, therapistPassword text, therapistName text, therapistAddress text, therapistPhone integer, therapistEmail text);";
-    static final String CREATE_Table_patient = "CREATE TABLE patient(patientId integer primary key, therapistId integer, patientLogin text, patientPassword text, patientFirstName text, patientLastName text, patientEmail text, FOREIGN KEY (therapistId) REFERENCES therapist(therapistId));";
+    static final String CREATE_Table_therapist = "CREATE TABLE therapist( therapistId integer primary key, therapistFirstName text, therapistLastName text);";
+    static final String CREATE_Table_patient = "CREATE TABLE patient(patientId integer primary key, therapistId integer, patientLogin text, patientPassword text, patientFirstName text, patientLastName text, FOREIGN KEY (therapistId) REFERENCES therapist(therapistId));";
     static final String CREATE_Table_activities = "CREATE TABLE activities( activityId integer primary Key, therapistId integer, patientId integer, time numeric, activity text, duration numeric, FOREIGN KEY (therapistId) REFERENCES therapist(therapistId), FOREIGN KEY (patientId) REFERENCES patient(patientId));";
     static final String CREATE_Table_RatingScreen = "CREATE Table RatingScreen(ratingId integer primary key, patientId integer, activityId integer, mood text, urge integer, time numeric, FOREIGN KEY (activityId) REFERENCES activities(activityId));";
 
@@ -112,21 +107,17 @@ public class ICopePatDB {
         DBHelper.close();
     }
 
-    public long insertNewTherapist(int tID, String tLogin, String tPWD, String tName, String tAddr, String tPhone, String tEmail)
+    public long insertNewTherapist(int tID, String tFName, String tLName)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(therapist_therapistId, tID);
-        initialValues.put(therapist_therapistLogin, tLogin);
-        initialValues.put(therapist_therapistPassword, tPWD);
-        initialValues.put(therapist_therapistName, tName);
-        initialValues.put(therapist_therapistAddress, tAddr);
-        initialValues.put(therapist_therapistPhone, tPhone);
-        initialValues.put(therapist_therapistEmail, tEmail);
+        initialValues.put(therapist_therapistFirstName, tFName);
+        initialValues.put(therapist_therapistLastName, tLName);
 
         return db.insert(therapist_Table,  null,  initialValues);
     }
 
-    public long insertNewPatient(int pID, int tID, String pLogin, String pPass, String pFName, String pLName, String pEmail)
+    public long insertNewPatient(int pID, int tID, String pLogin, String pPass, String pFName, String pLName)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(patient_patientId, pID);
@@ -135,7 +126,6 @@ public class ICopePatDB {
         initialValues.put(patient_patientPassword, pPass);
         initialValues.put(patient_patientFirstName, pFName);
         initialValues.put(patient_patientLastName, pLName);
-        initialValues.put(patient_patientEmail, pEmail);
 
         return db.insert(patient_Table,  null,  initialValues);
     }
@@ -186,7 +176,7 @@ public class ICopePatDB {
 
     public Cursor getAllTherapists()
     {
-        return db.query(therapist_Table, new String [] {therapist_therapistId, therapist_therapistName, therapist_therapistEmail}, null, null, null, null, null);
+        return db.query(therapist_Table, new String [] {therapist_therapistId, therapist_therapistFirstName, therapist_therapistLastName}, null, null, null, null, null);
     }
 
     public boolean isPatientAndTherapistOnPhone()
@@ -195,6 +185,11 @@ public class ICopePatDB {
             return true;
         else
             return false;
+    }
+
+    public Cursor getPatientName()
+    {
+        return db.query(patient_Table, new String [] {patient_patientFirstName, patient_patientLastName}, "1", null, null, null, null);
     }
 
 }

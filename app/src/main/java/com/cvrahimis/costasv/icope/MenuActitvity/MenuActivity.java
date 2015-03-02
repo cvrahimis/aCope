@@ -1,6 +1,7 @@
 package com.cvrahimis.costasv.icope.MenuActitvity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.*;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.LoginCode.LoginActivity;
 import com.cvrahimis.costasv.icope.MainActivity;
 import com.cvrahimis.costasv.icope.PhysicalActivities.PhysicalActivity;
@@ -32,6 +34,7 @@ public class MenuActivity extends ActionBarActivity {
 
     private int screenWidth;
     private int screenHeight;
+    ICopePatDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MenuActivity extends ActionBarActivity {
         final TextView greetingLbl = (TextView) findViewById(R.id.greeting);
         final LinearLayout content = (LinearLayout) findViewById(R.id.content);
         final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.menuActivityMainLayout);
+
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -73,6 +77,17 @@ public class MenuActivity extends ActionBarActivity {
             mainLayout.setBackground(d);
             greetingLbl.setText(R.string.morningGreet);
         }
+
+        db = new ICopePatDB(this);
+        db.open();
+
+        if(db.isPatientAndTherapistOnPhone())
+        {
+            Cursor cur = db.getPatientName();
+            if (cur.moveToFirst()) {
+                greetingLbl.setText(greetingLbl.getText() + " " + cur.getString(0) + " " + cur.getString(1));
+            }
+        }
     }
 
     @Override
@@ -82,7 +97,10 @@ public class MenuActivity extends ActionBarActivity {
 
         MenuItem itm1 = menu.add(0, 0, 0, "ADD");
         {
-            itm1.setTitle("Login");
+            if(db.isPatientAndTherapistOnPhone())
+                itm1.setTitle("Logout");
+            else
+                itm1.setTitle("Login");
             itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         }
 
@@ -95,9 +113,15 @@ public class MenuActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case 0:
             {
-                Intent intent = new Intent(this, LoginActivity.class);
-                finish();
-                startActivityForResult(intent, 1);
+                if(db.isPatientAndTherapistOnPhone()) {
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    finish();
+                    startActivityForResult(intent, 1);
+                }
+                else
+                {
+
+                }
                 break;
             }
             case R.id.action_settings:
