@@ -71,7 +71,7 @@ public class RatingScreenActivity extends ActionBarActivity {
         }*/
 
         feelingBtns = new int[]{R.id.lonely, R.id.ashamed, R.id.guilty, R.id.disgusted, R.id.angry, R.id.anxious, R.id.afraid, R.id.sad, R.id.depressed, R.id.okay, R.id.happy};
-        gestureDetector = new GestureDetector(getApplicationContext(), new SwipeGestureDetector());
+        //gestureDetector = new GestureDetector(getApplicationContext(), new SwipeGestureDetector());
 
         final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.ratingScreenMainLayout);
         final AbsoluteLayout absLayout = (AbsoluteLayout) mainLayout.findViewById(R.id.urgeFrameView);
@@ -95,6 +95,69 @@ public class RatingScreenActivity extends ActionBarActivity {
         mesurmentViewLayoutParams.y = ((int)Math.floor(screenHeight * .01)) + 3;
         mesurmentViewLayoutParams.height = (int)Math.floor(screenHeight * .05) - 1;
         urge = mesurmentViewLayoutParams.width;
+
+        thermometer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event){
+
+                float startx = 0.0f;
+                float starty = 0.0f;
+
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                    {
+                        startx = event.getX();
+                        starty = event.getY();
+                        break;
+                    }
+                    case MotionEvent.ACTION_MOVE:
+                    {
+                        float currentx = event.getX();
+                        float currenty = event.getY();
+
+                        float diffx = startx - currentx;
+                        float diffy = starty - currenty;
+
+                        if(Math.abs(diffy) < 30)
+                        {
+                            if(diffx > 0)
+                            {
+                                if(mesurmentViewLayoutParams.width - 10 < 0)
+                                    mesurmentViewLayoutParams.width = 1;
+                                else
+                                    mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width - 10;
+
+                                mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
+                                didSwipe = true;
+
+                                /*double section = (screenWidth * .738) / 10;
+                                int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
+                                Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();*/
+                            }
+                            if(diffx < 0)
+                            {
+                                if(mesurmentViewLayoutParams.width + 10 > screenWidth * .738)
+                                    mesurmentViewLayoutParams.width = (int)Math.floor(screenWidth * .738);
+                                else
+                                    mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width + 10;
+
+
+                                mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
+                                didSwipe = true;
+
+                                /*double section = (screenWidth * .738) / 10;
+                                int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
+                                Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();*/
+                            }
+                        }
+
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
 
         //mesurmentView.setLayoutParams(absParams);
 
@@ -183,7 +246,7 @@ public class RatingScreenActivity extends ActionBarActivity {
         }
     }
 
-    @Override
+    /*@Override
     public boolean onTouchEvent(MotionEvent event) {
         if (gestureDetector.onTouchEvent(event)) {
             return true;
@@ -263,7 +326,7 @@ public class RatingScreenActivity extends ActionBarActivity {
             }
             return false;
         }
-    }
+    }*/
 
     public void onActivityResult(int requestCode, int resultCode, Intent i)
     {

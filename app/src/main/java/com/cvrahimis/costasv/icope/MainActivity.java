@@ -21,11 +21,11 @@ public class MainActivity extends Activity {
         db = new ICopePatDB(this);
         db.open();
         Intent intent;
-        if (db.isPatientAndTherapistOnPhone()) {
+        //if (db.isPatientAndTherapistOnPhone()) {
             intent = new Intent(this, RatingScreenActivity.class);
-        } else {
-            intent = new Intent(this, MenuActivity.class);
-        }
+        //} else {
+        //    intent = new Intent(this, MenuActivity.class);
+        //}
         startActivity(intent);
         finish();
 
