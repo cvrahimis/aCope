@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/ratingScreen1"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:textColor="#FFF"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -26,59 +26,7 @@
         android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true">
 
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
 
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
@@ -93,6 +41,8 @@
                 android:background="#00FF33"
                 android:textColor="#000"
                 android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:onClick="feelingClick"/>
 
             <Button
@@ -104,6 +54,8 @@
                 android:background="#00FF33"
                 android:textColor="#000"
                 android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:onClick="feelingClick"/>
 
             <Button
@@ -115,6 +67,8 @@
                 android:background="#00FF33"
                 android:textColor="#000"
                 android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:onClick="feelingClick"/>
         </TableRow>
 
@@ -135,6 +89,8 @@
                 android:background="#00FF33"
                 android:textColor="#000"
                 android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:onClick="feelingClick"/>
 
             <Button
@@ -146,6 +102,8 @@
                 android:background="#00FF33"
                 android:textColor="#000"
                 android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:onClick="feelingClick"/>
 
             <Button
@@ -157,6 +115,8 @@
                 android:background="#00FF33"
                 android:textColor="#000"
                 android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:onClick="feelingClick"/>
         </TableRow>
 
@@ -177,6 +137,8 @@
                 android:background="#00FF33"
                 android:textColor="#000"
                 android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:onClick="feelingClick"/>
 
             <Button
@@ -188,6 +150,8 @@
                 android:background="#00FF33"
                 android:textColor="#000"
                 android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:onClick="feelingClick"/>
 
             <Button
@@ -199,6 +163,8 @@
                 android:background="#00FF33"
                 android:textColor="#000"
                 android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:onClick="feelingClick"/>
         </TableRow>
     </TableLayout>
@@ -216,24 +182,28 @@
 
         <Button
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:text="Okay"
             android:id="@+id/okay"
             android:layout_gravity="center_vertical"
             android:background="#00FF33"
             android:textColor="#000"
             android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:onClick="feelingClick"/>
 
         <Button
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:text="Happy"
             android:id="@+id/happy"
             android:layout_gravity="center_vertical"
             android:background="#00FF33"
             android:textColor="#000"
             android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:onClick="feelingClick"/>
     </LinearLayout>
 
@@ -243,7 +213,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/ratingScreen2"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:textColor="#FFF"
         android:layout_below="@+id/linearLayout"
         android:layout_alignRight="@+id/tableLayout"

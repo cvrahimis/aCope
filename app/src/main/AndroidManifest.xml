@@ -60,6 +60,7 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".LoginCode.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>

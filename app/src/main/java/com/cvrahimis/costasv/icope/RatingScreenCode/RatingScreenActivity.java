@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Timer;
 
 
 public class RatingScreenActivity extends ActionBarActivity {
@@ -97,11 +98,16 @@ public class RatingScreenActivity extends ActionBarActivity {
         urge = mesurmentViewLayoutParams.width;
 
         thermometer.setOnTouchListener(new View.OnTouchListener() {
+
+            float startx = 0.0f;
+            float starty = 0.0f;
+            float currentx = 0.0f;
+            float currenty = 0.0f;
+            int count = 0;
+            Timer T = new Timer();
+
             @Override
             public boolean onTouch(View view, MotionEvent event){
-
-                float startx = 0.0f;
-                float starty = 0.0f;
 
                 switch (event.getAction())
                 {
@@ -109,34 +115,20 @@ public class RatingScreenActivity extends ActionBarActivity {
                     {
                         startx = event.getX();
                         starty = event.getY();
+
                         break;
                     }
                     case MotionEvent.ACTION_MOVE:
                     {
-                        float currentx = event.getX();
-                        float currenty = event.getY();
+                        currentx = event.getRawX();
+                        currenty = event.getY();
 
                         float diffx = startx - currentx;
                         float diffy = starty - currenty;
 
-                        if(Math.abs(diffy) < 30)
+                        if(Math.abs(diffy) < Math.abs(diffx))
                         {
-                            if(diffx > 0)
-                            {
-                                if(mesurmentViewLayoutParams.width - 10 < 0)
-                                    mesurmentViewLayoutParams.width = 1;
-                                else
-                                    mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width - 10;
-
-                                mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
-                                didSwipe = true;
-
-                                /*double section = (screenWidth * .738) / 10;
-                                int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
-                                Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();*/
-                            }
-                            if(diffx < 0)
-                            {
+                            if (startx < currentx) {
                                 if(mesurmentViewLayoutParams.width + 10 > screenWidth * .738)
                                     mesurmentViewLayoutParams.width = (int)Math.floor(screenWidth * .738);
                                 else
@@ -149,7 +141,23 @@ public class RatingScreenActivity extends ActionBarActivity {
                                 /*double section = (screenWidth * .738) / 10;
                                 int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
                                 Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();*/
+
                             }
+                            if (startx > currentx) {
+                                if(mesurmentViewLayoutParams.width - 10 < 0)
+                                    mesurmentViewLayoutParams.width = 1;
+                                else
+                                    mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width - 10;
+
+                                mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
+                                didSwipe = true;
+
+                                /*double section = (screenWidth * .738) / 10;
+                                int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
+                                Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();*/
+
+                            }
+                            startx = currentx;
                         }
 
                         break;

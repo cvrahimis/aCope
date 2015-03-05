@@ -95,15 +95,6 @@ public class MenuActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem itm1 = menu.add(0, 0, 0, "ADD");
-        {
-            if(db.isPatientAndTherapistOnPhone())
-                itm1.setTitle("Logout");
-            else
-                itm1.setTitle("Login");
-            itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        }
-
         return true;
     }
 
@@ -111,19 +102,6 @@ public class MenuActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case 0:
-            {
-                if(db.isPatientAndTherapistOnPhone()) {
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    finish();
-                    startActivityForResult(intent, 1);
-                }
-                else
-                {
-
-                }
-                break;
-            }
             case R.id.action_settings:
                 return true;
         }
