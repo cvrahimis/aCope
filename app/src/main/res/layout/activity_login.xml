@@ -1,82 +1,113 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:id="@+id/loginRelativeLayout"
-    tools:context="com.cvrahimis.costasv.icope.LoginCode.LoginActivity">
+    tools:context="com.cvrahimis.costasv.icope.LoginCode.LoginActivity"
+    android:id="@+id/loginRelativeLayout">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView">
 
 
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:inputType="textPersonName"
-        android:text=""
-        android:ems="10"
-        android:background="#FFF"
-        android:id="@+id/username"
-        android:layout_marginBottom="76dp"
-        android:layout_above="@+id/password"
-        android:layout_alignLeft="@+id/password"
-        android:layout_alignStart="@+id/password" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/password"
-        android:background="#FFF"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="200dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:background="#0000FF"
-        android:textColor="#FFF"
-        android:id="@+id/loginDoneBtn"
-        android:onClick="buttonPress"
-        android:layout_below="@+id/password"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp" />
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/scrollView"
+        android:layout_alignEnd="@+id/scrollView">
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:background="#0000FF"
-        android:textColor="#FFF"
-        android:id="@+id/cancelBtn"
-        android:onClick="buttonPress"
-        android:layout_below="@+id/loginDoneBtn"
-        android:layout_alignLeft="@+id/loginDoneBtn"
-        android:layout_alignStart="@+id/loginDoneBtn"
-        android:layout_marginTop="43dp" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:inputType="textPersonName"
+            android:text=""
+            android:ems="10"
+            android:background="#FFF"
+            android:id="@+id/username"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="161dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/password"
+            android:layout_alignStart="@+id/password" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="No Internet Connection"
-        android:background="#FF0000"
-        android:textColor="#FFF"
-        android:id="@+id/connectLbl"
-        android:textSize="30dp"
-        android:layout_marginTop="20dp"
-        android:visibility="invisible"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:background="#0000FF"
+            android:textColor="#FFF"
+            android:id="@+id/loginDoneBtn"
+            android:onClick="buttonPress"
+            android:layout_marginTop="49dp"
+            android:layout_below="@+id/password"
+            android:layout_centerHorizontal="true" />
 
-    <ProgressBar
-        android:id="@+id/spinner"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:background="#0000FF"
+            android:textColor="#FFF"
+            android:id="@+id/cancelBtn"
+            android:onClick="buttonPress"
+            android:layout_below="@+id/loginDoneBtn"
+            android:layout_alignLeft="@+id/loginDoneBtn"
+            android:layout_alignStart="@+id/loginDoneBtn"
+            android:layout_marginTop="43dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="No Internet Connection"
+            android:background="#FF0000"
+            android:textColor="#FFF"
+            android:id="@+id/connectLbl"
+            android:textSize="30dp"
+            android:visibility="invisible"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/password"
+            android:background="#FFF"
+            android:layout_marginTop="42dp"
+            android:layout_below="@+id/username"
+            android:layout_alignLeft="@+id/loginDoneBtn"
+            android:layout_alignStart="@+id/loginDoneBtn" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Login Failed"
+            android:layout_marginTop="25dp"
+            android:textColor="#FF0000"
+            android:id="@+id/invalidLogin"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            android:layout_below="@+id/connectLbl"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

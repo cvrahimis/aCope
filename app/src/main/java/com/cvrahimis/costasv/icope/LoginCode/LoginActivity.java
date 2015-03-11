@@ -31,6 +31,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class LoginActivity extends ActionBarActivity {
     Button cancel;
     RelativeLayout mainLayout;
     TextView connectLbl;
+    TextView invalidLogin;
     ICopePatDB db;
     private ProgressBar spinner;
 
@@ -66,7 +68,8 @@ public class LoginActivity extends ActionBarActivity {
         username = (TextView) findViewById(R.id.username);
         password = (TextView) findViewById(R.id.password);
         connectLbl = (TextView) findViewById(R.id.connectLbl);
-        spinner = (ProgressBar)findViewById(R.id.spinner);
+        //spinner = (ProgressBar)findViewById(R.id.spinner);
+        invalidLogin = (TextView) findViewById(R.id.invalidLogin);
 
         username.setHint("Username");
         password.setHint("Password");
@@ -151,13 +154,18 @@ public class LoginActivity extends ActionBarActivity {
                         try {
                             String result = new RetrieveFeedTask().execute(String.valueOf(username.getText()), String.valueOf(password.getText())).get();
                             String[] patThrpData = result.split(",");
-                            if((db.insertNewTherapist(Integer.parseInt(patThrpData[1]), patThrpData[6], patThrpData[7]) > 0 && db.insertNewPatient(Integer.parseInt(patThrpData[0]), Integer.parseInt(patThrpData[1]), patThrpData[2], patThrpData[3], patThrpData[4], patThrpData[5]) > 0))
-                            {
-                                Intent intent = new Intent(this, RatingScreenActivity.class);
-                                finish();
-                                startActivity(intent);
+                            if(patThrpData.length == 8) {
+                                invalidLogin.setVisibility(View.INVISIBLE);
+                                if ((db.insertNewTherapist(Integer.parseInt(patThrpData[1]), patThrpData[6], patThrpData[7]) > 0 && db.insertNewPatient(Integer.parseInt(patThrpData[0]), Integer.parseInt(patThrpData[1]), patThrpData[2], patThrpData[3], patThrpData[4], patThrpData[5]) > 0)) {
+                                    Intent intent = new Intent(this, RatingScreenActivity.class);
+                                    finish();
+                                    startActivity(intent);
+                                }
                             }
-                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                            else{
+                                invalidLogin.setVisibility(View.VISIBLE);
+                            }
+                            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                         }
                         catch(ExecutionException e){
                             Log.i("LoginActivity", "MyClass.getView() exception3" + e.toString());

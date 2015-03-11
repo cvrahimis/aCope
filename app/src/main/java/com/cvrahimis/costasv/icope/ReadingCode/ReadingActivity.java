@@ -85,8 +85,37 @@ public class ReadingActivity extends ActionBarActivity {
 
     public void setUpQuoteTable()
     {
-        String[] authors = new String[]{"\"–Albert Einstein\"","\"–Wayne Gretzky\"","\"–Buddha\"", "\"–Socrates\""};
-        String[] quotes = new String[]{"\"Strive not to be a success, but rather to be of value\"","\"You miss 100% of the shots you don’t take\"","\"The mind is everything. What you think you become\"", "\"An unexamined life is not worth living\""};
+        String[] authors = new String[]{"–Dr. Seuss","–Walt Disney","–Buddha", "–Buddha", "–Henry David Thoreau",
+                                        "-Buddha","–Theodore Roosevelt","–Oscar Wilde", "–Wes Fessler", "–Ralph Waldo Emerson",
+                                        "–Karen Ravn","–Lady Gage","–Buddha", "–Carl Jung", "–Buddha",
+                                        "-Michael Jordan","–Mother Teresa","–Helen Keller", "–Audrey Hepburn", "–Ralph Waldo Emerson",
+                                        "–Finding Nemo","–Eckhart Tolle", "–Thich Nhat Hanh", "–Dalai Lama"
+        };
+        String[] quotes = new String[]{"\"You have a brain in your head. You have feet in your shoes.  You can steer yourself any direction you choose!\"",
+                                       "\"If you can dream it, you can do it\"",
+                                       "\"You can search throughout the entire universe for someone who is more deserving of your love and affection than you are yourself, and that person is not to be found anywhere.  You yourself, as much as anybody in the entire universe deserve your love and affection.\"",
+                                       "\"Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.\"",
+                                       "\"Go confidently in the direction of your dreams. Live the life you have imagined.\"",
+                                       "\"What you think you become. What you feel you attract. What you imagine you create.\"",
+                                       "\"Believe you can and you’re halfway there.\"",
+                                       "\"To love oneself is the beginning of a lifelong romance.\"",
+                                       "\"Look for goodness in others, for beauty in the world, and for possibilities in yourself.\"",
+                                       "\"What lies behind us and what lies before us are tiny matters compared to what lies within us.\"",
+                                       "\"Only as high as I reach can I grow, only as far as I seek can I go, only as deep as I look can I see, only as much as I dream can I be.\"",
+                                       "\"You have to be unique, and different, and shine in your own way.\"",
+                                       "\"The mind is everything. What you think you become.\"",
+                                       "\"Who looks outside, dreams. Who looks inside, awakes.\"",
+                                       "\"The mind is everything.  What you think you become.\"",
+                                       "\"You must expect great things of yourself before you can do them.\"",
+                                       "\"Be happy in the moment, that’s enough. Each moment is all we need, not more.\"",
+                                       "\"The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.\"",
+                                       "\"Nothing is impossible, the word itself says 'I'm possible'!\"",
+                                       "\"There are far, far better things ahead than any we leave behind.\"",
+                                       "\"Just keep swimming\"",
+                                       "\"The power for creating a better future is contained in the present moment; you create a good future by creating a good present.\"",
+                                       "\"There is no way to happiness, happiness is the way.\"",
+                                       "\"If you want others to be happy, practice compassion.  If you want to be happy, practice compassion.\""
+        };
 
         for(int i = 0; i < authors.length; i++)
         {

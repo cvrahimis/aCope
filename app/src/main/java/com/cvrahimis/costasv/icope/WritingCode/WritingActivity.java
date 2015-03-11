@@ -180,8 +180,6 @@ public class WritingActivity extends ActionBarActivity {
                                 Toast.makeText(getApplicationContext(), "Delete Not Successful", Toast.LENGTH_SHORT).show();
                             }
                         }
-
-
                         dialog.dismiss();
                     }
                 });
