@@ -3,7 +3,13 @@ package com.cvrahimis.costasv.icope.DrawingCode;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 import android.provider.MediaStore;
 import android.app.Activity;
@@ -16,8 +22,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
+import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
 import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
@@ -29,10 +37,26 @@ public class DrawingPad extends Activity implements OnClickListener {
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
     //sizes
     private float smallBrush, mediumBrush, largeBrush;
+
+    private ICopeActivity activity;
+    private TimerTask mTimerTask;
+    private int seconds = 0;
+
+    final Handler handler = new Handler();
+
+    Timer t = new Timer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing_pad);
+
+        /*SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        String str = sdf.format(new Date());
+        int time = Integer.parseInt(str);
+        activity = new ICopeActivity("Drawing", time);
+        */
+        doTimerTask();
 
         //get drawing view
         drawView = (DrawingView)findViewById(R.id.drawing);
@@ -230,16 +254,19 @@ public class DrawingPad extends Activity implements OnClickListener {
     }
 
     public void exitLogic(){
-        ICopePatDB db = new ICopePatDB(this);
+        /*ICopePatDB db = new ICopePatDB(this);
         db.open();
         if(db.isPatientAndTherapistOnPhone())
-        {
-            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        {*/
+            //Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            stopTask();
+            //activity.setActivityDuration(seconds);================================================
+            //((MyApplication) this.getApplication()).push(activity);===============================
             Intent intent = new Intent(this, RatingScreenActivity.class);
             finish();
-            db.close();
+            //db.close();
             startActivity(intent);
-        }
+        /*}
         else
         {
             Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
@@ -247,6 +274,32 @@ public class DrawingPad extends Activity implements OnClickListener {
             finish();
             db.close();
             startActivity(intent);
-        }
+        }*/
     }
+
+    public void doTimerTask(){
+
+        mTimerTask = new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        seconds++;
+                    }
+                });
+            }};
+
+        // public void schedule (TimerTask task, long delay, long period)
+        t.schedule(mTimerTask, 0, 1000);  //
+
+    }
+
+    public void stopTask(){
+
+        if(mTimerTask!=null){
+            mTimerTask.cancel();
+        }
+
+    }
+    public int getSeconds(){ return seconds; }
+
 }

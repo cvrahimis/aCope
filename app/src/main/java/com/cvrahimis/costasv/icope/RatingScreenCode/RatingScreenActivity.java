@@ -25,8 +25,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
+import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
 
 import java.text.SimpleDateFormat;
@@ -53,6 +55,10 @@ public class RatingScreenActivity extends ActionBarActivity {
     public String mood = "";
     private ICopePatDB db;
     public int urge;
+    double section;
+    int u;
+    private String activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,8 @@ public class RatingScreenActivity extends ActionBarActivity {
 
         db = new ICopePatDB(this);
         db.open();
+
+        activity = "";
 
         /*if(db.isPatientOnPhone())
         {
@@ -78,7 +86,6 @@ public class RatingScreenActivity extends ActionBarActivity {
         final AbsoluteLayout absLayout = (AbsoluteLayout) mainLayout.findViewById(R.id.urgeFrameView);
 
         mesurmentView = (ImageView) absLayout.findViewById(R.id.mesurmentView);
-        //mesurmentView.bringToFront();
 
         thermometer = (ImageView) absLayout.findViewById(R.id.thermometer);
         thermometerLayoutParams = (AbsoluteLayout.LayoutParams)thermometer.getLayoutParams();
@@ -93,9 +100,12 @@ public class RatingScreenActivity extends ActionBarActivity {
 
         mesurmentViewLayoutParams = (AbsoluteLayout.LayoutParams)mesurmentView.getLayoutParams();
         mesurmentViewLayoutParams.x = (int)Math.floor(screenWidth * .14);
-        mesurmentViewLayoutParams.y = ((int)Math.floor(screenHeight * .01)) + 3;
-        mesurmentViewLayoutParams.height = (int)Math.floor(screenHeight * .05) - 1;
+        mesurmentViewLayoutParams.y = ((int)Math.floor(screenHeight * .01));
+        mesurmentViewLayoutParams.height = (int)Math.floor(screenHeight * .055);
         urge = mesurmentViewLayoutParams.width;
+
+        section = (screenWidth * .738) / 10;
+        u = (int)Math.floor(mesurmentViewLayoutParams.width / section) + 1;
 
         thermometer.setOnTouchListener(new View.OnTouchListener() {
 
@@ -137,11 +147,6 @@ public class RatingScreenActivity extends ActionBarActivity {
 
                                 mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
                                 didSwipe = true;
-
-                                /*double section = (screenWidth * .738) / 10;
-                                int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
-                                Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();*/
-
                             }
                             if (startx > currentx) {
                                 if(mesurmentViewLayoutParams.width - 10 < 0)
@@ -151,15 +156,15 @@ public class RatingScreenActivity extends ActionBarActivity {
 
                                 mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
                                 didSwipe = true;
-
-                                /*double section = (screenWidth * .738) / 10;
-                                int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
-                                Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();*/
-
                             }
                             startx = currentx;
                         }
-
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:
+                    {
+                        u = (int)Math.floor(mesurmentViewLayoutParams.width / section) + 1;
+                        Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -254,92 +259,14 @@ public class RatingScreenActivity extends ActionBarActivity {
         }
     }
 
-    /*@Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event)) {
-            return true;
-        }
-        return super.onTouchEvent(event);
-    }
-
-    private void onLeftSwipe(double d) {
-        int diff = (int)Math.floor(d);
-        if(mesurmentViewLayoutParams.width - diff < 0)
-            mesurmentViewLayoutParams.width = 1;
-        else
-            mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width - diff;
-
-        mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
-        didSwipe = true;
-
-        double section = (screenWidth * .738) / 10;
-        int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
-        Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();
-    }
-
-    private void onRightSwipe(double d) {
-        int diff = (int)Math.floor(d);
-        if(mesurmentViewLayoutParams.width + diff > screenWidth * .738)
-            mesurmentViewLayoutParams.width = (int)Math.floor(screenWidth * .738);
-        else
-            mesurmentViewLayoutParams.width = mesurmentViewLayoutParams.width + diff;
-
-
-        mesurmentView.setLayoutParams(mesurmentViewLayoutParams);
-        didSwipe = true;
-
-        double section = (screenWidth * .738) / 10;
-        int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
-        Toast.makeText(getApplicationContext(), String.valueOf(u), Toast.LENGTH_SHORT).show();
-    }
-
-
-    // Private class for gestures
-    private class SwipeGestureDetector
-            extends GestureDetector.SimpleOnGestureListener {
-        // Swipe properties, you can change it to make the swipe
-        // longer or shorter and speed
-        private double SWIPE_MIN_DISTANCE;
-        private double SWIPE_MAX_OFF_PATH;
-        private static final int SWIPE_THRESHOLD_VELOCITY = 100;
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2,
-                               float velocityX, float velocityY) {
-            //SWIPE_MIN_DISTANCE = screenWidth * .25;
-            SWIPE_MAX_OFF_PATH = screenHeight * .2;
-            try {
-                float heightDiff = Math.abs(e1.getY() - e2.getY());
-                float diff = e1.getX() - e2.getX();
-
-                if (heightDiff > SWIPE_MAX_OFF_PATH)
-                {
-                    Toast.makeText(getApplicationContext(),"height: " + SWIPE_MAX_OFF_PATH, Toast.LENGTH_LONG).show();
-                    return false;
-                }
-
-                // Left swipe
-                if (diff > 0) {
-                    //Toast.makeText(getApplicationContext(),"diff: " + diff, Toast.LENGTH_LONG).show();
-                    RatingScreenActivity.this.onLeftSwipe(diff);
-                }
-                // Right swipe
-                else {
-                    //Toast.makeText(getApplicationContext(),"diff: " + diff, Toast.LENGTH_LONG).show();
-                    RatingScreenActivity.this.onRightSwipe(-diff);
-                }
-
-            } catch (Exception e) {
-                Log.e("YourActivity", "Error on gestures");
-            }
-            return false;
-        }
-    }*/
-
     public void onActivityResult(int requestCode, int resultCode, Intent i)
     {
         if (requestCode == 1 && resultCode == RESULT_OK)
+        {
             exit = (boolean) i.getBooleanExtra("exit", true);
+            activity = (String) i.getStringExtra("activity");
+        }
+
     }
 
     public void feelingClick(View view){
@@ -434,7 +361,7 @@ public class RatingScreenActivity extends ActionBarActivity {
     }
 
     public void goToMenuActivity(){
-        Intent intent = new Intent(this, com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivityForResult(intent, 1);
     }
 
@@ -475,6 +402,7 @@ public class RatingScreenActivity extends ActionBarActivity {
                 newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        insertData();
                         exitAndGoHome();
                     }
                 });
@@ -501,8 +429,9 @@ public class RatingScreenActivity extends ActionBarActivity {
         else
         {
             if(didSwipe && didFeelingPressed)
+            {
                 goToMenuActivity();
-
+            }
             else if(didSwipe && !didFeelingPressed)
             {
                 AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
@@ -524,6 +453,7 @@ public class RatingScreenActivity extends ActionBarActivity {
                 newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        insertData();
                         goToMenuActivity();
                     }
                 });
@@ -550,8 +480,34 @@ public class RatingScreenActivity extends ActionBarActivity {
     }
 
     public void insertData(){
-        /*double section = (screenWidth * .738) / 10;
-        int u = (int)Math.floor(mesurmentViewLayoutParams.width / section);
-        db.insertNewRatingScreen()*/
+        /*Cursor cur = db.getPatientID();
+        ICopeActivity activity = ((MyApplication) this.getApplication()).pop();
+        int pID = 0;
+        int tID = 0;
+        long aID = 0;
+
+
+        if (cur.moveToFirst()) {
+            pID = Integer.parseInt(cur.getString(0));
+        }
+        cur = db.getTherapistID();
+        if(cur.moveToFirst()){
+            tID = Integer.parseInt(cur.getString(0));
+        }
+
+        if(pID > 0 && tID > 0 && activity != null)
+        {
+            aID = db.insertNewActivity(tID, pID, activity.getActivityName(), activity.getActivityTime(), activity.getActivityDuration());
+        }
+
+        if(pID > 0 && aID > 0)
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+            String str = sdf.format(new Date());
+            db.insertNewRatingScreen(pID, (int)aID, mood, u, Integer.parseInt(str));
+        }
+
+
+        //db.insertNewRatingScreen();*/
     }
 }

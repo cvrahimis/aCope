@@ -4,6 +4,7 @@ package com.cvrahimis.costasv.icope;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 
 import com.cvrahimis.costasv.icope.LoginCode.LoginActivity;
@@ -24,10 +25,11 @@ public class MainActivity extends Activity {
         Intent intent;
 
         if (db.isPatientAndTherapistOnPhone()) {
-            intent = new Intent(this, MenuActivity.class);
+            intent = new Intent(this, RatingScreenActivity.class);
         } else {
             intent = new Intent(this, LoginActivity.class);
         }
+        //intent = new Intent(this, RatingScreenActivity.class);
         startActivity(intent);
         finish();
 

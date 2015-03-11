@@ -167,16 +167,16 @@ public class ReadingActivity extends ActionBarActivity {
     }
 
     public void exitLogic(){
-        ICopePatDB idb = new ICopePatDB(this);
+        /*ICopePatDB idb = new ICopePatDB(this);
         idb.open();
         if(idb.isPatientAndTherapistOnPhone())
-        {
+        {*/
             Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, RatingScreenActivity.class);
             finish();
-            idb.close();
+            //idb.close();
             startActivity(intent);
-        }
+        /*}
         else
         {
             Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
@@ -184,6 +184,6 @@ public class ReadingActivity extends ActionBarActivity {
             finish();
             idb.close();
             startActivity(intent);
-        }
+        }*/
     }
 }

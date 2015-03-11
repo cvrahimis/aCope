@@ -115,7 +115,7 @@ public class MenuActivity extends ActionBarActivity {
         {
             case R.id.music:
             {
-                Toast.makeText(getApplicationContext(), "Music Button Pressed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Music Button Pressed", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MusicActivity.class);
                 finish();
                 startActivityForResult(intent, 1);
@@ -123,7 +123,7 @@ public class MenuActivity extends ActionBarActivity {
             }
             case R.id.reading:
             {
-                Toast.makeText(getApplicationContext(), "Reading Button Pressed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Reading Button Pressed", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, ReadingActivity.class);
                 finish();
@@ -133,7 +133,7 @@ public class MenuActivity extends ActionBarActivity {
             }
             case R.id.drawing:
             {
-                Toast.makeText(getApplicationContext(), "Drawing Button Pressed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Drawing Button Pressed", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, DrawingPad.class);
                 finish();
@@ -143,7 +143,7 @@ public class MenuActivity extends ActionBarActivity {
             }
             case R.id.journal:
             {
-                Toast.makeText(getApplicationContext(), "Journal Button Pressed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Journal Button Pressed", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, WritingActivity.class);
                 finish();
@@ -153,7 +153,7 @@ public class MenuActivity extends ActionBarActivity {
             }
             case R.id.exercise:
             {
-                Toast.makeText(getApplicationContext(), "Exercise Button Pressed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Exercise Button Pressed", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, PhysicalActivity.class);
                 finish();
                 startActivityForResult(intent, 1);

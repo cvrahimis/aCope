@@ -124,16 +124,16 @@ public class PhysicalActivity extends ActionBarActivity {
     }
 
     public void exitLogic(){
-        ICopePatDB db = new ICopePatDB(this);
+        /*ICopePatDB db = new ICopePatDB(this);
         db.open();
         if(db.isPatientAndTherapistOnPhone())
-        {
+        {*/
             Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, RatingScreenActivity.class);
             finish();
-            db.close();
+            //db.close();
             startActivity(intent);
-        }
+        /*}
         else
         {
             Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
@@ -141,7 +141,7 @@ public class PhysicalActivity extends ActionBarActivity {
             finish();
             db.close();
             startActivity(intent);
-        }
+        }*/
     }
 
 }

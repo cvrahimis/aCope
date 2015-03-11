@@ -152,7 +152,7 @@ public class WritingActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Open Button Pressed", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, OpenWritingActivity.class);
-                finish();
+                //finish();
                 startActivityForResult(intent, 1);
 
                 break;
@@ -210,16 +210,16 @@ public class WritingActivity extends ActionBarActivity {
     }
 
     public void exitLogic(){
-        ICopePatDB idb = new ICopePatDB(this);
+        /*ICopePatDB idb = new ICopePatDB(this);
         idb.open();
         if(idb.isPatientAndTherapistOnPhone())
-        {
+        {*/
             Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, RatingScreenActivity.class);
             finish();
-            idb.close();
+            //idb.close();
             startActivity(intent);
-        }
+        /*}
         else
         {
             Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
@@ -227,6 +227,6 @@ public class WritingActivity extends ActionBarActivity {
             finish();
             idb.close();
             startActivity(intent);
-        }
+        }*/
     }
 }

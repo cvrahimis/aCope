@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -150,12 +151,12 @@ public class LoginActivity extends ActionBarActivity {
                         try {
                             String result = new RetrieveFeedTask().execute(String.valueOf(username.getText()), String.valueOf(password.getText())).get();
                             String[] patThrpData = result.split(",");
-                            /*if(db.insertNewTherapist(Integer.parseInt(patThrpData[1]), patThrpData[6], patThrpData[7])  long && db.insertNewPatient(Integer.parseInt(patThrpData[0]), Integer.parseInt(patThrpData[1]), patThrpData[2], patThrpData[3], patThrpData[4], patThrpData[5]) instanceof long)
+                            if((db.insertNewTherapist(Integer.parseInt(patThrpData[1]), patThrpData[6], patThrpData[7]) > 0 && db.insertNewPatient(Integer.parseInt(patThrpData[0]), Integer.parseInt(patThrpData[1]), patThrpData[2], patThrpData[3], patThrpData[4], patThrpData[5]) > 0))
                             {
-                                Intent intent = new Intent(this, MenuActivity.class);
+                                Intent intent = new Intent(this, RatingScreenActivity.class);
                                 finish();
                                 startActivity(intent);
-                            }*/
+                            }
                             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                         }
                         catch(ExecutionException e){

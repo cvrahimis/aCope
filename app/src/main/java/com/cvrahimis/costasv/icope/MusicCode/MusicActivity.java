@@ -355,24 +355,10 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     }
 
     public void exitLogic(){
-        ICopePatDB db = new ICopePatDB(this);
-        db.open();
-        if(db.isPatientAndTherapistOnPhone())
-        {
-            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, RatingScreenActivity.class);
-            finish();
-            db.close();
-            startActivity(intent);
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MenuActivity.class);
-            finish();
-            db.close();
-            startActivity(intent);
-        }
+        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RatingScreenActivity.class);
+        finish();
+        startActivity(intent);
     }
 
 }
