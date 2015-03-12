@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,9 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -51,6 +56,7 @@ public class LoginActivity extends ActionBarActivity {
     Button login;
     Button cancel;
     RelativeLayout mainLayout;
+    //ScrollView mainLayout;
     TextView connectLbl;
     TextView invalidLogin;
     ICopePatDB db;
@@ -61,18 +67,21 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle("iSoothe");
 
-        mainLayout = (RelativeLayout) findViewById(R.id.loginRelativeLayout);
+        mainLayout = (RelativeLayout) findViewById(R.id.loginMainLayout);
+        //mainLayout = (ScrollView) findViewById(R.id.scrollView);
         login = (Button) findViewById(R.id.loginDoneBtn);
         cancel = (Button) findViewById(R.id.cancelBtn);
         username = (TextView) findViewById(R.id.username);
         password = (TextView) findViewById(R.id.password);
         connectLbl = (TextView) findViewById(R.id.connectLbl);
-        //spinner = (ProgressBar)findViewById(R.id.spinner);
+        spinner = (ProgressBar)findViewById(R.id.spinner);
         invalidLogin = (TextView) findViewById(R.id.invalidLogin);
 
         username.setHint("Username");
         password.setHint("Password");
+        username.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
         if(!isNetworkAvailable())
             connectLbl.setVisibility(View.VISIBLE);
@@ -105,13 +114,13 @@ public class LoginActivity extends ActionBarActivity {
 
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         Intent intent = new Intent(this, MenuActivity.class);
         finish();
         db.close();
         startActivity(intent);
-    }
+    }*/
 
     public void onDestory(){
         super.onDestroy();
@@ -222,8 +231,14 @@ public class LoginActivity extends ActionBarActivity {
             //String uname = urls[0];
             // Create a new HttpClient and Post Header
             String line = "";
-            HttpClient httpclient = new DefaultHttpClient();
+
             HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/Login.php");
+            HttpParams httpParameters = new BasicHttpParams();
+            int timeoutConnection = 5000;
+            HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+            int timeoutSocket = 5000;
+            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+            HttpClient httpclient = new DefaultHttpClient(httpParameters);
 
 
             try {
@@ -235,6 +250,7 @@ public class LoginActivity extends ActionBarActivity {
                 //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
+
 
                 if (response != null) {
                     InputStream inputstream = response.getEntity().getContent();

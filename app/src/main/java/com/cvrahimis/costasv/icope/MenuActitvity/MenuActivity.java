@@ -40,6 +40,7 @@ public class MenuActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        setTitle("iSoothe");
 
         final TextView greetingLbl = (TextView) findViewById(R.id.greeting);
         final LinearLayout content = (LinearLayout) findViewById(R.id.content);
