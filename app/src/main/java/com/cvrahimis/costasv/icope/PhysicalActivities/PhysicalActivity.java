@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
@@ -35,6 +36,7 @@ public class PhysicalActivity extends ActionBarActivity {
     String[] exName;
     String[] exDescriptions;
     int screenWidth;
+    private ICopeActivity activity;
     int screenHeight;
     int[] images = {R.drawable.backlifts1, R.drawable.leglifts1, R.drawable.crunches1, R.drawable.plank};
 
@@ -43,6 +45,11 @@ public class PhysicalActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_physical);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        String str = sdf.format(new Date());
+        int time = Integer.parseInt(str);
+        activity = new ICopeActivity("Drawing", time);
 
         Resources res = getResources();
         exName = res.getStringArray(R.array.exerciseNames);
@@ -59,8 +66,8 @@ public class PhysicalActivity extends ActionBarActivity {
 
         Drawable d;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH");
-        String str = sdf.format(new Date());
+        sdf = new SimpleDateFormat("HH");
+        str = sdf.format(new Date());
 
         int hour = Integer.parseInt(str);
         if(hour >= 12 && hour < 18)

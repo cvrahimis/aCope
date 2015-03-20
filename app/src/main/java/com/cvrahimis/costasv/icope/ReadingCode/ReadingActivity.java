@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.DBAdapter;
+import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
@@ -29,13 +30,17 @@ public class ReadingActivity extends ActionBarActivity {
     private int count = 0;
     private TextView quote;
     private TextView author;
+    private ICopeActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading);
 
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        String str = sdf.format(new Date());
+        int time = Integer.parseInt(str);
+        activity = new ICopeActivity("Drawing", time);
 
         quote = (TextView) findViewById(R.id.quote);
         author = (TextView) findViewById(R.id.author);
@@ -46,8 +51,8 @@ public class ReadingActivity extends ActionBarActivity {
         final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.readingBackground);
         Drawable d;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH");
-        String str = sdf.format(new Date());
+        sdf = new SimpleDateFormat("HH");
+        str = sdf.format(new Date());
 
 
         int hour = Integer.parseInt(str);

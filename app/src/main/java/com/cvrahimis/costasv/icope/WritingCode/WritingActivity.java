@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.DBAdapter;
+import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
@@ -28,11 +29,17 @@ public class WritingActivity extends ActionBarActivity {
     private EditText title;
     private EditText entry;
     private long rowID = 0;
+    private ICopeActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        String str = sdf.format(new Date());
+        int time = Integer.parseInt(str);
+        activity = new ICopeActivity("Drawing", time);
 
         db = new DBAdapter(this);
         db.open();
@@ -41,8 +48,8 @@ public class WritingActivity extends ActionBarActivity {
 
         Drawable d;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH");
-        String str = sdf.format(new Date());
+        sdf = new SimpleDateFormat("HH");
+        str = sdf.format(new Date());
 
         title = (EditText) findViewById(R.id.title);
         title.setHint(R.string.titleHint);

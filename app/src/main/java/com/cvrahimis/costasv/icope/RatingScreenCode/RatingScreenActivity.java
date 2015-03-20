@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Looper;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.os.Process;
@@ -31,9 +33,23 @@ import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.Timer;
 
@@ -480,7 +496,7 @@ public class RatingScreenActivity extends ActionBarActivity {
     }
 
     public void insertData(){
-        /*Cursor cur = db.getPatientID();
+        Cursor cur = db.getPatientID();
         ICopeActivity activity = ((MyApplication) this.getApplication()).pop();
         int pID = 0;
         int tID = 0;
@@ -497,17 +513,64 @@ public class RatingScreenActivity extends ActionBarActivity {
 
         if(pID > 0 && tID > 0 && activity != null)
         {
-            aID = db.insertNewActivity(tID, pID, activity.getActivityName(), activity.getActivityTime(), activity.getActivityDuration());
+            if(exit)
+                aID = db.insertNewActivity(pID, tID, "Exit Rating", mood, u, activity.getActivityTime(), activity.getActivityDuration());
+            else
+                aID = db.insertNewActivity(pID, tID, "Entrance Rating", mood, u, activity.getActivityTime(), activity.getActivityDuration());
+
         }
 
         if(pID > 0 && aID > 0)
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
-            String str = sdf.format(new Date());
-            db.insertNewRatingScreen(pID, (int)aID, mood, u, Integer.parseInt(str));
+            db.insertNewActivity(pID, tID, activity.getActivityName(), mood, u, activity.getActivityTime(), activity.getActivityDuration());
         }
+    }
+
+    class RetrieveFeedTask extends AsyncTask<String, Void, String> {
+
+        private Exception exception;
+
+        protected String doInBackground(String... urls) {
+            Looper.prepare();
+            //String uname = urls[0];
+            // Create a new HttpClient and Post Header
+            String line = "";
+
+            HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/Login.php");
+            HttpParams httpParameters = new BasicHttpParams();
+            int timeoutConnection = 5000;
+            HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+            int timeoutSocket = 5000;
+            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+            HttpClient httpclient = new DefaultHttpClient(httpParameters);
 
 
-        //db.insertNewRatingScreen();*/
+            try {
+                // Add your data
+                List nameValuePairs = new ArrayList();
+                nameValuePairs.add(new BasicNameValuePair("Username", urls[0]));
+                nameValuePairs.add(new BasicNameValuePair("Password", urls[1]));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                // Execute HTTP Post Request
+                HttpResponse response = httpclient.execute(httppost);
+
+
+                /*if (response != null) {
+                    InputStream inputstream = response.getEntity().getContent();
+                    line = convertStreamToString(inputstream);
+                }*/
+
+            } catch (ClientProtocolException e) {
+                Log.i("LoginActivity", "MyClass.getView() exception" + e.toString());
+                //Looper.loop();
+            } catch (IOException e) {
+                Log.i("LoginActivity", "MyClass.getView() exception2" + e.toString());
+                //Looper.loop();
+            }
+            //spinner.setVisibility(View.INVISIBLE);
+
+            return line;
+        }
     }
 }

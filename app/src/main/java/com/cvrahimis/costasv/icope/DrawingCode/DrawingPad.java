@@ -51,11 +51,11 @@ public class DrawingPad extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing_pad);
 
-        /*SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
         String str = sdf.format(new Date());
         int time = Integer.parseInt(str);
         activity = new ICopeActivity("Drawing", time);
-        */
+
         doTimerTask();
 
         //get drawing view

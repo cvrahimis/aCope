@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.R;
@@ -38,7 +39,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     //song list variables
     private ArrayList<Song> songList;
     private ListView songView;
-
+    private ICopeActivity activity;
     //service
     private MusicService musicSrv;
     private Intent playIntent;
@@ -55,11 +56,17 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        String str = sdf.format(new Date());
+        int time = Integer.parseInt(str);
+        activity = new ICopeActivity("Drawing", time);
+
         final LinearLayout mainLayout = (LinearLayout) findViewById(R.id.background);
         Drawable d;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH");
-        String str = sdf.format(new Date());
+        sdf = new SimpleDateFormat("HH");
+        str = sdf.format(new Date());
 
 
         int hour = Integer.parseInt(str);
