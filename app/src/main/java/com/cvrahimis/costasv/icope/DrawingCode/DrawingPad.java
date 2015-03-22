@@ -51,7 +51,7 @@ public class DrawingPad extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing_pad);
 
-        //doTimerTask();
+        startTimerTask();
 
         SimpleDateFormat sdf = new SimpleDateFormat("H");
         int hour = Integer.parseInt(sdf.format(new Date()));
@@ -288,7 +288,7 @@ public class DrawingPad extends Activity implements OnClickListener {
         }*/
     }
 
-    public void doTimerTask(){
+    public void startTimerTask(){
 
         mTimerTask = new TimerTask() {
             public void run() {

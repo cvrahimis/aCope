@@ -406,8 +406,8 @@ public class RatingScreenActivity extends ActionBarActivity {
                 newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        insertData();
-                        exitAndGoHome();
+                        //insertData();
+                        //exitAndGoHome();
                     }
                 });
                 newDialog.show();
@@ -472,7 +472,7 @@ public class RatingScreenActivity extends ActionBarActivity {
                 newDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        insertData();
+                        //insertData();
                         goToMenuActivity();
                     }
                 });
@@ -503,7 +503,7 @@ public class RatingScreenActivity extends ActionBarActivity {
         ICopeActivity activity = ((MyApplication) this.getApplication()).pop();
         long pID = 0;
         long tID = 0;
-        long aID = 0;
+        //long aID = 0;
 
         Cursor cur = db.getPatientID();
         if (cur.moveToFirst()) {
@@ -529,9 +529,12 @@ public class RatingScreenActivity extends ActionBarActivity {
                 str = str + "am";
 
             if(exit)
-                aID = db.insertNewActivity(pID, tID, "Exit Rating", mood, u, str, "0 hours 0 minuets 0 seconds");
+            {
+                db.insertNewActivity(pID, tID, "Exit Rating", mood, u, str, "0 hours 0 minuets 0 seconds");
+                new SendActivities().execute(this);
+            }
             else
-                aID = db.insertNewActivity(pID, tID, "Entrance Rating", mood, u, str, "0 hours 0 minuets 0 seconds");
+                db.insertNewActivity(pID, tID, "Entrance Rating", mood, u, str, "0 hours 0 minuets 0 seconds");
 
         }
         else if(pID > 0 && tID > 0 && activity != null)
@@ -539,6 +542,6 @@ public class RatingScreenActivity extends ActionBarActivity {
             db.insertNewActivity(pID, tID, activity.getActivityName(), mood, u, activity.getActivityTime(), activity.getActivityDuration());
         }
 
-        new SendActivities().execute(this);
+
     }
 }

@@ -68,7 +68,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
 
-        doTimerTask();
+        startTimerTask();
 
         SimpleDateFormat sdf = new SimpleDateFormat("H");
         int hour = Integer.parseInt(sdf.format(new Date()));
@@ -127,9 +127,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     }
 
     @Override
-    public void onBackPressed() {
-        exitLogic();
-    }
+    public void onBackPressed() { exitLogic(); }
 
     private void CreateMenu(Menu menu)
     {
@@ -377,6 +375,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     @Override
     protected void onDestroy() {
         stopService(playIntent);
+        unbindService(musicConnection);
         musicSrv=null;
         super.onDestroy();
     }
@@ -396,7 +395,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
         startActivity(intent);
     }
 
-    public void doTimerTask(){
+    public void startTimerTask(){
 
         mTimerTask = new TimerTask() {
             public void run() {

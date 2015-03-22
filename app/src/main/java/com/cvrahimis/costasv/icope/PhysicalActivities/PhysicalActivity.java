@@ -55,7 +55,7 @@ public class PhysicalActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_physical);
 
-        doTimerTask();
+        startTimerTask();
 
         SimpleDateFormat sdf = new SimpleDateFormat("H");
         int hour = Integer.parseInt(sdf.format(new Date()));
@@ -177,7 +177,7 @@ public class PhysicalActivity extends ActionBarActivity {
         }*/
     }
 
-    public void doTimerTask(){
+    public void startTimerTask(){
 
         mTimerTask = new TimerTask() {
             public void run() {

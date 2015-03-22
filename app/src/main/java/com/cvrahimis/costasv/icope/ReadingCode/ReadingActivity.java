@@ -46,7 +46,7 @@ public class ReadingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading);
 
-        doTimerTask();
+        startTimerTask();
 
         SimpleDateFormat sdf = new SimpleDateFormat("H");
         int hour = Integer.parseInt(sdf.format(new Date()));
@@ -248,7 +248,7 @@ public class ReadingActivity extends ActionBarActivity {
         }*/
     }
 
-    public void doTimerTask(){
+    public void startTimerTask(){
 
         mTimerTask = new TimerTask() {
             public void run() {
