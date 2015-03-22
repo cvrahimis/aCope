@@ -32,6 +32,7 @@ import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.SendActivities;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -394,6 +395,7 @@ public class RatingScreenActivity extends ActionBarActivity {
         {
             if(didSwipe && didFeelingPressed)
             {
+                insertData();
                 exitAndGoHome();
             }
             else if(didSwipe && !didFeelingPressed)
@@ -446,6 +448,7 @@ public class RatingScreenActivity extends ActionBarActivity {
         {
             if(didSwipe && didFeelingPressed)
             {
+                insertData();
                 goToMenuActivity();
             }
             else if(didSwipe && !didFeelingPressed)
@@ -496,13 +499,13 @@ public class RatingScreenActivity extends ActionBarActivity {
     }
 
     public void insertData(){
-        Cursor cur = db.getPatientID();
+
         ICopeActivity activity = ((MyApplication) this.getApplication()).pop();
-        int pID = 0;
-        int tID = 0;
+        long pID = 0;
+        long tID = 0;
         long aID = 0;
 
-
+        Cursor cur = db.getPatientID();
         if (cur.moveToFirst()) {
             pID = Integer.parseInt(cur.getString(0));
         }
@@ -511,66 +514,31 @@ public class RatingScreenActivity extends ActionBarActivity {
             tID = Integer.parseInt(cur.getString(0));
         }
 
-        if(pID > 0 && tID > 0 && activity != null)
+        if(pID > 0 && tID > 0 && activity == null)
         {
-            if(exit)
-                aID = db.insertNewActivity(pID, tID, "Exit Rating", mood, u, activity.getActivityTime(), activity.getActivityDuration());
+
+            SimpleDateFormat sdf = new SimpleDateFormat("H");
+            int hour = Integer.parseInt(sdf.format(new Date()));
+
+            sdf = new SimpleDateFormat("MM/d/yyyy h:m");
+            String str = sdf.format(new Date());
+
+            if(hour > 12)
+                str = str +"pm";
             else
-                aID = db.insertNewActivity(pID, tID, "Entrance Rating", mood, u, activity.getActivityTime(), activity.getActivityDuration());
+                str = str + "am";
+
+            if(exit)
+                aID = db.insertNewActivity(pID, tID, "Exit Rating", mood, u, str, "0 hours 0 minuets 0 seconds");
+            else
+                aID = db.insertNewActivity(pID, tID, "Entrance Rating", mood, u, str, "0 hours 0 minuets 0 seconds");
 
         }
-
-        if(pID > 0 && aID > 0)
+        else if(pID > 0 && tID > 0 && activity != null)
         {
             db.insertNewActivity(pID, tID, activity.getActivityName(), mood, u, activity.getActivityTime(), activity.getActivityDuration());
         }
-    }
 
-    class RetrieveFeedTask extends AsyncTask<String, Void, String> {
-
-        private Exception exception;
-
-        protected String doInBackground(String... urls) {
-            Looper.prepare();
-            //String uname = urls[0];
-            // Create a new HttpClient and Post Header
-            String line = "";
-
-            HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/Login.php");
-            HttpParams httpParameters = new BasicHttpParams();
-            int timeoutConnection = 5000;
-            HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-            int timeoutSocket = 5000;
-            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-            HttpClient httpclient = new DefaultHttpClient(httpParameters);
-
-
-            try {
-                // Add your data
-                List nameValuePairs = new ArrayList();
-                nameValuePairs.add(new BasicNameValuePair("Username", urls[0]));
-                nameValuePairs.add(new BasicNameValuePair("Password", urls[1]));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-                // Execute HTTP Post Request
-                HttpResponse response = httpclient.execute(httppost);
-
-
-                /*if (response != null) {
-                    InputStream inputstream = response.getEntity().getContent();
-                    line = convertStreamToString(inputstream);
-                }*/
-
-            } catch (ClientProtocolException e) {
-                Log.i("LoginActivity", "MyClass.getView() exception" + e.toString());
-                //Looper.loop();
-            } catch (IOException e) {
-                Log.i("LoginActivity", "MyClass.getView() exception2" + e.toString());
-                //Looper.loop();
-            }
-            //spinner.setVisibility(View.INVISIBLE);
-
-            return line;
-        }
+        new SendActivities().execute(this);
     }
 }

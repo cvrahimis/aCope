@@ -51,12 +51,19 @@ public class DrawingPad extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing_pad);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
-        String str = sdf.format(new Date());
-        int time = Integer.parseInt(str);
-        activity = new ICopeActivity("Drawing", time);
+        SimpleDateFormat sdf = new SimpleDateFormat("H");
+        int hour = Integer.parseInt(sdf.format(new Date()));
 
-        doTimerTask();
+        sdf = new SimpleDateFormat("MM/d/yyyy h:m");
+        String str = sdf.format(new Date());
+
+        if(hour > 12)
+            str = str +"pm";
+        else
+            str = str + "am";
+        activity = new ICopeActivity("Drawing", str);
+
+        //doTimerTask();
 
         //get drawing view
         drawView = (DrawingView)findViewById(R.id.drawing);
@@ -258,10 +265,10 @@ public class DrawingPad extends Activity implements OnClickListener {
         db.open();
         if(db.isPatientAndTherapistOnPhone())
         {*/
-            //Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+
             stopTask();
-            //activity.setActivityDuration(seconds);================================================
-            //((MyApplication) this.getApplication()).push(activity);===============================
+            //activity.setActivityDuration(seconds);
+            //((MyApplication) this.getApplication()).push(activity);
             Intent intent = new Intent(this, RatingScreenActivity.class);
             finish();
             //db.close();
@@ -269,7 +276,7 @@ public class DrawingPad extends Activity implements OnClickListener {
         /*}
         else
         {
-            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(this, MenuActivity.class);
             finish();
             db.close();

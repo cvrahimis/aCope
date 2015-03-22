@@ -3,6 +3,7 @@ package com.cvrahimis.costasv.icope.ReadingCode;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,13 +17,16 @@ import android.widget.Toast;
 import com.cvrahimis.costasv.icope.DBAdapter;
 import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
-import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
+import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
 import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
+import com.cvrahimis.costasv.icope.SendActivities;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ReadingActivity extends ActionBarActivity {
     DBAdapter db;
@@ -31,22 +35,41 @@ public class ReadingActivity extends ActionBarActivity {
     private TextView quote;
     private TextView author;
     private ICopeActivity activity;
+    private TimerTask mTimerTask;
+    private int seconds = 0;
+    ICopePatDB patDB;
+    final Handler handler = new Handler();
+
+    Timer t = new Timer();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        doTimerTask();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("H");
+        int hour = Integer.parseInt(sdf.format(new Date()));
+
+        sdf = new SimpleDateFormat("MM/d/yyyy h:m");
         String str = sdf.format(new Date());
-        int time = Integer.parseInt(str);
-        activity = new ICopeActivity("Drawing", time);
+
+        if(hour > 12)
+            str = str +"pm";
+        else
+            str = str + "am";
+        activity = new ICopeActivity("Reading", str);
 
         quote = (TextView) findViewById(R.id.quote);
         author = (TextView) findViewById(R.id.author);
 
         db = new DBAdapter(this);
         db.open();
+
+        patDB = new ICopePatDB(this);
+        patDB.open();
 
         final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.readingBackground);
         Drawable d;
@@ -55,7 +78,7 @@ public class ReadingActivity extends ActionBarActivity {
         str = sdf.format(new Date());
 
 
-        int hour = Integer.parseInt(str);
+        //int hour = Integer.parseInt(str);
         if (hour >= 12 && hour < 18)
         {
             d = getResources().getDrawable(R.drawable.afternoon);
@@ -129,7 +152,7 @@ public class ReadingActivity extends ActionBarActivity {
     }
 
     public void nextQuote(View view){
-        Toast.makeText(getApplicationContext(), "Screen Tap", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Screen Tap", Toast.LENGTH_SHORT).show();
         count++;
         if(count >= quotesList.size())
             count = 0;
@@ -205,7 +228,13 @@ public class ReadingActivity extends ActionBarActivity {
         idb.open();
         if(idb.isPatientAndTherapistOnPhone())
         {*/
-            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+            stopTask();
+            int hours = seconds / 3600;
+            seconds = seconds - (3600 * hours);
+            int min = seconds / 60;
+            seconds = seconds - (60 * min);
+            activity.setActivityDuration(hours + " hours " + min + " minuets " + seconds + " seconds");
+            ((MyApplication) this.getApplication()).push(activity);
             Intent intent = new Intent(this, RatingScreenActivity.class);
             finish();
             //idb.close();
@@ -220,4 +249,31 @@ public class ReadingActivity extends ActionBarActivity {
             startActivity(intent);
         }*/
     }
+
+    public void doTimerTask(){
+
+        mTimerTask = new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        seconds++;
+                    }
+                });
+            }};
+
+        // public void schedule (TimerTask task, long delay, long period)
+        t.schedule(mTimerTask, 0, 1000);  //
+
+    }
+
+    public void stopTask(){
+
+        if(mTimerTask!=null){
+            mTimerTask.cancel();
+        }
+
+    }
+    public int getSeconds(){ return seconds; }
+
+
 }

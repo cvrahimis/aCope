@@ -36,10 +36,17 @@ public class WritingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        SimpleDateFormat sdf = new SimpleDateFormat("H");
+        int hour = Integer.parseInt(sdf.format(new Date()));
+
+        sdf = new SimpleDateFormat("MM/d/yyyy h:m");
         String str = sdf.format(new Date());
-        int time = Integer.parseInt(str);
-        activity = new ICopeActivity("Drawing", time);
+
+        if(hour > 12)
+            str = str +"pm";
+        else
+            str = str + "am";
+        activity = new ICopeActivity("Drawing", str);
 
         db = new DBAdapter(this);
         db.open();
@@ -57,7 +64,7 @@ public class WritingActivity extends ActionBarActivity {
         entry = (EditText) findViewById(R.id.entry);
         entry.setHint(R.string.entryHint);
 
-        int hour = Integer.parseInt(str);
+        //int hour = Integer.parseInt(str);
         if(hour >= 12 && hour < 18)
         {
             d = getResources().getDrawable(R.drawable.afternoon);

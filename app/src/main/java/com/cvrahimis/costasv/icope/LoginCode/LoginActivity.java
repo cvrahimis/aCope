@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
+import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
 import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
@@ -164,6 +165,8 @@ public class LoginActivity extends ActionBarActivity {
                             String result = new RetrieveFeedTask().execute(String.valueOf(username.getText()), String.valueOf(password.getText())).get();
                             String[] patThrpData = result.split(",");
                             if(patThrpData.length == 8) {
+                                ((MyApplication) this.getApplication()).setpID((long) Long.parseLong(patThrpData[0]));
+                                ((MyApplication) this.getApplication()).settID((long) Long.parseLong(patThrpData[1]));
                                 invalidLogin.setVisibility(View.INVISIBLE);
                                 if ((db.insertNewTherapist(Integer.parseInt(patThrpData[1]), patThrpData[6], patThrpData[7]) > 0 && db.insertNewPatient(Integer.parseInt(patThrpData[0]), Integer.parseInt(patThrpData[1]), patThrpData[2], patThrpData[3], patThrpData[4], patThrpData[5]) > 0)) {
                                     Intent intent = new Intent(this, RatingScreenActivity.class);

@@ -57,10 +57,17 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        SimpleDateFormat sdf = new SimpleDateFormat("H");
+        int hour = Integer.parseInt(sdf.format(new Date()));
+
+        sdf = new SimpleDateFormat("MM/d/yyyy h:m");
         String str = sdf.format(new Date());
-        int time = Integer.parseInt(str);
-        activity = new ICopeActivity("Drawing", time);
+
+        if(hour > 12)
+            str = str +"pm";
+        else
+            str = str + "am";
+        activity = new ICopeActivity("Drawing", str);
 
         final LinearLayout mainLayout = (LinearLayout) findViewById(R.id.background);
         Drawable d;
@@ -69,7 +76,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
         str = sdf.format(new Date());
 
 
-        int hour = Integer.parseInt(str);
+        //int hour = Integer.parseInt(str);
         if(hour >= 12 && hour < 18)
         {
             d = getResources().getDrawable(R.drawable.afternoon);

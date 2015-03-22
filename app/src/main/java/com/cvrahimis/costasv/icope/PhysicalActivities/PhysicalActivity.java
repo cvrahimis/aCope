@@ -46,10 +46,17 @@ public class PhysicalActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_physical);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dMMyyyyHm");
+        SimpleDateFormat sdf = new SimpleDateFormat("H");
+        int hour = Integer.parseInt(sdf.format(new Date()));
+
+        sdf = new SimpleDateFormat("MM/d/yyyy h:m");
         String str = sdf.format(new Date());
-        int time = Integer.parseInt(str);
-        activity = new ICopeActivity("Drawing", time);
+
+        if(hour > 12)
+            str = str +"pm";
+        else
+            str = str + "am";
+        activity = new ICopeActivity("Drawing", str);
 
         Resources res = getResources();
         exName = res.getStringArray(R.array.exerciseNames);
@@ -69,7 +76,7 @@ public class PhysicalActivity extends ActionBarActivity {
         sdf = new SimpleDateFormat("HH");
         str = sdf.format(new Date());
 
-        int hour = Integer.parseInt(str);
+        //int hour = Integer.parseInt(str);
         if(hour >= 12 && hour < 18)
         {
             d = getResources().getDrawable(R.drawable.afternoon);
