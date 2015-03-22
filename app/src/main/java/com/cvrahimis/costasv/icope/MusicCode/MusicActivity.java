@@ -3,6 +3,7 @@ package com.cvrahimis.costasv.icope.MusicCode;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,10 +13,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
+import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
 import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
@@ -39,7 +43,6 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     //song list variables
     private ArrayList<Song> songList;
     private ListView songView;
-    private ICopeActivity activity;
     //service
     private MusicService musicSrv;
     private Intent playIntent;
@@ -52,10 +55,20 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     //activity and playback pause flags
     private boolean paused=false, playbackPaused=false;
 
+    private ICopeActivity activity;
+    private TimerTask mTimerTask;
+    private int seconds = 0;
+    ICopePatDB patDB;
+    final Handler handler = new Handler();
+
+    Timer t = new Timer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
+
+        doTimerTask();
 
         SimpleDateFormat sdf = new SimpleDateFormat("H");
         int hour = Integer.parseInt(sdf.format(new Date()));
@@ -67,7 +80,7 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
             str = str +"pm";
         else
             str = str + "am";
-        activity = new ICopeActivity("Drawing", str);
+        activity = new ICopeActivity("Music", str);
 
         final LinearLayout mainLayout = (LinearLayout) findViewById(R.id.background);
         Drawable d;
@@ -369,10 +382,42 @@ public class MusicActivity extends ActionBarActivity implements MediaPlayerContr
     }
 
     public void exitLogic(){
-        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+
+        stopTask();
+        int hours = seconds / 3600;
+        seconds = seconds - (3600 * hours);
+        int min = seconds / 60;
+        seconds = seconds - (60 * min);
+        activity.setActivityDuration(hours + " hours " + min + " minuets " + seconds + " seconds");
+        ((MyApplication) this.getApplication()).push(activity);
         Intent intent = new Intent(this, RatingScreenActivity.class);
         finish();
         startActivity(intent);
+    }
+
+    public void doTimerTask(){
+
+        mTimerTask = new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        seconds++;
+                    }
+                });
+            }};
+
+        // public void schedule (TimerTask task, long delay, long period)
+        t.schedule(mTimerTask, 0, 1000);  //
+
+    }
+
+    public void stopTask(){
+
+        if(mTimerTask!=null){
+            mTimerTask.cancel();
+        }
+
     }
 
 }

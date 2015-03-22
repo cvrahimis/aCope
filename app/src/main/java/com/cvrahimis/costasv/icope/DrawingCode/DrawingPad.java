@@ -51,6 +51,8 @@ public class DrawingPad extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing_pad);
 
+        //doTimerTask();
+
         SimpleDateFormat sdf = new SimpleDateFormat("H");
         int hour = Integer.parseInt(sdf.format(new Date()));
 
@@ -62,8 +64,6 @@ public class DrawingPad extends Activity implements OnClickListener {
         else
             str = str + "am";
         activity = new ICopeActivity("Drawing", str);
-
-        //doTimerTask();
 
         //get drawing view
         drawView = (DrawingView)findViewById(R.id.drawing);
@@ -266,13 +266,17 @@ public class DrawingPad extends Activity implements OnClickListener {
         if(db.isPatientAndTherapistOnPhone())
         {*/
 
-            stopTask();
-            //activity.setActivityDuration(seconds);
-            //((MyApplication) this.getApplication()).push(activity);
-            Intent intent = new Intent(this, RatingScreenActivity.class);
-            finish();
-            //db.close();
-            startActivity(intent);
+        stopTask();
+        int hours = seconds / 3600;
+        seconds = seconds - (3600 * hours);
+        int min = seconds / 60;
+        seconds = seconds - (60 * min);
+        activity.setActivityDuration(hours + " hours " + min + " minuets " + seconds + " seconds");
+        ((MyApplication) this.getApplication()).push(activity);
+        Intent intent = new Intent(this, RatingScreenActivity.class);
+        finish();
+        //db.close();
+        startActivity(intent);
         /*}
         else
         {

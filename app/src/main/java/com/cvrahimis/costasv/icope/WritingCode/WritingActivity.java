@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,11 +18,14 @@ import com.cvrahimis.costasv.icope.DBAdapter;
 import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
+import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
 import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WritingActivity extends ActionBarActivity {
 
@@ -30,11 +34,18 @@ public class WritingActivity extends ActionBarActivity {
     private EditText entry;
     private long rowID = 0;
     private ICopeActivity activity;
+    private TimerTask mTimerTask;
+    private int seconds = 0;
+    ICopePatDB patDB;
+    final Handler handler = new Handler();
+    Timer t = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
+
+        doTimerTask();
 
         SimpleDateFormat sdf = new SimpleDateFormat("H");
         int hour = Integer.parseInt(sdf.format(new Date()));
@@ -46,7 +57,7 @@ public class WritingActivity extends ActionBarActivity {
             str = str +"pm";
         else
             str = str + "am";
-        activity = new ICopeActivity("Drawing", str);
+        activity = new ICopeActivity("Writing", str);
 
         db = new DBAdapter(this);
         db.open();
@@ -226,11 +237,19 @@ public class WritingActivity extends ActionBarActivity {
         idb.open();
         if(idb.isPatientAndTherapistOnPhone())
         {*/
-            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, RatingScreenActivity.class);
-            finish();
-            //idb.close();
-            startActivity(intent);
+            //Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+
+        stopTask();
+        int hours = seconds / 3600;
+        seconds = seconds - (3600 * hours);
+        int min = seconds / 60;
+        seconds = seconds - (60 * min);
+        activity.setActivityDuration(hours + " hours " + min + " minuets " + seconds + " seconds");
+        ((MyApplication) this.getApplication()).push(activity);
+        Intent intent = new Intent(this, RatingScreenActivity.class);
+        finish();
+        //idb.close();
+        startActivity(intent);
         /*}
         else
         {
@@ -240,5 +259,28 @@ public class WritingActivity extends ActionBarActivity {
             idb.close();
             startActivity(intent);
         }*/
+    }
+    public void doTimerTask(){
+
+        mTimerTask = new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        seconds++;
+                    }
+                });
+            }};
+
+        // public void schedule (TimerTask task, long delay, long period)
+        t.schedule(mTimerTask, 0, 1000);  //
+
+    }
+
+    public void stopTask(){
+
+        if(mTimerTask!=null){
+            mTimerTask.cancel();
+        }
+
     }
 }

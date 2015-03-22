@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Display;
@@ -25,26 +26,36 @@ import android.widget.Toast;
 import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
+import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
 import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class PhysicalActivity extends ActionBarActivity {
 
     String[] exName;
     String[] exDescriptions;
     int screenWidth;
-    private ICopeActivity activity;
     int screenHeight;
     int[] images = {R.drawable.backlifts1, R.drawable.leglifts1, R.drawable.crunches1, R.drawable.plank};
+    private ICopeActivity activity;
+    private TimerTask mTimerTask;
+    private int seconds = 0;
+    ICopePatDB patDB;
+    final Handler handler = new Handler();
+    Timer t = new Timer();
 
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_physical);
+
+        doTimerTask();
 
         SimpleDateFormat sdf = new SimpleDateFormat("H");
         int hour = Integer.parseInt(sdf.format(new Date()));
@@ -56,7 +67,7 @@ public class PhysicalActivity extends ActionBarActivity {
             str = str +"pm";
         else
             str = str + "am";
-        activity = new ICopeActivity("Drawing", str);
+        activity = new ICopeActivity("Exercise", str);
 
         Resources res = getResources();
         exName = res.getStringArray(R.array.exerciseNames);
@@ -73,8 +84,8 @@ public class PhysicalActivity extends ActionBarActivity {
 
         Drawable d;
 
-        sdf = new SimpleDateFormat("HH");
-        str = sdf.format(new Date());
+        //sdf = new SimpleDateFormat("HH");
+        //str = sdf.format(new Date());
 
         //int hour = Integer.parseInt(str);
         if(hour >= 12 && hour < 18)
@@ -142,11 +153,19 @@ public class PhysicalActivity extends ActionBarActivity {
         db.open();
         if(db.isPatientAndTherapistOnPhone())
         {*/
-            Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, RatingScreenActivity.class);
-            finish();
-            //db.close();
-            startActivity(intent);
+            //Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+
+        stopTask();
+        int hours = seconds / 3600;
+        seconds = seconds - (3600 * hours);
+        int min = seconds / 60;
+        seconds = seconds - (60 * min);
+        activity.setActivityDuration(hours + " hours " + min + " minuets " + seconds + " seconds");
+        ((MyApplication) this.getApplication()).push(activity);
+        Intent intent = new Intent(this, RatingScreenActivity.class);
+        finish();
+        //db.close();
+        startActivity(intent);
         /*}
         else
         {
@@ -156,6 +175,30 @@ public class PhysicalActivity extends ActionBarActivity {
             db.close();
             startActivity(intent);
         }*/
+    }
+
+    public void doTimerTask(){
+
+        mTimerTask = new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        seconds++;
+                    }
+                });
+            }};
+
+        // public void schedule (TimerTask task, long delay, long period)
+        t.schedule(mTimerTask, 0, 1000);  //
+
+    }
+
+    public void stopTask(){
+
+        if(mTimerTask!=null){
+            mTimerTask.cancel();
+        }
+
     }
 
 }

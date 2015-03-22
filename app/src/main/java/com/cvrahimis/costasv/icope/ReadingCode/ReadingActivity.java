@@ -20,7 +20,6 @@ import com.cvrahimis.costasv.icope.ICopePatDB;
 import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
 import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
-import com.cvrahimis.costasv.icope.SendActivities;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +38,6 @@ public class ReadingActivity extends ActionBarActivity {
     private int seconds = 0;
     ICopePatDB patDB;
     final Handler handler = new Handler();
-
     Timer t = new Timer();
 
 
@@ -98,7 +96,7 @@ public class ReadingActivity extends ActionBarActivity {
         if(db.quoteCount() == 0)
             setUpQuoteTable();
 
-        quotesList = new ArrayList<Quote>();
+        quotesList = new ArrayList<>();
 
         getQuotesList();
 
@@ -273,7 +271,7 @@ public class ReadingActivity extends ActionBarActivity {
         }
 
     }
-    public int getSeconds(){ return seconds; }
+    //public int getSeconds(){ return seconds; }
 
 
 }
