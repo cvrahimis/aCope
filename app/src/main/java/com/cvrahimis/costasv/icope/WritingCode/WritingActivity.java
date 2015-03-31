@@ -75,7 +75,7 @@ public class WritingActivity extends ActionBarActivity {
         entry = (EditText) findViewById(R.id.entry);
         entry.setHint(R.string.entryHint);
 
-        //int hour = Integer.parseInt(str);
+        hour = Integer.parseInt(str);
         if(hour >= 12 && hour < 18)
         {
             d = getResources().getDrawable(R.drawable.afternoon);

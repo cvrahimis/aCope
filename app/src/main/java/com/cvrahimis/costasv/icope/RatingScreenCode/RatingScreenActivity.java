@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -60,8 +61,9 @@ public class RatingScreenActivity extends ActionBarActivity {
     int screenWidth;
     int screenHeight;
     private GestureDetector gestureDetector;
-    private AbsoluteLayout.LayoutParams thermometerLayoutParams;
+    private ViewGroup.LayoutParams thermometerLayoutParams;
     private AbsoluteLayout.LayoutParams mesurmentViewLayoutParams;
+    private ViewGroup.LayoutParams absLayoutParams;
     private ImageView mesurmentView;
     private ImageView thermometer;
     public final static int RESULT_CLOSE_ALL = 0;
@@ -101,11 +103,12 @@ public class RatingScreenActivity extends ActionBarActivity {
 
         final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.ratingScreenMainLayout);
         final AbsoluteLayout absLayout = (AbsoluteLayout) mainLayout.findViewById(R.id.urgeFrameView);
+        //absLayoutParams = absLayout.getLayoutParams();
 
         mesurmentView = (ImageView) absLayout.findViewById(R.id.mesurmentView);
 
         thermometer = (ImageView) absLayout.findViewById(R.id.thermometer);
-        thermometerLayoutParams = (AbsoluteLayout.LayoutParams)thermometer.getLayoutParams();
+        thermometerLayoutParams = thermometer.getLayoutParams();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -113,12 +116,12 @@ public class RatingScreenActivity extends ActionBarActivity {
         screenWidth = size.x;
         screenHeight = size.y;
 
-        Toast.makeText(getApplicationContext(), String.valueOf((int)Math.floor(screenWidth)), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "width: " + String.valueOf(thermometerLayoutParams.width) + " height: " + String.valueOf(thermometerLayoutParams.height), Toast.LENGTH_SHORT).show();
 
         mesurmentViewLayoutParams = (AbsoluteLayout.LayoutParams)mesurmentView.getLayoutParams();
         mesurmentViewLayoutParams.x = (int)Math.floor(screenWidth * .14);
         mesurmentViewLayoutParams.y = ((int)Math.floor(screenHeight * .01));
-        mesurmentViewLayoutParams.height = (int)Math.floor(screenHeight * .055);
+        mesurmentViewLayoutParams.height = (int)Math.floor(screenHeight * .06);
         urge = mesurmentViewLayoutParams.width;
 
         section = (screenWidth * .738) / 10;

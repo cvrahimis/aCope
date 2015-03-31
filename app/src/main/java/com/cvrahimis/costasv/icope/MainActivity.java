@@ -24,12 +24,12 @@ public class MainActivity extends Activity {
         db.open();
         Intent intent;
 
-        if (db.isPatientAndTherapistOnPhone()) {
+        /*if (db.isPatientAndTherapistOnPhone()) {
             intent = new Intent(this, RatingScreenActivity.class);
         } else {
             intent = new Intent(this, LoginActivity.class);
-        }
-        //intent = new Intent(this, RatingScreenActivity.class);
+        }*/
+        intent = new Intent(this, RatingScreenActivity.class);
         startActivity(intent);
         finish();
 

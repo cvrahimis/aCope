@@ -84,10 +84,10 @@ public class PhysicalActivity extends ActionBarActivity {
 
         Drawable d;
 
-        //sdf = new SimpleDateFormat("HH");
-        //str = sdf.format(new Date());
+        sdf = new SimpleDateFormat("HH");
+        str = sdf.format(new Date());
 
-        //int hour = Integer.parseInt(str);
+        hour = Integer.parseInt(str);
         if(hour >= 12 && hour < 18)
         {
             d = getResources().getDrawable(R.drawable.afternoon);
