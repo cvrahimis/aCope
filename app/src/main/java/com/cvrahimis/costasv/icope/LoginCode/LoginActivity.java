@@ -235,7 +235,8 @@ public class LoginActivity extends ActionBarActivity {
             // Create a new HttpClient and Post Header
             String line = "";
 
-            HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/Login.php");
+            //HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/Login.php");
+            HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/login.php");
             HttpParams httpParameters = new BasicHttpParams();
             int timeoutConnection = 5000;
             HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);

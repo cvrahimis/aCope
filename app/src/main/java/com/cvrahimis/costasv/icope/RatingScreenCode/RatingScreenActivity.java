@@ -121,7 +121,7 @@ public class RatingScreenActivity extends ActionBarActivity {
         mesurmentViewLayoutParams = (AbsoluteLayout.LayoutParams)mesurmentView.getLayoutParams();
         mesurmentViewLayoutParams.x = (int)Math.floor(screenWidth * .14);
         mesurmentViewLayoutParams.y = ((int)Math.floor(screenHeight * .01));
-        mesurmentViewLayoutParams.height = (int)Math.floor(screenHeight * .06);
+        mesurmentViewLayoutParams.height = (int)Math.floor(screenHeight * .055);
         urge = mesurmentViewLayoutParams.width;
 
         section = (screenWidth * .738) / 10;

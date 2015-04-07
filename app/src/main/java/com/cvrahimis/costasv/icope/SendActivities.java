@@ -42,7 +42,8 @@ public class SendActivities extends AsyncTask<Context, Void, Void> {
         String line = "";
         db = new ICopePatDB(params[0]);
         db.open();
-        HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/AddActivity.php");
+        //HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/AddActivity.php");
+        HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/AddActivity.php");
         HttpParams httpParameters = new BasicHttpParams();
         int timeoutConnection = 5000;
         HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
