@@ -1,5 +1,6 @@
 package com.cvrahimis.costasv.icope.LoginCode;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -77,8 +78,8 @@ public class LoginActivity extends ActionBarActivity {
         username = (TextView) findViewById(R.id.username);
         password = (TextView) findViewById(R.id.password);
         connectLbl = (TextView) findViewById(R.id.connectLbl);
-        spinner = (ProgressBar)findViewById(R.id.spinner);
         invalidLogin = (TextView) findViewById(R.id.invalidLogin);
+        spinner = (ProgressBar) findViewById(R.id.spinner);
 
         username.setHint("Username");
         password.setHint("Password");
@@ -160,9 +161,9 @@ public class LoginActivity extends ActionBarActivity {
                 {
                     Toast.makeText(getApplicationContext(), "LoginPress", Toast.LENGTH_SHORT).show();
                     if(isNetworkAvailable()) {
-                        spinner.setVisibility(View.VISIBLE);
+
                         try {
-                            String result = new RetrieveFeedTask().execute(String.valueOf(username.getText()), String.valueOf(password.getText())).get();
+                            String result = new RetrieveFeedTask(this).execute(String.valueOf(username.getText()), String.valueOf(password.getText())).get();
                             String[] patThrpData = result.split(",");
                             if(patThrpData.length == 8) {
                                 ((MyApplication) this.getApplication()).setpID((long) Long.parseLong(patThrpData[0]));
@@ -228,6 +229,17 @@ public class LoginActivity extends ActionBarActivity {
     class RetrieveFeedTask extends AsyncTask<String, Void, String> {
 
         private Exception exception;
+        private ProgressDialog Dialog;
+        //private Context context;
+        public RetrieveFeedTask(LoginActivity activity){
+            Dialog = new ProgressDialog(activity);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Loading");
+            Dialog.show();
+        }
 
         protected String doInBackground(String... urls) {
             Looper.prepare();
@@ -236,7 +248,8 @@ public class LoginActivity extends ActionBarActivity {
             String line = "";
 
             //HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/Login.php");
-            HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/login.php");
+            //HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/login.php");
+            HttpPost httppost = new HttpPost("http://192.168.1.11:8888/iSoothe/iSootheMobile/login.php");
             HttpParams httpParameters = new BasicHttpParams();
             int timeoutConnection = 5000;
             HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
@@ -246,6 +259,7 @@ public class LoginActivity extends ActionBarActivity {
 
 
             try {
+                //Thread.sleep(3000);
                 // Add your data
                 List nameValuePairs = new ArrayList();
                 nameValuePairs.add(new BasicNameValuePair("Username", urls[0]));
@@ -268,9 +282,17 @@ public class LoginActivity extends ActionBarActivity {
                 Log.i("LoginActivity", "MyClass.getView() exception2" + e.toString());
                 //Looper.loop();
             }
-            spinner.setVisibility(View.INVISIBLE);
+            //catch (InterruptedException e){}
+
 
             return line;
         }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            Dialog.dismiss();
+        }
     }
+
 }

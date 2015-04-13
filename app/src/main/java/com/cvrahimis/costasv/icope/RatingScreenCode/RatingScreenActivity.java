@@ -357,15 +357,15 @@ public class RatingScreenActivity extends ActionBarActivity {
         Button tempFeelingBtn;
         Button moodBtn = (Button) findViewById(btnID);
         mood = moodBtn.getText().toString();
-        moodBtn.setBackgroundColor(Color.parseColor("#0000FF"));
-        moodBtn.setTextColor(Color.parseColor("#FFFFFF"));
+        moodBtn.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        moodBtn.setTextColor(Color.parseColor("#000000"));
         for(int i = 0; i < feelingBtns.length; i++)
         {
             if(feelingBtns[i] != btnID)
             {
                 tempFeelingBtn = (Button) findViewById(feelingBtns[i]);
-                tempFeelingBtn.setBackgroundColor(Color.parseColor("#00FF33"));
-                tempFeelingBtn.setTextColor(Color.parseColor("#000000"));
+                tempFeelingBtn.setBackgroundColor(Color.parseColor("#45FFFFFF"));
+                tempFeelingBtn.setTextColor(Color.parseColor("#FFFFFF"));
             }
         }
     }
@@ -375,8 +375,8 @@ public class RatingScreenActivity extends ActionBarActivity {
         for(int i = 0; i < feelingBtns.length; i++)
         {
             tempFeelingBtn = (Button) findViewById(feelingBtns[i]);
-            tempFeelingBtn.setBackgroundColor(Color.parseColor("#00FF33"));
-            tempFeelingBtn.setTextColor(Color.parseColor("#000000"));
+            tempFeelingBtn.setBackgroundColor(Color.parseColor("#45FFFFFF"));
+            tempFeelingBtn.setTextColor(Color.parseColor("#FFFFFF"));
         }
     }
 

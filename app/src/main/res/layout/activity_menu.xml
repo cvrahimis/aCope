@@ -31,7 +31,7 @@
             android:id="@+id/music"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            android:background="#33EE11"
+            android:background="#45FFFFFF"
             android:textColor="#FFF"
             android:onClick="activityPress"
             />
@@ -43,7 +43,7 @@
             android:id="@+id/reading"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            android:background="#0011FF"
+            android:background="#45FFFFFF"
             android:textColor="#FFF"
             android:onClick="activityPress"
             />
@@ -55,7 +55,7 @@
             android:id="@+id/drawing"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            android:background="#FF1100"
+            android:background="#45FFFFFF"
             android:textColor="#FFF"
             android:onClick="activityPress"
             />
@@ -67,7 +67,7 @@
             android:id="@+id/journal"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            android:background="#6622AA"
+            android:background="#45FFFFFF"
             android:textColor="#FFF"
             android:onClick="activityPress"
             />
@@ -79,7 +79,7 @@
             android:id="@+id/exercise"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            android:background="#FF8811"
+            android:background="#45FFFFFF"
             android:textColor="#FFF"
             android:onClick="activityPress"
             />
