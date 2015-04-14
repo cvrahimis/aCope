@@ -178,7 +178,7 @@ public class LoginActivity extends ActionBarActivity {
                             else{
                                 invalidLogin.setVisibility(View.VISIBLE);
                             }
-                            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                         }
                         catch(ExecutionException e){
                             Log.i("LoginActivity", "MyClass.getView() exception3" + e.toString());
@@ -248,8 +248,8 @@ public class LoginActivity extends ActionBarActivity {
             String line = "";
 
             //HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/Login.php");
-            //HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/login.php");
-            HttpPost httppost = new HttpPost("http://192.168.1.11:8888/iSoothe/iSootheMobile/login.php");
+            HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/login.php");
+            //HttpPost httppost = new HttpPost("http://192.168.1.11:8888/iSoothe/iSootheMobile/login.php");
             HttpParams httpParameters = new BasicHttpParams();
             int timeoutConnection = 5000;
             HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
