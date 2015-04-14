@@ -2,18 +2,17 @@
 
     <!--<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/cancelBtn"
-        android:id="@+id/scrollView">android:layout_alignRight="@+id/scrollView"
-        android:layout_alignEnd="@+id/scrollView"-->
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/scrollView">-->
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:id="@+id/loginMainLayout"
         >
 
@@ -40,7 +39,11 @@
             android:id="@+id/username"
             android:layout_marginTop="32dp"
             android:layout_below="@+id/invalidLogin"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true">
+            <requestFocus />
+        </EditText>
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,11 +67,13 @@
             android:id="@+id/password"
             android:background="#FFF"
             android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/username"
             android:layout_alignRight="@+id/username"
             android:layout_alignEnd="@+id/username"
             android:layout_alignLeft="@+id/username"
-            android:layout_alignStart="@+id/username" />
+            android:layout_alignStart="@+id/username"/>
+
 
         <Button
             android:layout_width="200dp"
@@ -78,6 +83,7 @@
             android:textColor="#FFF"
             android:id="@+id/loginDoneBtn"
             android:onClick="buttonPress"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/password"
             android:layout_alignRight="@+id/password"
@@ -92,6 +98,7 @@
             android:background="#0000FF"
             android:textColor="#FFF"
             android:id="@+id/cancelBtn"
+            android:layout_centerHorizontal="true"
             android:onClick="buttonPress"
             android:layout_below="@+id/loginDoneBtn"
             android:layout_alignLeft="@+id/loginDoneBtn"
@@ -109,4 +116,4 @@
 
 
     </RelativeLayout>
-   <!-- </ScrollView>-->
+<!--</ScrollView>-->

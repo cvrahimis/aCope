@@ -38,12 +38,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -192,7 +194,7 @@ public class LoginActivity extends ActionBarActivity {
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_LONG).show();
                 }
                 break;
             }
@@ -209,7 +211,13 @@ public class LoginActivity extends ActionBarActivity {
     private String convertStreamToString(InputStream is) {
         String line = "";
         StringBuilder total = new StringBuilder();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+        BufferedReader rd = null;
+        try {
+            rd = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        }
+        catch (UnsupportedEncodingException e){
+            rd = new BufferedReader(new InputStreamReader(is));
+        }
         try {
             while ((line = rd.readLine()) != null) {
                 total.append(line);
@@ -249,7 +257,7 @@ public class LoginActivity extends ActionBarActivity {
 
             //HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/Login.php");
             HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/login.php");
-            //HttpPost httppost = new HttpPost("http://192.168.1.11:8888/iSoothe/iSootheMobile/login.php");
+            //HttpPost httppost = new HttpPost("http://192.168.1.18:8888/iSoothe/iSootheMobile/login.php");
             HttpParams httpParameters = new BasicHttpParams();
             int timeoutConnection = 5000;
             HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
@@ -264,7 +272,7 @@ public class LoginActivity extends ActionBarActivity {
                 List nameValuePairs = new ArrayList();
                 nameValuePairs.add(new BasicNameValuePair("Username", urls[0]));
                 nameValuePairs.add(new BasicNameValuePair("Password", urls[1]));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
                 //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
