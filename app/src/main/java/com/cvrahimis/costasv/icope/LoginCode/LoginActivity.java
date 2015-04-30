@@ -211,13 +211,8 @@ public class LoginActivity extends ActionBarActivity {
     private String convertStreamToString(InputStream is) {
         String line = "";
         StringBuilder total = new StringBuilder();
-        BufferedReader rd = null;
-        try {
-            rd = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-        }
-        catch (UnsupportedEncodingException e){
-            rd = new BufferedReader(new InputStreamReader(is));
-        }
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+
         try {
             while ((line = rd.readLine()) != null) {
                 total.append(line);
@@ -256,8 +251,8 @@ public class LoginActivity extends ActionBarActivity {
             String line = "";
 
             //HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/Login.php");
-            HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/login.php");
-            //HttpPost httppost = new HttpPost("http://192.168.1.18:8888/iSoothe/iSootheMobile/login.php");
+            //HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/login.php");
+            HttpPost httppost = new HttpPost("http://192.168.1.10:8888/iSoothe/iSootheMobile/login.php");
             HttpParams httpParameters = new BasicHttpParams();
             int timeoutConnection = 5000;
             HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
@@ -272,8 +267,8 @@ public class LoginActivity extends ActionBarActivity {
                 List nameValuePairs = new ArrayList();
                 nameValuePairs.add(new BasicNameValuePair("Username", urls[0]));
                 nameValuePairs.add(new BasicNameValuePair("Password", urls[1]));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
-                //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
 
