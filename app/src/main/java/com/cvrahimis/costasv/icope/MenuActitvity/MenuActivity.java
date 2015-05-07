@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.*;
 import android.os.Process;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,17 +18,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.ICopePatDB;
+import com.cvrahimis.costasv.icope.Login;
 import com.cvrahimis.costasv.icope.LoginCode.LoginActivity;
 import com.cvrahimis.costasv.icope.MainActivity;
+import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.PhysicalActivities.PhysicalActivity;
 import com.cvrahimis.costasv.icope.DrawingCode.DrawingPad;
 import com.cvrahimis.costasv.icope.MusicCode.MusicActivity;
 import com.cvrahimis.costasv.icope.R;
+import com.cvrahimis.costasv.icope.RatingScreenCode.RatingScreenActivity;
 import com.cvrahimis.costasv.icope.ReadingCode.ReadingActivity;
 import com.cvrahimis.costasv.icope.WritingCode.WritingActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 
 public class MenuActivity extends ActionBarActivity {
@@ -35,6 +40,9 @@ public class MenuActivity extends ActionBarActivity {
     private int screenWidth;
     private int screenHeight;
     ICopePatDB db;
+    public int therapistid;
+    //public String[] patient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,15 @@ public class MenuActivity extends ActionBarActivity {
         final LinearLayout content = (LinearLayout) findViewById(R.id.content);
         final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.menuActivityMainLayout);
 
+        db = new ICopePatDB(this);
+        db.open();
+
+        /*Cursor cursor = db.getTherapistID();
+
+        if (cursor.moveToFirst()) {
+            therapistid = cursor.getInt(cursor.getColumnIndex("therapistId"));
+            Toast.makeText(getApplicationContext(), String.valueOf(therapistid), Toast.LENGTH_LONG).show();
+        }*/
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -78,9 +95,6 @@ public class MenuActivity extends ActionBarActivity {
             mainLayout.setBackground(d);
             greetingLbl.setText(R.string.morningGreet);
         }
-
-        db = new ICopePatDB(this);
-        db.open();
 
         if(db.isPatientAndTherapistOnPhone())
         {

@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.ICopeActivity;
 import com.cvrahimis.costasv.icope.ICopePatDB;
+import com.cvrahimis.costasv.icope.Login;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
@@ -54,19 +55,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Timer;
+import java.util.concurrent.ExecutionException;
 
 
 public class RatingScreenActivity extends ActionBarActivity {
 
     int screenWidth;
     int screenHeight;
-    private GestureDetector gestureDetector;
+    //private GestureDetector gestureDetector;
     private ViewGroup.LayoutParams thermometerLayoutParams;
     private AbsoluteLayout.LayoutParams mesurmentViewLayoutParams;
-    private ViewGroup.LayoutParams absLayoutParams;
+    //private ViewGroup.LayoutParams absLayoutParams;
     private ImageView mesurmentView;
     private ImageView thermometer;
-    public final static int RESULT_CLOSE_ALL = 0;
+    //public final static int RESULT_CLOSE_ALL = 0;
     public boolean didFeelingPressed = false;
     public boolean didSwipe = false;
     public boolean exit = false;
@@ -77,7 +79,8 @@ public class RatingScreenActivity extends ActionBarActivity {
     double section;
     int u;
     private String activity;
-
+    //public boolean isEntry;
+    public int therapistid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,13 @@ public class RatingScreenActivity extends ActionBarActivity {
 
         db = new ICopePatDB(this);
         db.open();
+
+        //isEntry = false;
+
+        //Intent intent = getIntent();
+        //isEntry = intent.getBooleanExtra("isEntry", false);
+        //if(isEntry)
+        checkTherapist();
 
         activity = "";
 
@@ -352,6 +362,39 @@ public class RatingScreenActivity extends ActionBarActivity {
                 break;
         }
     }
+
+    public void checkTherapist(){
+        Cursor cur = db.getTherapistID();
+        if (cur.moveToFirst())
+            therapistid = cur.getInt(cur.getColumnIndex("therapistId"));
+
+        String username = "";
+        cur = db.getPatientUsername();
+        if(cur.moveToFirst())
+            username = cur.getString(cur.getColumnIndex("patientLogin"));
+
+        String password = "";
+        cur = db.getPatientPassword();
+        if(cur.moveToFirst())
+            password = cur.getString(cur.getColumnIndex("patientPassword"));
+
+        try {
+            String result = new Login().execute(username, password).get();
+            String[] patThrpData = result.split(",");
+            if(patThrpData.length == 8 && therapistid != Integer.parseInt(patThrpData[1])) {
+                db.updatePatientAndTherapist(Integer.parseInt(patThrpData[1]));
+                    //Toast.makeText(getApplicationContext(), "It worked", Toast.LENGTH_LONG).show();
+            }
+            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+        }
+        catch(ExecutionException e){
+            Log.i("LoginActivity", "MyClass.getView() exception3" + e.toString());
+        }
+        catch(InterruptedException e){
+            Log.i("LoginActivity", "MyClass.getView() exception4" + e.toString());
+        }
+    }
+
     public void changeFeelingPressColors(int btnID)
     {
         Button tempFeelingBtn;
@@ -537,7 +580,10 @@ public class RatingScreenActivity extends ActionBarActivity {
                 new SendActivities().execute(this);
             }
             else
+            {
                 db.insertNewActivity(pID, tID, "Entrance Rating", mood, u, str, "0 hours 0 minuets 0 seconds");
+                //isEntry = true;
+            }
 
         }
         else if(pID > 0 && tID > 0 && activity != null)

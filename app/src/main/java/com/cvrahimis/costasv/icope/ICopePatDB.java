@@ -175,6 +175,16 @@ public class ICopePatDB {
         return db.query(patient_Table, new String [] {patient_patientFirstName, patient_patientLastName}, "1", null, null, null, null);
     }
 
+    public Cursor getPatientUsername()
+    {
+        return db.query(patient_Table, new String [] {patient_patientLogin}, "1", null, null, null, null);
+    }
+
+    public Cursor getPatientPassword()
+    {
+        return db.query(patient_Table, new String [] {patient_patientPassword}, "1", null, null, null, null);
+    }
+
     public Cursor getPatientID()
     {
         return db.query(patient_Table, new String [] {patient_patientId}, "1", null, null, null, null);
@@ -183,6 +193,18 @@ public class ICopePatDB {
     public Cursor getTherapistID()
     {
         return db.query(therapist_Table, new String [] {therapist_therapistId}, "1", null, null, null, null);
+    }
+
+    public boolean updatePatientAndTherapist(int id){
+        Cursor cur = this.getTherapistID();
+        int tID = -1;
+        if (cur.moveToFirst()) {
+            tID = Integer.parseInt(cur.getString(0));
+        }
+        ContentValues cv = new ContentValues();
+        cv.put("therapistId", id);
+
+        return (db.update(patient_Table, cv, "therapistId=" + tID, null) > 0 && db.update(therapist_Table, cv, "therapistId=" + tID, null) > 0);
     }
 
     public void clearActivitiesTable()

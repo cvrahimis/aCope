@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cvrahimis.costasv.icope.ICopePatDB;
+import com.cvrahimis.costasv.icope.Login;
 import com.cvrahimis.costasv.icope.MenuActitvity.MenuActivity;
 import com.cvrahimis.costasv.icope.MyApplication;
 import com.cvrahimis.costasv.icope.R;
@@ -161,13 +162,15 @@ public class LoginActivity extends ActionBarActivity {
             {
                 if(!username.getText().equals("") && !password.getText().equals(""))
                 {
-                    Toast.makeText(getApplicationContext(), "LoginPress", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "LoginPress", Toast.LENGTH_SHORT).show();
                     if(isNetworkAvailable()) {
 
                         try {
-                            String result = new RetrieveFeedTask(this).execute(String.valueOf(username.getText()), String.valueOf(password.getText())).get();
+                            String uname = String.valueOf(username.getText());
+                            String pass = String.valueOf(password.getText());
+                            String result = new Login().execute(uname, pass).get();
                             String[] patThrpData = result.split(",");
-                            if(patThrpData.length == 8) {
+                            if(patThrpData.length == 8 && patThrpData[2].equals(uname) && patThrpData[3].equals(pass)) {
                                 ((MyApplication) this.getApplication()).setpID((long) Long.parseLong(patThrpData[0]));
                                 ((MyApplication) this.getApplication()).settID((long) Long.parseLong(patThrpData[1]));
                                 invalidLogin.setVisibility(View.INVISIBLE);
@@ -180,7 +183,7 @@ public class LoginActivity extends ActionBarActivity {
                             else{
                                 invalidLogin.setVisibility(View.VISIBLE);
                             }
-                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                         }
                         catch(ExecutionException e){
                             Log.i("LoginActivity", "MyClass.getView() exception3" + e.toString());
@@ -208,7 +211,7 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
-    private String convertStreamToString(InputStream is) {
+    /*private String convertStreamToString(InputStream is) {
         String line = "";
         StringBuilder total = new StringBuilder();
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -221,7 +224,7 @@ public class LoginActivity extends ActionBarActivity {
             Toast.makeText(this, "Stream Exception", Toast.LENGTH_SHORT).show();
         }
         return total.toString();
-    }
+    }*/
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -229,7 +232,7 @@ public class LoginActivity extends ActionBarActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    class RetrieveFeedTask extends AsyncTask<String, Void, String> {
+    /*public class RetrieveFeedTask extends AsyncTask<String, Void, String> {
 
         private Exception exception;
         private ProgressDialog Dialog;
@@ -296,6 +299,6 @@ public class LoginActivity extends ActionBarActivity {
         {
             Dialog.dismiss();
         }
-    }
+    }*/
 
 }

@@ -44,7 +44,7 @@ public class SendActivities extends AsyncTask<Context, Void, Void> {
         db.open();
         //HttpPost httppost = new HttpPost("http://10.0.2.2:8888/ICopeDBInserts/AddActivity.php");
         //HttpPost httppost = new HttpPost("http://isoothe.cs.iona.edu/AddActivity.php");
-        HttpPost httppost = new HttpPost("http://192.168.1.11:8888/iSoothe/iSootheMobile/AddActivity.php");
+        HttpPost httppost = new HttpPost("http://192.168.1.8:8888/iSoothe/iSootheMobile/AddActivity.php");
         HttpParams httpParameters = new BasicHttpParams();
         int timeoutConnection = 5000;
         HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
@@ -64,10 +64,10 @@ public class SendActivities extends AsyncTask<Context, Void, Void> {
                 {
                     xml.append("<activity>");
                     xml.append("<therapistId>");
-                    xml.append((String) cur.getString(0));
+                    xml.append((String) cur.getString(1));
                     xml.append("</therapistId>");
                     xml.append("<patientId>");
-                    xml.append((String) cur.getString(1));
+                    xml.append((String) cur.getString(0));
                     xml.append("</patientId>");
                     xml.append("<time>");
                     xml.append((String) cur.getString(2));

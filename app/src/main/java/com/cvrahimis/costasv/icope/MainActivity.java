@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
 
         if (db.isPatientAndTherapistOnPhone()) {
             intent = new Intent(this, RatingScreenActivity.class);
+            //intent.putExtra("isEntry", true);
         } else {
             intent = new Intent(this, LoginActivity.class);
         }
